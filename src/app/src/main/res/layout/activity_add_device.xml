@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <!-- Top Green Banner -->
+    <View
+        android:id="@+id/topBannerAdd"
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:background="@color/pastel_green" />
+
+    <ImageButton
+        android:id="@+id/btnBackAdd"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_btn"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvTempAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/quicksand"
+        android:text="3°C"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <!-- Available Devices Header -->
+    <TextView
+        android:id="@+id/tvAvailableDevicesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="180dp"
+        android:text="@string/available_devices"
+        android:textSize="22sp"
+        android:fontFamily="@font/quicksand"
+        android:textStyle="bold"
+        android:textColor="#333333" />
+
+    <TextView
+        android:id="@+id/tvClickToAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvAvailableDevicesTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:text="@string/click_to_add"
+        android:fontFamily="@font/quicksand"
+        android:textSize="17sp"
+        android:textColor="#777777" />
+
+    <!-- Device List Container -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvClickToAdd"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="32dp"
+        android:padding="20dp">
+
+        <Button
+            android:id="@+id/btnDevice1"
+            android:layout_width="220dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_pill_selectable"
+            android:text="@string/device_1"
+            android:fontFamily="@font/quicksand"
+            android:textStyle="bold"
+            android:textColor="@color/pill_text_color"
+            android:textSize="16sp"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            app:backgroundTint="@null" />
+
+        <Button
+            android:id="@+id/btnDevice2"
+            android:layout_width="220dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_pill_selectable"
+            android:text="@string/device_2"
+            android:textColor="@color/pill_text_color"
+            android:fontFamily="@font/quicksand"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            app:backgroundTint="@null" />
+
+        <Button
+            android:id="@+id/btnDevice3"
+            android:layout_width="220dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_pill_selectable"
+            android:text="@string/device_3"
+            android:textColor="@color/pill_text_color"
+            android:fontFamily="@font/quicksand"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            app:backgroundTint="@null" />
+    </LinearLayout>
+
+    <!-- Bottom Navigation Bar -->
+    <LinearLayout
+        android:id="@+id/bottomNavBarAdd"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/pastel_green"
+        android:orientation="horizontal"
+        android:paddingBottom="20dp">
+
+        <ImageButton
+            android:id="@+id/navCartAdd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="18dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/cart_icon"
+            app:tint="@color/nav_icon_tint" />
+
+        <ImageButton
+            android:id="@+id/navFridgeAdd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="18dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/fridge_icon"
+            app:tint="@color/nav_icon_tint" />
+
+        <ImageButton
+            android:id="@+id/navSettingsAdd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="18dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/baseline_settings_24"
+            app:tint="@color/nav_icon_tint" />
+    </LinearLayout>
+
+</RelativeLayout>
