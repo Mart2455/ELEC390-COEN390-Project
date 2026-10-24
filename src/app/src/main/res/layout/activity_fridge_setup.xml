@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <!-- Top Green Banner -->
+    <View
+        android:id="@+id/topBannerSetup"
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:background="@color/pastel_green" />
+
+    <ImageButton
+        android:id="@+id/btnBackSetup"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_btn"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvTempSetup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/quicksand"
+        android:text="3°C"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <!-- Your Fridge Header -->
+    <TextView
+        android:id="@+id/tvYourFridge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="110dp"
+        android:text="Your fridge"
+        android:textSize="26sp"
+        android:fontFamily="@font/shrikhand"
+        android:textStyle="bold"
+        android:textColor="#333333" />
+
+    <TextView
+        android:id="@+id/tvDeviceNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvYourFridge"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:text="Device 1"
+        android:textSize="14sp"
+        android:fontFamily="@font/quicksand"
+        android:textColor="#777777" />
+
+    <!-- Icon Placeholder Box -->
+    <FrameLayout
+        android:id="@+id/viewIconBox"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_below="@id/tvDeviceNameLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_rounded_box">
+        <ImageView
+            android:id="@+id/ivSetupIcon"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center"
+            android:src="@drawable/baseline_add_24" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvEditIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/viewIconBox"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        android:text="Edit Icon"
+        android:textSize="12sp"
+        android:fontFamily="@font/quicksand"
+        android:textColor="#777777" />
+
+    <!-- Track Options Header -->
+    <TextView
+        android:id="@+id/tvSelectTrack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvEditIcon"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:text="Select what to track ..."
+        android:textSize="16sp"
+        android:fontFamily="@font/quicksand"
+        android:textStyle="bold"
+        android:textColor="#333333" />
+
+    <!-- Tracking Buttons Layout -->
+    <LinearLayout
+        android:id="@+id/layoutTrackOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSelectTrack"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnFreshness"
+            android:layout_width="220dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_pill_selectable"
+            android:text="Freshness"
+            android:fontFamily="@font/quicksand"
+            android:textStyle="bold"
+            android:textColor="@color/pill_text_color"
+            android:textSize="15sp"
+            android:gravity="start|center_vertical"
+            android:paddingStart="24dp"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            app:backgroundTint="@null" />
+
+        <Button
+            android:id="@+id/btnMoisture"
+            android:layout_width="220dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_pill_selectable"
+            android:text="Moisture"
+            android:fontFamily="@font/quicksand"
+            android:textStyle="bold"
+            android:textColor="@color/pill_text_color"
+            android:textSize="15sp"
+            android:gravity="start|center_vertical"
+            android:paddingStart="24dp"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            app:backgroundTint="@null" />
+
+        <Button
+            android:id="@+id/btnFermentation"
+            android:layout_width="220dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_pill_selectable"
+            android:text="Fermentation"
+            android:fontFamily="@font/quicksand"
+            android:textStyle="bold"
+            android:textColor="@color/pill_text_color"
+            android:textSize="15sp"
+            android:gravity="start|center_vertical"
+            android:paddingStart="24dp"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            app:backgroundTint="@null" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomNavBarSetup"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:padding="8dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnRemoveDevice"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_pill_light"
+            android:elevation="4dp"
+            android:fontFamily="@font/quicksand"
+            android:paddingHorizontal="16dp"
+            android:text="Remove device"
+            android:textAllCaps="false"
+            android:textColor="@color/dark_green"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_pill_dark"
+            android:text="Save"
+            android:textColor="@color/white"
+            android:fontFamily="@font/quicksand"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:elevation="4dp" />
+    </LinearLayout>
+
+    <!-- Bottom Navigation Bar -->
+    <LinearLayout
+        android:id="@+id/bottomNavBarSetup"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/pastel_green"
+        android:orientation="horizontal"
+        android:paddingBottom="20dp">
+
+        <ImageButton
+            android:id="@+id/navCartSetup"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="18dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/cart_icon"
+            app:tint="@color/nav_icon_tint" />
+
+        <ImageButton
+            android:id="@+id/navFridgeSetup"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="18dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/fridge_icon"
+            app:tint="@color/nav_icon_tint" />
+
+        <ImageButton
+            android:id="@+id/navSettingsSetup"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="18dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/baseline_settings_24"
+            app:tint="@color/nav_icon_tint" />
+    </LinearLayout>
+
+</RelativeLayout>

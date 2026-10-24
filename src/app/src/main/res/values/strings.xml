@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Fridge Friends</string>
+    <string name="please_connect_your_device">Please connect your device</string>
+    <string name="click_to_add">Click to add</string>
+    <string name="device_1">Device 1</string>
+    <string name="available_devices">Available devices</string>
+    <string name="device_2">Device 2</string>
+    <string name="device_3">Device 3</string>
+</resources>
