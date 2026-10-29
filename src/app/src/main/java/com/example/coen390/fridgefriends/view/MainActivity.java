@@ -23,7 +23,7 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.graphics.Color;
 
-import com.example.coen390.fridgefriends.ESP32Receiver;
+import com.example.coen390.fridgefriends.network.ESP32Receiver;
 import com.example.coen390.fridgefriends.R;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
