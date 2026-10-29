@@ -22,6 +22,8 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.graphics.Color;
+
+import com.example.coen390.fridgefriends.ESP32Receiver;
 import com.example.coen390.fridgefriends.R;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -66,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
             android.content.Intent intent = new android.content.Intent(MainActivity.this, AddDeviceActivity.class);
             startActivity(intent);
         });
+
+        ESP32Receiver.receiveData();
 
         // Close the overlay if the user clicks the 'X'
         btnOverlayClose.setOnClickListener(v -> overlayAddMenu.setVisibility(View.GONE));
