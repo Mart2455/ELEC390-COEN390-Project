@@ -95,7 +95,6 @@ public class ESP32Receiver
             }
             finally
             {
-
                 if (connection != null)
                 {
                     connection.disconnect();

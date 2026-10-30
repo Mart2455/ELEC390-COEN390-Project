@@ -78,12 +78,15 @@ void handleSensors() {
   String json = "{";
 
   // BME680 data
-  if (bmeDataValid) {
+  if (bmeDataValid)
+  {
     json += "\"temperature\":" + String(temperature, 2);
     json += ",\"humidity\":" + String(humidity, 2);
     json += ",\"pressure\":" + String(pressure, 2);
     json += ",\"gasResistance\":" + String(gasResistance, 2);
-  } else {
+  }
+  else
+  {
     json += "\"temperature\":null";
     json += ",\"humidity\":null";
     json += ",\"pressure\":null";
@@ -91,7 +94,8 @@ void handleSensors() {
   }
 
   // CCS811 data
-  if (ccsDataValid) {
+  if (ccsDataValid)
+  {
     json += ",\"eco2\":" + String(eco2);
     json += ",\"tvoc\":" + String(tvoc);
   } 
@@ -263,10 +267,10 @@ void loop()
   static unsigned long lastWiFiRetry = 0;
 
   if (WiFi.status() != WL_CONNECTED &&
-      millis() - lastWiFiRetry >= 10000) {
+      millis() - lastWiFiRetry >= 10000) 
+  {
 
     lastWiFiRetry = millis();
-
     Serial.println("Wi-Fi disconnected. Reconnecting...");
     WiFi.reconnect();
   }
