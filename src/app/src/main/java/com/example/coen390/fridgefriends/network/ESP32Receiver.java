@@ -29,10 +29,25 @@ public class ESP32Receiver
     private static int tvoc;
     private static int mq3Raw;
 
-    public static void receiveData()
+    public static void receiveData(Runnable onSuccess)
     {
 
         new Thread(() -> {
+
+            // gotta review this mechanic
+            boolean useTestData = true; // Set false when testing with ESP32
+
+            if (useTestData) {
+                humidity = 65.5;
+                tvoc = 120;
+                eco2 = 800;
+                mq3Raw = 1500;
+
+                if (onSuccess != null) {
+                    onSuccess.run();
+                }
+                return;
+            }
 
             HttpURLConnection connection = null;
 
@@ -78,6 +93,7 @@ public class ESP32Receiver
                 mq3Raw = data.optInt("mq3Raw", -1);
 
 
+                // Testing purposes always show the data here
                 Log.d(TAG, "Temperature: " + temperature + " C");
                 Log.d(TAG, "Humidity: " + humidity + " %");
                 Log.d(TAG, "Pressure: " + pressure + " hPa");

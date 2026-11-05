@@ -22,8 +22,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 import com.example.coen390.fridgefriends.R;
+import com.example.coen390.fridgefriends.network.ESP32Receiver;
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class DeviceTrackerActivity extends AppCompatActivity {
 
@@ -38,7 +41,8 @@ public class DeviceTrackerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_tracker);
 
-        if (getSupportActionBar() != null) {
+        if (getSupportActionBar() != null)
+        {
             getSupportActionBar().hide();
         }
 
@@ -110,21 +114,74 @@ public class DeviceTrackerActivity extends AppCompatActivity {
         // Initialize the data list for the swipeable pages based on selections
         trackerList = new ArrayList<>();
 
-        if (trackMoisture) {
-            trackerList.add(new TrackerData("Moisture", "Humidity levels", "#7EC8E3", "30% (low)", R.drawable.moisture_icon));
-        }
-        if (trackFreshness) {
-            trackerList.add(new TrackerData("Freshness", "VOC levels", "#85B751", "< 10 ppm (fresh)", R.drawable.veggie_icon));
-        }
-        if (trackFermentation) {
-            trackerList.add(new TrackerData("Fermentation", "CO2 and ethanol levels", "#9D84B7", "30% (low)", R.drawable.voc_icon));
-        }
+
+
+        // NOTE FOR ME, THIS IS THE HARDCODED PART, So instead of showing the hardcoded part, i need to put the receivedata here
+//        if (trackMoisture) {
+//            trackerList.add(new TrackerData("Moisture", "Humidity levels", "#7EC8E3", "30% (low)", R.drawable.moisture_icon));
+//        }
+//        if (trackFreshness) {
+//            trackerList.add(new TrackerData("Freshness", "VOC levels", "#85B751", "< 10 ppm (fresh)", R.drawable.veggie_icon));
+//        }
+//        if (trackFermentation) {
+//            trackerList.add(new TrackerData(
+//                    "Fermentation",
+//                    "CO2 and ethanol levels",
+//                    "#9D84B7",
+//                    "30% (low)",
+//                    R.drawable.voc_icon));
+//        }
 
         // Set up the adapter
         TrackerPagerAdapter adapter = new TrackerPagerAdapter(trackerList);
+
         viewPager.setAdapter(adapter);
 
-        setupDots(trackerList.size());
+
+        // This is to update the screen
+        final boolean moistureEnabled = trackMoisture;
+        final boolean freshnessEnabled = trackFreshness;
+        final boolean fermentationEnabled = trackFermentation;
+        ESP32Receiver.receiveData(() -> {
+            runOnUiThread(()-> {
+                trackerList.clear(); // clear the list for new readings
+                if (moistureEnabled)
+                {
+                    // update the trackerlist
+                    trackerList.add(new TrackerData(
+                            "Moisture",
+                            "Humidity Levels",
+                            "#7EC8E3",
+                            Double.toString(ESP32Receiver.getHumidity()) + " %",
+                            R.drawable.moisture_icon));
+                }
+                if (freshnessEnabled)
+                {
+                    // update the trackerlist
+                    trackerList.add(new TrackerData(
+                            "Freshness",
+                            "VOC levels",
+                            "#85B751",
+                            Double.toString(ESP32Receiver.getTvoc()) + " ppm",
+                            R.drawable.veggie_icon));
+                }
+                if (freshnessEnabled)
+                {
+                    // update the trackerlist
+                    trackerList.add(new TrackerData(
+                            "Fermentation",
+                            "CO2 and ethanol levels",
+                            "#9D84B7",
+                            Double.toString(ESP32Receiver.getEco2()) + " %",
+                            R.drawable.voc_icon));
+                }
+                adapter.notifyDataSetChanged();
+                setupDots(trackerList.size());
+            });
+        });
+        ;
+
+
 
         // Listen for swipes to change the active dot color
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {

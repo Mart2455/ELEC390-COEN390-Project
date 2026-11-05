@@ -69,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        ESP32Receiver.receiveData();
-
         // Close the overlay if the user clicks the 'X'
         btnOverlayClose.setOnClickListener(v -> overlayAddMenu.setVisibility(View.GONE));
 
