@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.graphics.Color;
 
+import com.example.coen390.fridgefriends.SensorMonitoringService;
 import com.example.coen390.fridgefriends.network.ESP32Receiver;
 import com.example.coen390.fridgefriends.R;
 import android.view.animation.Animation;
@@ -39,6 +41,37 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // Make the monitoring reset everytime the app is turned on
+
+        SharedPreferences prefs = getSharedPreferences("DevicePrefs" , MODE_PRIVATE);
+
+        String[] devices = {"Device 1", "Device 2" , "Device 3"}; // each device is created
+
+        // loop through the devices, activate the service
+        for (int i = 0; i < devices.length; i++)
+        {
+            // return false if this device not connected, meaning sensoring device not setup
+            boolean added = prefs.getBoolean(devices[i] + "_added" , false);
+
+            // next is to verify if the sensor is actually tracking something
+
+            boolean trackingEnabled = prefs.getBoolean(devices[i] + "_track_moisture", false)
+                                                        || prefs.getBoolean(devices[i] + "_track_freshness", false)
+                                                        || prefs.getBoolean(devices[i] + "_track_fermentation", false);
+
+            // If both are true the sensor is atleast tracking a single thing
+
+            if (added && trackingEnabled)
+            {
+                // Basically abstract class of an operation to be performed
+                // !!! CAN BE USED BY SERVICE CLASS !!!
+                Intent serviceIntent = new Intent(this, SensorMonitoringService.class);
+                ContextCompat.startForegroundService(this, serviceIntent);
+                break;
+            }
+        }
 
         // Hide the default Action Bar to match your clean mockup
         if (getSupportActionBar() != null) {
