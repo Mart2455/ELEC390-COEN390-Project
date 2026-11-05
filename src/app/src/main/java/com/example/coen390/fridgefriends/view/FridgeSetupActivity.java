@@ -13,7 +13,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.example.coen390.fridgefriends.R;
+import com.example.coen390.fridgefriends.SensorMonitoringService;
 
 public class FridgeSetupActivity extends AppCompatActivity {
 
@@ -131,6 +134,8 @@ public class FridgeSetupActivity extends AppCompatActivity {
             editor.remove(deviceName + "_track_fermentation");
             editor.apply();
 
+
+
             Intent intent = new Intent(FridgeSetupActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
@@ -157,6 +162,17 @@ public class FridgeSetupActivity extends AppCompatActivity {
             editor.putBoolean(deviceName + "_track_fermentation", trackFermentation);
             editor.apply();
 
+            // Start the monitoring service so it can receive sensor readings
+            // even when the monitoring screen is no longer visible.
+            Intent serviceIntent =
+                    new Intent(FridgeSetupActivity.this,
+                            SensorMonitoringService.class);
+
+            ContextCompat.startForegroundService(
+                    FridgeSetupActivity.this,
+                    serviceIntent
+            );
+
             Intent intent = new Intent(FridgeSetupActivity.this, DeviceTrackerActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("device_name", deviceName);
@@ -167,6 +183,8 @@ public class FridgeSetupActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+
+
 
         android.widget.ImageButton navFridgeSetup = findViewById(R.id.navFridgeSetup);
         if (navFridgeSetup != null) {

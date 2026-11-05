@@ -179,7 +179,7 @@ public class DeviceTrackerActivity extends AppCompatActivity {
                 setupDots(trackerList.size());
             });
         });
-        ;
+
 
 
 
