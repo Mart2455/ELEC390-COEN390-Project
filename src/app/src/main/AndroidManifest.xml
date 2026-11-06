@@ -4,9 +4,11 @@
 
     <!-- Required for receiving sensor data from the ESP32 via WiFi[cite: 8] -->
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <application
-        android:usesCleartextTraffic="true"
+
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,8 +16,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:usesCleartextTraffic="true">
         <!-- Welcome Screen -->
         <activity
             android:name=".view.WelcomeActivity"
@@ -23,8 +25,10 @@
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
+
                 <!-- This tells Android to present this activity first when the application starts[cite: 9] -->
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -59,6 +63,12 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
+        <service
+            android:name=".SensorMonitoringService"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice">
+
+        </service>
     </application>
 
 </manifest>

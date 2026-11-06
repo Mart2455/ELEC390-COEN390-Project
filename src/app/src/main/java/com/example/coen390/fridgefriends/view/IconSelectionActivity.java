@@ -52,7 +52,8 @@ public class IconSelectionActivity extends AppCompatActivity {
         }
     }
 
-    private void returnIconResult(int iconResId) {
+    private void returnIconResult(int iconResId)
+    {
         android.content.Intent resultIntent = new android.content.Intent();
         resultIntent.putExtra("selected_icon", iconResId);
         setResult(RESULT_OK, resultIntent);

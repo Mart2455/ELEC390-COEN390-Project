@@ -29,10 +29,26 @@ public class ESP32Receiver
     private static int tvoc;
     private static int mq3Raw;
 
-    public static void receiveData()
+    public static void receiveData(ReceiveCallback callback)
     {
 
         new Thread(() -> {
+
+            // gotta review this mechanic
+            boolean useTestData = false; // Set false when testing with ESP32
+            boolean success = false;
+            if (useTestData)
+            {
+                humidity = 65.5;
+                tvoc = 120;
+                eco2 = 800;
+                mq3Raw = 1500;
+
+                callback.onComplete(true);
+
+
+                return;
+            }
 
             HttpURLConnection connection = null;
 
@@ -77,7 +93,8 @@ public class ESP32Receiver
                 tvoc = data.optInt("tvoc", -1);
                 mq3Raw = data.optInt("mq3Raw", -1);
 
-
+                success = true;
+                // Testing purposes always show the data here
                 Log.d(TAG, "Temperature: " + temperature + " C");
                 Log.d(TAG, "Humidity: " + humidity + " %");
                 Log.d(TAG, "Pressure: " + pressure + " hPa");
@@ -99,6 +116,8 @@ public class ESP32Receiver
                 {
                     connection.disconnect();
                 }
+
+                callback.onComplete(success);
             }
 
         }).start();
@@ -107,6 +126,12 @@ public class ESP32Receiver
     // ==============================
     // GETTERS
     // ==============================
+
+    // Connection loss
+    public interface ReceiveCallback
+    {
+        void onComplete(boolean success);
+    }
 
     public static double getTemperature()
     {

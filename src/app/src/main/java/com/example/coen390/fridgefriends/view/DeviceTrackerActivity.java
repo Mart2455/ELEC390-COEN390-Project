@@ -2,6 +2,7 @@ package com.example.coen390.fridgefriends.view;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +23,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 import com.example.coen390.fridgefriends.R;
+import com.example.coen390.fridgefriends.MonitoringState;
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class DeviceTrackerActivity extends AppCompatActivity {
 
@@ -33,12 +37,58 @@ public class DeviceTrackerActivity extends AppCompatActivity {
     private List<TrackerData> trackerList;
     private int currentIconResId = R.drawable.baseline_add_24;
 
+    private boolean connectionLost = false;
+    private boolean hasReadings = false;
+    private TrackerPagerAdapter adapter;
+    private final MonitoringState.Listener monitoringListener = this::updateReadings;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        MonitoringState.observe(monitoringListener);
+    }
+
+    @Override
+    protected void onStop() {
+        MonitoringState.removeObserver(monitoringListener);
+        super.onStop();
+    }
+
+    // The service owns HTTP requests; this screen only renders its latest result.
+    private void updateReadings(MonitoringState.Snapshot state) {
+        connectionLost = state.attempted && !state.connected;
+        hasReadings = state.hasReadings;
+        if (hasReadings) {
+            for (TrackerData item : trackerList) {
+                switch (item.name) {
+                    case "Moisture":
+                        item.value = Double.isNaN(state.humidity)
+                                ? "Reading unavailable" : state.humidity + " %";
+                        break;
+                    case "Freshness":
+                        item.value = state.tvoc < 0
+                                ? "Reading unavailable" : state.tvoc + " ppb";
+                        break;
+                    case "Fermentation":
+                        item.value = "eCO2: " + (state.eco2 < 0 ? "unavailable" : state.eco2 + " ppm")
+                                + "\nMQ-3: " + (state.mq3Raw < 0 ? "unavailable" : state.mq3Raw + " raw");
+                        break;
+                }
+                item.unavailable = (item.name.equals("Moisture") && Double.isNaN(state.humidity))
+                        || (item.name.equals("Freshness") && state.tvoc < 0)
+                        || (item.name.equals("Fermentation") && (state.eco2 < 0 || state.mq3Raw < 0));
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_tracker);
 
-        if (getSupportActionBar() != null) {
+        if (getSupportActionBar() != null)
+        {
             getSupportActionBar().hide();
         }
 
@@ -107,23 +157,30 @@ public class DeviceTrackerActivity extends AppCompatActivity {
         ImageView ivSelectedIcon = findViewById(R.id.ivSelectedIcon);
         if (ivSelectedIcon != null) ivSelectedIcon.setImageResource(currentIconResId);
 
-        // Initialize the data list for the swipeable pages based on selections
+        // Create pages before requesting data so first-request failures are visible.
         trackerList = new ArrayList<>();
 
-        if (trackMoisture) {
-            trackerList.add(new TrackerData("Moisture", "Humidity levels", "#7EC8E3", "30% (low)", R.drawable.moisture_icon));
+        if (trackMoisture)
+        {
+            trackerList.add(new TrackerData(
+                    "Moisture", "Humidity levels", "#7EC8E3",
+                    "No readings available", R.drawable.moisture_icon));
         }
-        if (trackFreshness) {
-            trackerList.add(new TrackerData("Freshness", "VOC levels", "#85B751", "< 10 ppm (fresh)", R.drawable.veggie_icon));
+        if (trackFreshness)
+        {
+            trackerList.add(new TrackerData(
+                    "Freshness", "VOC levels", "#85B751",
+                    "No readings available", R.drawable.veggie_icon));
         }
-        if (trackFermentation) {
-            trackerList.add(new TrackerData("Fermentation", "CO2 and ethanol levels", "#9D84B7", "30% (low)", R.drawable.voc_icon));
+        if (trackFermentation)
+        {
+            trackerList.add(new TrackerData(
+                    "Fermentation", "CO2 and ethanol levels", "#9D84B7",
+                    "No readings available", R.drawable.voc_icon));
         }
 
-        // Set up the adapter
-        TrackerPagerAdapter adapter = new TrackerPagerAdapter(trackerList);
+        adapter = new TrackerPagerAdapter(trackerList);
         viewPager.setAdapter(adapter);
-
         setupDots(trackerList.size());
 
         // Listen for swipes to change the active dot color
@@ -176,6 +233,7 @@ public class DeviceTrackerActivity extends AppCompatActivity {
     class TrackerData {
         String name, subtitle, colorHex, value;
         int iconResId;
+        boolean unavailable;
 
         TrackerData(String name, String subtitle, String colorHex, String value, int iconResId) {
             this.name = name;
@@ -191,6 +249,7 @@ public class DeviceTrackerActivity extends AppCompatActivity {
         List<TrackerData> data;
         TrackerPagerAdapter(List<TrackerData> data) { this.data = data; }
 
+
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -201,7 +260,28 @@ public class DeviceTrackerActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             TrackerData item = data.get(position);
+            // Here it says the tracking name maybe i should put the error message here
+
             holder.tvTitle.setText("Tracking: " + item.name);
+
+            if (connectionLost)
+            {
+                holder.tvStatus.setText(hasReadings
+                        ? "Connection lost — readings outdated"
+                        : "Unable to connect — no readings available");
+                holder.tvStatus.setTextColor(Color.RED);
+            }
+            else if (item.unavailable)
+            {
+                holder.tvStatus.setText("Sensor reading unavailable");
+                holder.tvStatus.setTextColor(Color.RED);
+            }
+            else
+            {
+                holder.tvStatus.setText(hasReadings ? "Connected" : "Connecting...");
+                holder.tvStatus.setTextColor(Color.parseColor(item.colorHex));
+            }
+
             holder.tvSubtitle.setText(item.subtitle);
             holder.tvValue.setText(item.value);
 
@@ -210,7 +290,6 @@ public class DeviceTrackerActivity extends AppCompatActivity {
 
             // Set dynamic colors based on the tracker type
             int color = Color.parseColor(item.colorHex);
-            holder.tvStatus.setTextColor(color);
             holder.tvValue.setTextColor(color);
             holder.ivIcon.setColorFilter(color);
         }
