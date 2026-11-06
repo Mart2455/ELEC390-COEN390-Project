@@ -32,13 +32,17 @@ public class SensorMonitoringService extends Service
             if (!monitoring)
                 return;
 
-            ESP32Receiver.receiveData(() -> {
-                Log.d("SensorMonitoring",
-                        "Humidity: " + ESP32Receiver.getHumidity()
-                                + ", TVOC: " + ESP32Receiver.getTvoc()
-                                + ", eCO2: " + ESP32Receiver.getEco2()
-                                + ", MQ3: " + ESP32Receiver.getMq3Raw());
+            ESP32Receiver.receiveData(success -> {
 
+                if (success) {
+                    Log.d("SensorMonitoring",
+                            "Humidity: " + ESP32Receiver.getHumidity()
+                                    + ", TVOC: " + ESP32Receiver.getTvoc()
+                                    + ", eCO2: " + ESP32Receiver.getEco2()
+                                    + ", MQ3: " + ESP32Receiver.getMq3Raw());
+                } else {
+                    Log.e("SensorMonitoring", "Request failed");
+                }
                 handler.post(() -> {
                     if (monitoring)
                     {
@@ -115,6 +119,8 @@ public class SensorMonitoringService extends Service
     public void onDestroy()
     {
         // Cancel scheduled polling and release resources.
+        monitoring = false;
+        handler.removeCallbacksAndMessages(null);
         super.onDestroy();
     }
 

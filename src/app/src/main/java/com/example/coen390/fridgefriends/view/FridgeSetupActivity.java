@@ -134,7 +134,19 @@ public class FridgeSetupActivity extends AppCompatActivity {
             editor.remove(deviceName + "_track_fermentation");
             editor.apply();
 
+            // Keep monitoring if another sensor is still configured.
+            boolean anyDevice = prefs.getBoolean("Device 1_added", false)
+                                || prefs.getBoolean("Device 2_added", false)
+                                || prefs.getBoolean("Device 3_added", false);
 
+            // !!! Stop monitoring when the last sensor is removed. !!!
+            if (!anyDevice)
+            {
+                stopService(new Intent(
+                        FridgeSetupActivity.this,
+                        SensorMonitoringService.class
+                ));
+            }
 
             Intent intent = new Intent(FridgeSetupActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -196,7 +208,8 @@ public class FridgeSetupActivity extends AppCompatActivity {
         }
     }
 
-    private void handleBackPress() {
+    private void handleBackPress()
+    {
         Button btnFreshness = findViewById(R.id.btnFreshness);
         Button btnMoisture = findViewById(R.id.btnMoisture);
         Button btnFermentation = findViewById(R.id.btnFermentation);

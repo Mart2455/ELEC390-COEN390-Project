@@ -2,6 +2,7 @@ package com.example.coen390.fridgefriends.view;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -142,7 +143,15 @@ public class DeviceTrackerActivity extends AppCompatActivity {
         final boolean moistureEnabled = trackMoisture;
         final boolean freshnessEnabled = trackFreshness;
         final boolean fermentationEnabled = trackFermentation;
-        ESP32Receiver.receiveData(() -> {
+        ESP32Receiver.receiveData(success -> {
+
+            // Maybe refactor this
+            if (!success)
+            {
+                Log.e("SensorMonitoring", "Request failed");
+                return;
+            }
+
             runOnUiThread(()-> {
                 trackerList.clear(); // clear the list for new readings
                 if (moistureEnabled)
@@ -162,17 +171,17 @@ public class DeviceTrackerActivity extends AppCompatActivity {
                             "Freshness",
                             "VOC levels",
                             "#85B751",
-                            Double.toString(ESP32Receiver.getTvoc()) + " ppm",
+                            Double.toString(ESP32Receiver.getTvoc()) + " ppb",
                             R.drawable.veggie_icon));
                 }
-                if (freshnessEnabled)
+                if (fermentationEnabled)
                 {
                     // update the trackerlist
                     trackerList.add(new TrackerData(
                             "Fermentation",
                             "CO2 and ethanol levels",
                             "#9D84B7",
-                            Double.toString(ESP32Receiver.getEco2()) + " %",
+                            Double.toString(ESP32Receiver.getEco2()) + " ppm",
                             R.drawable.voc_icon));
                 }
                 adapter.notifyDataSetChanged();
