@@ -46,6 +46,7 @@ public class SensorMonitoringService extends Service
                 handler.post(() -> {
                     if (monitoring)
                     {
+                        MonitoringState.publish(success);
                         handler.postDelayed(this, 5000);
                     }
                 });

@@ -25,12 +25,34 @@ import android.text.style.ForegroundColorSpan;
 import android.graphics.Color;
 
 import com.example.coen390.fridgefriends.SensorMonitoringService;
-import com.example.coen390.fridgefriends.network.ESP32Receiver;
+import com.example.coen390.fridgefriends.MonitoringState;
 import com.example.coen390.fridgefriends.R;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 public class MainActivity extends AppCompatActivity {
+
+    private MonitoringState.Snapshot monitoringState;
+    private DeviceAdapter deviceAdapter;
+    private final MonitoringState.Listener monitoringListener = state -> {
+        monitoringState = state;
+        if (deviceAdapter != null) deviceAdapter.notifyDataSetChanged();
+    };
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        MonitoringState.observe(monitoringListener);
+    }
+
+    @Override
+    protected void onStop()
+    {
+
+        MonitoringState.removeObserver(monitoringListener);
+        super.onStop();
+    }
 
     private ImageButton btnPlus;
     private RelativeLayout overlayAddMenu;
@@ -161,6 +183,10 @@ public class MainActivity extends AppCompatActivity {
                 boolean trackMoist = prefs.getBoolean(dName + "_track_moisture", false);
                 boolean trackFerm = prefs.getBoolean(dName + "_track_fermentation", false);
                 
+                item.trackFreshness = trackFresh;
+                item.trackMoisture = trackMoist;
+                item.trackFermentation = trackFerm;
+
                 if (trackFresh) { item.trackingText = "Freshness"; item.trackingColor = "#85B751"; }
                 else if (trackMoist) { item.trackingText = "Moisture"; item.trackingColor = "#7EC8E3"; }
                 else if (trackFerm) { item.trackingText = "Fermentation"; item.trackingColor = "#9D84B7"; }
@@ -180,7 +206,8 @@ public class MainActivity extends AppCompatActivity {
             tvTempMain.setVisibility(View.VISIBLE);
 
             rvDevices.setLayoutManager(new GridLayoutManager(this, 2));
-            rvDevices.setAdapter(new DeviceAdapter(items));
+            deviceAdapter = new DeviceAdapter(items);
+            rvDevices.setAdapter(deviceAdapter);
         }
     }
 
@@ -189,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
         int iconResId;
         String trackingText;
         String trackingColor;
+        boolean trackFreshness, trackMoisture, trackFermentation;
     }
 
     class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder> {
@@ -215,6 +243,35 @@ public class MainActivity extends AppCompatActivity {
             spannable.setSpan(new ForegroundColorSpan(color), startIndex, fullText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             holder.tvTrackingMain.setText(spannable);
 
+            String status;
+            boolean warning = false;
+            if (monitoringState == null || !monitoringState.attempted)
+            {
+                status = "Connecting...";
+            }
+            else if (!monitoringState.connected)
+            {
+                warning = true;
+                status = monitoringState.hasReadings
+                        ? "Connection lost — readings outdated"
+                        : "Unable to connect — no readings available";
+            }
+            else if ((item.trackMoisture && Double.isNaN(monitoringState.humidity))
+                    || (item.trackFreshness && monitoringState.tvoc < 0)
+                    || (item.trackFermentation
+                        && (monitoringState.eco2 < 0 || monitoringState.mq3Raw < 0)))
+            {
+                warning = true;
+                status = "Sensor reading unavailable";
+            }
+            else
+            {
+                status = "Connected";
+            }
+            holder.tvConnectionStatusMain.setText(status);
+            holder.tvConnectionStatusMain.setTextColor(
+                    warning ? Color.RED : Color.parseColor("#777777"));
+
             holder.itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(MainActivity.this, DeviceTrackerActivity.class);
                 intent.putExtra("device_name", item.name);
@@ -233,12 +290,13 @@ public class MainActivity extends AppCompatActivity {
         public int getItemCount() { return items.size(); }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            TextView tvDeviceNameMain, tvTrackingMain;
+            TextView tvDeviceNameMain, tvTrackingMain, tvConnectionStatusMain;
             ImageView ivDeviceIconMain;
             ViewHolder(View itemView) {
                 super(itemView);
                 tvDeviceNameMain = itemView.findViewById(R.id.tvDeviceNameMain);
                 tvTrackingMain = itemView.findViewById(R.id.tvTrackingMain);
+                tvConnectionStatusMain = itemView.findViewById(R.id.tvConnectionStatusMain);
                 ivDeviceIconMain = itemView.findViewById(R.id.ivDeviceIconMain);
             }
         }
