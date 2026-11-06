@@ -40,10 +40,16 @@ public class MonitoringUiTest {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws Exception
+    {
+
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
         context.stopService(new Intent(context, SensorMonitoringService.class));
+
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+
+
         SharedPreferences prefs = context.getSharedPreferences("DevicePrefs", Context.MODE_PRIVATE);
         savedPreferences = prefs.getAll();
         // Prevent MainActivity from starting real HTTP polling during UI tests.
@@ -54,6 +60,8 @@ public class MonitoringUiTest {
             field.setAccessible(true);
             savedReadings.put(name, field.get(null));
         }
+
+
         Field latest = MonitoringState.class.getDeclaredField("latest");
         latest.setAccessible(true);
         savedState = (MonitoringState.Snapshot) latest.get(null);
@@ -102,16 +110,23 @@ public class MonitoringUiTest {
 
     private void success(double humidity, int tvoc) {
         onMain(() -> {
-            try {
+            try
+            {
                 String[] names = {"humidity", "tvoc", "eco2", "mq3Raw"};
                 Object[] values = {humidity, tvoc, 800, 1500};
-                for (int i = 0; i < names.length; i++) {
+
+                for (int i = 0; i < names.length; i++)
+                {
                     Field field = ESP32Receiver.class.getDeclaredField(names[i]);
                     field.setAccessible(true);
                     field.set(null, values[i]);
                 }
                 MonitoringState.publish(true);
-            } catch (ReflectiveOperationException e) { throw new AssertionError(e); }
+            }
+            catch (ReflectiveOperationException e)
+            {
+                throw new AssertionError(e);
+            }
         });
     }
 
@@ -122,29 +137,48 @@ public class MonitoringUiTest {
     }
 
     @Test
-    public void failurePreservesReadingsAndRecoveryReplacesThem() {
+    public void failurePreservesReadingsAndRecoveryReplacesThem()
+    {
         List<MonitoringState.Snapshot> results = new ArrayList<>();
+
         MonitoringState.Listener listener = results::add;
+
         observers.add(listener);
+
         onMain(() -> MonitoringState.observe(listener));
+
         assertFalse(results.get(0).attempted);
+
         onMain(() -> MonitoringState.publish(false));
+
         assertFalse(results.get(1).hasReadings);
+
         success(65.5, 120);
+
         onMain(() -> MonitoringState.publish(false));
+
         MonitoringState.Snapshot failure = results.get(3);
+
         assertFalse(failure.connected);
+
         assertTrue(failure.hasReadings);
+
         assertEquals(65.5, failure.humidity, 0.001);
+
         success(42.0, 80);
+
         assertTrue(results.get(4).connected);
+
         assertEquals(42.0, results.get(4).humidity, 0.001);
     }
 
     @Test
-    public void removedObserverStopsReceivingUpdatesAndNewObserverGetsLatest() {
+    public void removedObserverStopsReceivingUpdatesAndNewObserverGetsLatest()
+    {
         List<MonitoringState.Snapshot> first = new ArrayList<>();
+
         MonitoringState.Listener listener = first::add;
+
         onMain(() -> { MonitoringState.observe(listener); MonitoringState.removeObserver(listener); });
         success(42.0, 80);
         assertEquals(1, first.size());
@@ -186,13 +220,23 @@ public class MonitoringUiTest {
     }
 
     @Test
-    public void dashboardShowsFailureAndRecoveryWithoutChangingTrackingPreference() {
-        try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
+    public void dashboardShowsFailureAndRecoveryWithoutChangingTrackingPreference()
+    {
+        try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class))
+        {
             SharedPreferences prefs = context.getSharedPreferences("DevicePrefs", Context.MODE_PRIVATE);
+
+
             assertTrue(prefs.edit().putBoolean("Device 1_added", true)
                     .putBoolean("Device 1_track_moisture", true).commit());
+
+
             scenario.moveToState(androidx.lifecycle.Lifecycle.State.CREATED);
+
+
             scenario.moveToState(androidx.lifecycle.Lifecycle.State.RESUMED);
+
+
             success(65.5, 120);
             onMain(() -> MonitoringState.publish(false));
             onView(withId(R.id.tvTrackingMain)).check(matches(withText("Tracking: Moisture")));
