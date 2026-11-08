@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,12 +24,35 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.graphics.Color;
 
-import com.example.coen390.fridgefriends.network.ESP32Receiver;
+import com.example.coen390.fridgefriends.SensorMonitoringService;
+import com.example.coen390.fridgefriends.MonitoringState;
 import com.example.coen390.fridgefriends.R;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 public class MainActivity extends AppCompatActivity {
+
+    private MonitoringState.Snapshot monitoringState;
+    private DeviceAdapter deviceAdapter;
+    private final MonitoringState.Listener monitoringListener = state -> {
+        monitoringState = state;
+        if (deviceAdapter != null) deviceAdapter.notifyDataSetChanged();
+    };
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        MonitoringState.observe(monitoringListener);
+    }
+
+    @Override
+    protected void onStop()
+    {
+
+        MonitoringState.removeObserver(monitoringListener);
+        super.onStop();
+    }
 
     private ImageButton btnPlus;
     private RelativeLayout overlayAddMenu;
@@ -39,6 +63,37 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // Make the monitoring reset everytime the app is turned on
+
+        SharedPreferences prefs = getSharedPreferences("DevicePrefs" , MODE_PRIVATE);
+
+        String[] devices = {"Device 1", "Device 2" , "Device 3"}; // each device is created
+
+        // loop through the devices, activate the service
+        for (int i = 0; i < devices.length; i++)
+        {
+            // return false if this device not connected, meaning sensoring device not setup
+            boolean added = prefs.getBoolean(devices[i] + "_added" , false);
+
+            // next is to verify if the sensor is actually tracking something
+
+            boolean trackingEnabled = prefs.getBoolean(devices[i] + "_track_moisture", false)
+                                                        || prefs.getBoolean(devices[i] + "_track_freshness", false)
+                                                        || prefs.getBoolean(devices[i] + "_track_fermentation", false);
+
+            // If both are true the sensor is atleast tracking a single thing
+
+            if (added && trackingEnabled)
+            {
+                // Basically abstract class of an operation to be performed
+                // !!! CAN BE USED BY SERVICE CLASS !!!
+                Intent serviceIntent = new Intent(this, SensorMonitoringService.class);
+                ContextCompat.startForegroundService(this, serviceIntent);
+                break;
+            }
+        }
 
         // Hide the default Action Bar to match your clean mockup
         if (getSupportActionBar() != null) {
@@ -68,8 +123,6 @@ public class MainActivity extends AppCompatActivity {
             android.content.Intent intent = new android.content.Intent(MainActivity.this, AddDeviceActivity.class);
             startActivity(intent);
         });
-
-        ESP32Receiver.receiveData();
 
         // Close the overlay if the user clicks the 'X'
         btnOverlayClose.setOnClickListener(v -> overlayAddMenu.setVisibility(View.GONE));
@@ -130,6 +183,10 @@ public class MainActivity extends AppCompatActivity {
                 boolean trackMoist = prefs.getBoolean(dName + "_track_moisture", false);
                 boolean trackFerm = prefs.getBoolean(dName + "_track_fermentation", false);
                 
+                item.trackFreshness = trackFresh;
+                item.trackMoisture = trackMoist;
+                item.trackFermentation = trackFerm;
+
                 if (trackFresh) { item.trackingText = "Freshness"; item.trackingColor = "#85B751"; }
                 else if (trackMoist) { item.trackingText = "Moisture"; item.trackingColor = "#7EC8E3"; }
                 else if (trackFerm) { item.trackingText = "Fermentation"; item.trackingColor = "#9D84B7"; }
@@ -149,7 +206,8 @@ public class MainActivity extends AppCompatActivity {
             tvTempMain.setVisibility(View.VISIBLE);
 
             rvDevices.setLayoutManager(new GridLayoutManager(this, 2));
-            rvDevices.setAdapter(new DeviceAdapter(items));
+            deviceAdapter = new DeviceAdapter(items);
+            rvDevices.setAdapter(deviceAdapter);
         }
     }
 
@@ -158,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
         int iconResId;
         String trackingText;
         String trackingColor;
+        boolean trackFreshness, trackMoisture, trackFermentation;
     }
 
     class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder> {
@@ -184,6 +243,35 @@ public class MainActivity extends AppCompatActivity {
             spannable.setSpan(new ForegroundColorSpan(color), startIndex, fullText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             holder.tvTrackingMain.setText(spannable);
 
+            String status;
+            boolean warning = false;
+            if (monitoringState == null || !monitoringState.attempted)
+            {
+                status = "Connecting...";
+            }
+            else if (!monitoringState.connected)
+            {
+                warning = true;
+                status = monitoringState.hasReadings
+                        ? "Connection lost — readings outdated"
+                        : "Unable to connect — no readings available";
+            }
+            else if ((item.trackMoisture && Double.isNaN(monitoringState.humidity))
+                    || (item.trackFreshness && monitoringState.tvoc < 0)
+                    || (item.trackFermentation
+                        && (monitoringState.eco2 < 0 || monitoringState.mq3Raw < 0)))
+            {
+                warning = true;
+                status = "Sensor reading unavailable";
+            }
+            else
+            {
+                status = "Connected";
+            }
+            holder.tvConnectionStatusMain.setText(status);
+            holder.tvConnectionStatusMain.setTextColor(
+                    warning ? Color.RED : Color.parseColor("#777777"));
+
             holder.itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(MainActivity.this, DeviceTrackerActivity.class);
                 intent.putExtra("device_name", item.name);
@@ -202,12 +290,13 @@ public class MainActivity extends AppCompatActivity {
         public int getItemCount() { return items.size(); }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            TextView tvDeviceNameMain, tvTrackingMain;
+            TextView tvDeviceNameMain, tvTrackingMain, tvConnectionStatusMain;
             ImageView ivDeviceIconMain;
             ViewHolder(View itemView) {
                 super(itemView);
                 tvDeviceNameMain = itemView.findViewById(R.id.tvDeviceNameMain);
                 tvTrackingMain = itemView.findViewById(R.id.tvTrackingMain);
+                tvConnectionStatusMain = itemView.findViewById(R.id.tvConnectionStatusMain);
                 ivDeviceIconMain = itemView.findViewById(R.id.ivDeviceIconMain);
             }
         }

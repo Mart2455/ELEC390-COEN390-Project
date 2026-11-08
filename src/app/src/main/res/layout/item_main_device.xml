@@ -38,4 +38,14 @@
         android:textSize="12sp"
         android:textColor="#333333"
         android:fontFamily="@font/quicksand" />
+    <TextView
+        android:id="@+id/tvConnectionStatusMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:textColor="#777777"
+        android:accessibilityLiveRegion="polite"
+        android:fontFamily="@font/quicksand" />
 </LinearLayout>
