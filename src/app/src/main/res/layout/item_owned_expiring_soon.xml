@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="88dp"
+    android:layout_height="110dp"
+    android:layout_marginEnd="12dp"
+    android:background="@drawable/bg_item_card"
+    android:orientation="vertical"
+    android:padding="6dp"
+    android:elevation="2.5dp"
+    android:outlineAmbientShadowColor="#20000000"
+    android:outlineSpotShadowColor="#15000000">
+
+    <ImageView
+        android:id="@+id/imgExpiringPhoto"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="centerCrop"
+        android:background="@drawable/bg_thumb_rounded"
+        android:clipToOutline="true"
+        android:src="@drawable/cart_icon"
+        android:contentDescription="Expiring Item Photo" />
+
+    <TextView
+        android:id="@+id/tvExpiringName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Chicken Breast"
+        android:textColor="#2A2A2A"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/quicksand"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/tvExpiringBadge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Today"
+        android:textColor="#C0392B"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/quicksand"
+        android:gravity="center" />
+</LinearLayout>

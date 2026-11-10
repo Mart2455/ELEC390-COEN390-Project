@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Camera Body with Lens Cutout -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M9,8 L8,10 H4 C2.9,10 2,10.9 2,12 V20 C2,21.1 2.9,22 4,22 H20 C21.1,22 22,21.1 22,20 V12 C22,10.9 21.1,10 20,10 H16 L15,8 H9 Z M12,20 C9.79,20 8,18.21 8,16 C8,13.79 9.79,12 12,12 C14.21,12 16,13.79 16,16 C16,18.21 14.21,20 12,20 Z M12,14 C10.9,14 10,14.9 10,16 C10,17.1 10.9,18 12,18 C13.1,18 14,17.1 14,16 C14,14.9 13.1,14 12,14 Z"/>
+    <!-- Top Flash Rays -->
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:pathData="M12,2 V5 M7,3.5 L8.8,6 M17,3.5 L15.2,6 M3.5,6 L6,7.5 M20.5,6 L18,7.5"/>
+</vector>

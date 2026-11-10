@@ -16,10 +16,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.FrameLayout;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 import com.example.coen390.fridgefriends.R;
@@ -134,6 +136,16 @@ public class DeviceTrackerActivity extends AppCompatActivity {
                 Intent intent = new Intent(DeviceTrackerActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
+            });
+        }
+        
+        ImageButton navCartTracker = findViewById(R.id.navCartTracker);
+        if (navCartTracker != null) {
+            navCartTracker.setOnClickListener(v -> {
+                Intent intent = new Intent(DeviceTrackerActivity.this, GroceryListActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
             });
         }
 
@@ -143,8 +155,11 @@ public class DeviceTrackerActivity extends AppCompatActivity {
         boolean trackMoisture = false;
         boolean trackFermentation = false;
 
+        SharedPreferences devicePrefs = getSharedPreferences("DevicePrefs", MODE_PRIVATE);
+        String storedIconName = devicePrefs.getString(deviceName + "_icon_name", "");
+        currentIconResId = FridgeSetupActivity.resolveIconResId(this, storedIconName, deviceName);
+
         if (getIntent() != null) {
-            currentIconResId = getIntent().getIntExtra("selected_icon", R.drawable.baseline_add_24);
             trackFreshness = getIntent().getBooleanExtra("track_freshness", false);
             trackMoisture = getIntent().getBooleanExtra("track_moisture", false);
             trackFermentation = getIntent().getBooleanExtra("track_fermentation", false);
@@ -190,14 +205,16 @@ public class DeviceTrackerActivity extends AppCompatActivity {
                 updateDots(position);
             }
         });
-    }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(DeviceTrackerActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
-        finish();
+        getOnBackPressedDispatcher().addCallback(this, new androidx.activity.OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent intent = new Intent(DeviceTrackerActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     // --- DOT INDICATOR LOGIC ---
@@ -220,11 +237,11 @@ public class DeviceTrackerActivity extends AppCompatActivity {
 
     private void updateDots(int activePosition) {
         for (int i = 0; i < dots.length; i++) {
-            // Dark green for active dot, light green for inactive
+            // Dark green for active dot, soft earthy white/beige for inactive dot
             if (i == activePosition) {
-                dots[i].setColorFilter(Color.parseColor("#4A5D4E"));
+                dots[i].setColorFilter(ContextCompat.getColor(this, R.color.dark_green));
             } else {
-                dots[i].setColorFilter(Color.parseColor("#C8D5B9"));
+                dots[i].setColorFilter(Color.parseColor("#D8D4CB"));
             }
         }
     }

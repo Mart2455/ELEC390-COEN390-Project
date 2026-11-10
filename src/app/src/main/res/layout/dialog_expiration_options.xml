@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@drawable/bg_dialog_rounded">
+
+    <TextView
+        android:id="@+id/tvExpirationDialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Expiration Date"
+        android:textColor="#333333"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/quicksand"
+        android:layout_marginBottom="20dp" />
+
+    <!-- Scan Expiration Date Option Button -->
+    <LinearLayout
+        android:id="@+id/btnOptionScanDate"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:background="@drawable/bg_pill_button"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginBottom="12dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_menu_camera"
+            app:tint="@color/dark_green"
+            android:layout_marginEnd="12dp"
+            android:contentDescription="Scan Expiration Date" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scan Expiration Date"
+            android:textColor="@color/dark_green"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/quicksand" />
+    </LinearLayout>
+
+    <!-- Calendar Picker Option Button -->
+    <LinearLayout
+        android:id="@+id/btnOptionCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:background="@drawable/bg_pill_button"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_menu_today"
+            app:tint="@color/dark_green"
+            android:layout_marginEnd="12dp"
+            android:contentDescription="Calendar Picker" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calendar Picker"
+            android:textColor="@color/dark_green"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/quicksand" />
+    </LinearLayout>
+
+    <!-- Cancel Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <TextView
+            android:id="@+id/btnExpirationCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textColor="@color/medium_grey"
+            android:textSize="16sp"
+            android:fontFamily="@font/quicksand"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F5F0"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Top Bar: Back & Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageButton
+                android:id="@+id/btnNewItemBack"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/back_btn"
+                app:tint="#2A2A2A"
+                android:scaleType="fitCenter"
+                android:contentDescription="Back" />
+
+            <TextView
+                android:id="@+id/tvNewItemTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:text="New Item"
+                android:textColor="#2A2A2A"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/quicksand" />
+        </LinearLayout>
+
+        <!-- Photos Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="14dp">
+
+            <!-- Primary Photo Card -->
+            <RelativeLayout
+                android:id="@+id/cardProductPhoto"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_marginEnd="14dp"
+                android:background="@drawable/bg_dialog_rounded"
+                android:backgroundTint="@color/white"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/imgNewItemPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/bg_dialog_rounded"
+                    android:clipToOutline="true"
+                    android:src="@drawable/cart_icon"
+                    android:contentDescription="Product Image" />
+
+                <!-- Small delete cross at top right -->
+                <ImageButton
+                    android:id="@+id/btnDeletePhoto"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="6dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    app:tint="@color/white"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Delete photo" />
+            </RelativeLayout>
+
+            <!-- Add Photo Card [ + ] -->
+            <LinearLayout
+                android:id="@+id/btnAddPhoto"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:background="@drawable/bg_dialog_rounded"
+                android:backgroundTint="#EBE8E0"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:textColor="@color/dark_green"
+                    android:textSize="32sp"
+                    android:fontFamily="@font/quicksand" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnScanItem"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="14dp"
+            android:background="@drawable/bg_pill_button"
+            android:backgroundTint="@color/dark_green"
+            android:text="Scan item"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/quicksand"
+            android:paddingHorizontal="22dp"
+            android:drawableStart="@drawable/ic_camera_flash_white"
+            android:drawablePadding="6dp" />
+
+        <!-- Form Info Card Container -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_dialog_rounded"
+            android:backgroundTint="@color/white"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <!-- Item Name -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="5dp">
+
+                <EditText
+                    android:id="@+id/etNewItemName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="Item Name"
+                    android:textColor="#2A2A2A"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/quicksand" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EEEEEE"
+                android:layout_marginVertical="5dp" />
+
+            <!-- Expiration Date -->
+            <RelativeLayout
+                android:id="@+id/rlExpirationDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="5dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Expiration"
+                    android:textColor="#2A2A2A"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/quicksand" />
+
+                <TextView
+                    android:id="@+id/tvNewItemExpiry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/ivExpiryScan"
+                    android:layout_marginEnd="10dp"
+                    android:text="Apr 30, 2027"
+                    android:textColor="#888888"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/quicksand" />
+
+                <ImageView
+                    android:id="@+id/ivExpiryScan"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@android:drawable/ic_menu_today"
+                    app:tint="@color/medium_grey" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EEEEEE"
+                android:layout_marginVertical="5dp" />
+
+            <!-- Type / Category Spinner -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="5dp">
+
+                <TextView
+                    android:id="@+id/tvTypeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Type"
+                    android:textColor="#2A2A2A"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/quicksand" />
+
+                <Spinner
+                    android:id="@+id/spNewItemType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/tvTypeLabel"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:gravity="end"
+                    android:textAlignment="viewEnd"
+                    android:spinnerMode="dropdown" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EEEEEE"
+                android:layout_marginVertical="5dp" />
+
+            <!-- Quantity Selector -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Quantity"
+                    android:textColor="#2A2A2A"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/quicksand" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/btnQtyMinus"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:text="—"
+                        android:textColor="#666666"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:background="?attr/selectableItemBackgroundBorderless" />
+
+                    <TextView
+                        android:id="@+id/tvQtyValue"
+                        android:layout_width="44dp"
+                        android:layout_height="32dp"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="#2A2A2A"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:background="@drawable/bg_pill_dark"
+                        android:backgroundTint="#EBE8E0"
+                        android:layout_marginHorizontal="6dp" />
+
+                    <TextView
+                        android:id="@+id/btnQtyPlus"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textColor="#666666"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:background="?attr/selectableItemBackgroundBorderless" />
+
+                    <TextView
+                        android:id="@+id/tvUnitText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="pcs"
+                        android:textColor="#888888"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/quicksand" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EEEEEE"
+                android:layout_marginVertical="5dp" />
+
+            <!-- Memo (Optional) -->
+            <EditText
+                android:id="@+id/etNewItemMemo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="5dp"
+                android:background="@null"
+                android:hint="Memo (Optional)"
+                android:textColor="#2A2A2A"
+                android:textColorHint="#BBBBBB"
+                android:textSize="16sp"
+                android:fontFamily="@font/quicksand" />
+        </LinearLayout>
+
+        <!-- Save to Fridge Button -->
+        <Button
+            android:id="@+id/btnSaveToFridge"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_pill_button"
+            android:backgroundTint="@color/dark_green"
+            android:text="Save to Fridge"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:fontFamily="@font/quicksand"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Add to Grocery List Button -->
+        <Button
+            android:id="@+id/btnAddtoGroceryList"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_pill_button"
+            android:backgroundTint="@color/white"
+            android:text="Add to Grocery List"
+            android:textColor="#2A2A2A"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:fontFamily="@font/quicksand" />
+
+        <!-- Delete Item Button -->
+        <Button
+            android:id="@+id/btnDeleteNewItem"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_pill_button"
+            android:backgroundTint="#FFF0F0"
+            android:text="Delete Item"
+            android:textColor="#C0392B"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:fontFamily="@font/quicksand"
+            android:visibility="gone" />
+    </LinearLayout>
+</ScrollView>

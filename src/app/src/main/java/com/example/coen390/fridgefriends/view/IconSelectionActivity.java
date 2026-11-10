@@ -36,11 +36,11 @@ public class IconSelectionActivity extends AppCompatActivity {
         LinearLayout optionGreens = findViewById(R.id.optionGreens);
         LinearLayout optionFermented = findViewById(R.id.optionFermented);
 
-        optionFruits.setOnClickListener(v -> returnIconResult(R.drawable.happy_apples));
-        optionCheeses.setOnClickListener(v -> returnIconResult(R.drawable.cheese_icon));
-        optionDeli.setOnClickListener(v -> returnIconResult(R.drawable.meat_icon));
-        optionGreens.setOnClickListener(v -> returnIconResult(R.drawable.veggie_icon));
-        optionFermented.setOnClickListener(v -> returnIconResult(R.drawable.fermentation_icon));
+        optionFruits.setOnClickListener(v -> returnIconResult(R.drawable.happy_apples, "happy_apples"));
+        optionCheeses.setOnClickListener(v -> returnIconResult(R.drawable.cheese_icon, "cheese_icon"));
+        optionDeli.setOnClickListener(v -> returnIconResult(R.drawable.meat_icon, "meat_icon"));
+        optionGreens.setOnClickListener(v -> returnIconResult(R.drawable.veggie_icon, "veggie_icon"));
+        optionFermented.setOnClickListener(v -> returnIconResult(R.drawable.fermentation_icon, "fermentation_icon"));
 
         ImageButton navFridgeIcon = findViewById(R.id.navFridgeIcon);
         if (navFridgeIcon != null) {
@@ -48,14 +48,24 @@ public class IconSelectionActivity extends AppCompatActivity {
                 android.content.Intent intent = new android.content.Intent(IconSelectionActivity.this, MainActivity.class);
                 intent.setFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP | android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
+            });
+        }
+        
+        ImageButton navCartIcon = findViewById(R.id.navCartIcon);
+        if (navCartIcon != null) {
+            navCartIcon.setOnClickListener(v -> {
+                android.content.Intent intent = new android.content.Intent(IconSelectionActivity.this, GroceryListActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
             });
         }
     }
 
-    private void returnIconResult(int iconResId)
-    {
+    private void returnIconResult(int iconResId, String iconName) {
         android.content.Intent resultIntent = new android.content.Intent();
         resultIntent.putExtra("selected_icon", iconResId);
+        resultIntent.putExtra("selected_icon_name", iconName);
         setResult(RESULT_OK, resultIntent);
         finish();
     }

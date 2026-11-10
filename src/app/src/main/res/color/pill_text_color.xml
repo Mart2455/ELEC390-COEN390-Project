@@ -4,6 +4,6 @@
     <item android:color="@color/white" android:state_selected="true" />
     <item android:color="@color/white" android:state_pressed="true" />
 
-    <!-- Dark green text by default -->
-    <item android:color="@color/dark_green" />
+    <!-- Dark earthy text when unselected -->
+    <item android:color="#2A2A2A" />
 </selector>
