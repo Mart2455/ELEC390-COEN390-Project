@@ -25,10 +25,22 @@ public class FridgeSetupActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> iconSelectionLauncher;
 
     private int initialIconResId;
+    private String selectedIconName = "";
     private boolean initialFreshness;
     private boolean initialMoisture;
     private boolean initialFermentation;
     private boolean isAdded;
+
+    public static int resolveIconResId(android.content.Context context, String iconName, String deviceName) {
+        if (iconName != null && !iconName.trim().isEmpty()) {
+            int id = context.getResources().getIdentifier(iconName, "drawable", context.getPackageName());
+            if (id != 0) return id;
+        }
+        if ("Device 1".equalsIgnoreCase(deviceName)) return R.drawable.happy_apples;
+        if ("Device 2".equalsIgnoreCase(deviceName)) return R.drawable.cheese_icon;
+        if ("Device 3".equalsIgnoreCase(deviceName)) return R.drawable.fermentation_icon;
+        return R.drawable.fridge_icon;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,24 +67,23 @@ public class FridgeSetupActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("DevicePrefs", MODE_PRIVATE);
         isAdded = prefs.getBoolean(deviceName + "_added", false);
+        String storedIconName = prefs.getString(deviceName + "_icon_name", "");
+        selectedIconResId = resolveIconResId(this, storedIconName, deviceName);
+
         if (isAdded) {
-            initialIconResId = prefs.getInt(deviceName + "_icon", R.drawable.baseline_add_24);
             initialFreshness = prefs.getBoolean(deviceName + "_track_freshness", false);
             initialMoisture = prefs.getBoolean(deviceName + "_track_moisture", false);
             initialFermentation = prefs.getBoolean(deviceName + "_track_fermentation", false);
             
-            selectedIconResId = initialIconResId;
             btnFreshness.setSelected(initialFreshness);
             btnMoisture.setSelected(initialMoisture);
             btnFermentation.setSelected(initialFermentation);
         } else {
             // Default state: Freshness selected by default
-            initialIconResId = R.drawable.baseline_add_24;
             initialFreshness = true;
             initialMoisture = false;
             initialFermentation = false;
             
-            selectedIconResId = initialIconResId;
             btnFreshness.setSelected(true);
             btnMoisture.setSelected(false);
             btnFermentation.setSelected(false);
@@ -80,15 +91,6 @@ public class FridgeSetupActivity extends AppCompatActivity {
         
         if (ivSetupIcon != null) {
             ivSetupIcon.setImageResource(selectedIconResId);
-        }
-
-        // Check if ANY device is added to show Temperature
-        boolean anyDeviceAdded = prefs.getBoolean("Device 1_added", false) || 
-                                 prefs.getBoolean("Device 2_added", false) || 
-                                 prefs.getBoolean("Device 3_added", false);
-        TextView tvTempSetup = findViewById(R.id.tvTempSetup);
-        if (tvTempSetup != null) {
-            tvTempSetup.setVisibility(anyDeviceAdded ? View.VISIBLE : View.GONE);
         }
 
         // Toggle selected state on click
@@ -101,6 +103,7 @@ public class FridgeSetupActivity extends AppCompatActivity {
             result -> {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     selectedIconResId = result.getData().getIntExtra("selected_icon", R.drawable.baseline_add_24);
+                    selectedIconName = result.getData().getStringExtra("selected_icon_name");
                     if (ivSetupIcon != null) {
                         ivSetupIcon.setImageResource(selectedIconResId);
                     }
@@ -169,6 +172,9 @@ public class FridgeSetupActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean(deviceName + "_added", true);
             editor.putInt(deviceName + "_icon", selectedIconResId);
+            if (selectedIconName != null && !selectedIconName.isEmpty()) {
+                editor.putString(deviceName + "_icon_name", selectedIconName);
+            }
             editor.putBoolean(deviceName + "_track_freshness", trackFreshness);
             editor.putBoolean(deviceName + "_track_moisture", trackMoisture);
             editor.putBoolean(deviceName + "_track_fermentation", trackFermentation);
@@ -195,17 +201,6 @@ public class FridgeSetupActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-
-
-
-        android.widget.ImageButton navFridgeSetup = findViewById(R.id.navFridgeSetup);
-        if (navFridgeSetup != null) {
-            navFridgeSetup.setOnClickListener(v -> {
-                Intent intent = new Intent(FridgeSetupActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-            });
-        }
     }
 
     private void handleBackPress()

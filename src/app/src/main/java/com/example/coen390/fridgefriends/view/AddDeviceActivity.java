@@ -48,6 +48,16 @@ public class AddDeviceActivity extends AppCompatActivity {
                 Intent intent = new Intent(AddDeviceActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
+            });
+        }
+        
+        android.widget.ImageButton navCartAdd = findViewById(R.id.navCartAdd);
+        if (navCartAdd != null) {
+            navCartAdd.setOnClickListener(v -> {
+                Intent intent = new Intent(AddDeviceActivity.this, GroceryListActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
             });
         }
 

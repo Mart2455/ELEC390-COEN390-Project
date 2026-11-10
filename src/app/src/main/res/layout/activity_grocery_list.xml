@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainGroceryRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:background="@color/white">
+
+    <!-- Top Green Banner -->
+    <View
+        android:id="@+id/topBannerGrocery"
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/pastel_green" />
+
+    <TextView
+        android:id="@+id/tvTempGrocery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/quicksand"
+        android:text="3°C"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <!-- Bottom Navigation Bar -->
+    <LinearLayout
+        android:id="@+id/bottomNavBar"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/pastel_green"
+        android:orientation="horizontal"
+        android:paddingBottom="20dp">
+
+        <ImageButton
+            android:id="@+id/navCart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="18dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/cart_icon"
+            app:tint="@color/dark_green" />
+
+        <ImageButton
+            android:id="@+id/navFridge"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="18dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/fridge_icon"
+            app:tint="@color/white" />
+
+        <ImageButton
+            android:id="@+id/navSettings"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="18dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/baseline_settings_24"
+            app:tint="@color/white" />
+    </LinearLayout>
+
+    <!-- Green '+' Circular Button for Add Fridge Item -->
+    <ImageButton
+        android:id="@+id/btnAddOwned"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_above="@id/bottomNavBar"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/bg_circle_button"
+        android:src="@drawable/baseline_add_24"
+        app:tint="@color/white"
+        android:scaleType="fitCenter"
+        android:padding="10dp"
+        android:elevation="6dp"
+        android:contentDescription="Add Fridge Item"
+        android:visibility="gone" />
+
+
+
+    <!-- Content area: Folder tabs + White rectangle with border -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topBannerGrocery"
+        android:layout_above="@id/bottomNavBar"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Inverted Tabs: Owned (Left) & To-Buy (Right) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tabOwned"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tab_active"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="12dp"
+                android:text="Owned"
+                android:textColor="#2A2A2A"
+                android:textStyle="bold"
+                android:fontFamily="@font/quicksand" />
+
+            <TextView
+                android:id="@+id/tabToBuy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tab_inactive"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="12dp"
+                android:text="To-Buy"
+                android:textColor="#999999"
+                android:textStyle="bold"
+                android:fontFamily="@font/quicksand" />
+        </LinearLayout>
+
+        <!-- Main Rectangle Container (Matches selected Owned tab) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_grocery_content"
+            android:backgroundTint="#F2EFE9"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="4dp"
+            android:paddingBottom="16dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:id="@+id/tvGroceryTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/shrikhand"
+                    android:text="In fridge"
+                    android:textColor="#333333"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <!-- View Mode Toggle Icon (List vs Visual) -->
+                <ImageButton
+                    android:id="@+id/btnToggleViewMode"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@android:drawable/ic_menu_sort_by_size"
+                    app:tint="@color/dark_green"
+                    android:contentDescription="Toggle View Mode" />
+
+                <LinearLayout
+                    android:id="@+id/llSelectionControls"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:visibility="gone">
+
+                    <CheckBox
+                        android:id="@+id/cbSelectAll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/dark_green"
+                        android:scaleX="0.8"
+                        android:scaleY="0.8" />
+
+                    <TextView
+                        android:id="@+id/tvSelectAllLabel"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Select All"
+                        android:fontFamily="@font/quicksand"
+                        android:textColor="@color/dark_green"
+                        android:textStyle="bold"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                    <ImageButton
+                        android:id="@+id/btnMoveSelected"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/cart_icon"
+                        android:scaleType="fitCenter"
+                        android:padding="4dp"
+                        android:background="?attr/selectableItemBackground"
+                        app:tint="@color/dark_green"
+                        android:layout_marginEnd="12dp"
+                        android:contentDescription="Move to Grocery List"
+                        android:visibility="gone" />
+
+                    <ImageButton
+                        android:id="@+id/btnDeleteSelected"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@android:drawable/ic_menu_delete"
+                        android:scaleType="fitCenter"
+                        android:padding="4dp"
+                        android:background="?attr/selectableItemBackground"
+                        app:tint="@color/medium_grey"
+                        android:layout_marginEnd="12dp"
+                        android:contentDescription="Delete Selected" />
+
+                    <ImageButton
+                        android:id="@+id/btnCancelSelection"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@android:drawable/ic_menu_close_clear_cancel"
+                        android:scaleType="fitCenter"
+                        android:padding="4dp"
+                        android:background="?attr/selectableItemBackground"
+                        app:tint="@color/medium_grey"
+                        android:contentDescription="Cancel Selection" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <!-- Visual Owned Layout (Photo 2) -->
+            <ScrollView
+                android:id="@+id/layoutOwnedVisualView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:paddingEnd="12dp"
+                android:scrollbarSize="2dp"
+                android:scrollbarStyle="outsideOverlay"
+                android:clipToPadding="false"
+                android:paddingBottom="80dp"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Search Bar (White) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:background="@drawable/bg_dialog_rounded"
+                        android:backgroundTint="@color/white"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="14dp"
+                        android:layout_marginBottom="16dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@android:drawable/ic_menu_search"
+                            app:tint="#888888"
+                            android:contentDescription="Search Icon" />
+
+                        <EditText
+                            android:id="@+id/etOwnedSearch"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="6dp"
+                            android:background="@null"
+                            android:hint="Search"
+                            android:textColor="#2A2A2A"
+                            android:textColorHint="#888888"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/quicksand" />
+
+                        <ImageButton
+                            android:id="@+id/btnFilterType"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:src="@drawable/ic_filter_sliders"
+                            app:tint="#888888"
+                            android:contentDescription="Filter by produce type" />
+                    </LinearLayout>
+
+                    <!-- Section: Expiring soon -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Expiring soon"
+                        android:textColor="#2A2A2A"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/quicksand"
+                        android:layout_marginBottom="10dp" />
+
+                    <!-- Horizontal Carousel -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvExpiringSoon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:clipToPadding="false"
+                        android:layout_marginBottom="20dp" />
+
+                    <!-- Section: EXPIRES TODAY -->
+                    <TextView
+                        android:id="@+id/tvHeaderExpiresToday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EXPIRES TODAY"
+                        android:textColor="#777777"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/quicksand"
+                        android:layout_marginBottom="8dp" />
+
+                    <LinearLayout
+                        android:id="@+id/containerExpiresToday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- Section: EXPIRES TOMORROW -->
+                    <TextView
+                        android:id="@+id/tvHeaderExpiresTomorrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EXPIRES TOMORROW"
+                        android:textColor="#777777"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/quicksand"
+                        android:layout_marginBottom="8dp" />
+
+                    <LinearLayout
+                        android:id="@+id/containerExpiresTomorrow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- Section: EXPIRES IN 7 DAYS -->
+                    <TextView
+                        android:id="@+id/tvHeaderExpiresLater"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="WITHIN 7 DAYS"
+                        android:textColor="#777777"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/quicksand"
+                        android:layout_marginBottom="8dp" />
+
+                    <LinearLayout
+                        android:id="@+id/containerExpiresLater"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- Section: EXPIRES LATER -->
+                    <TextView
+                        android:id="@+id/tvHeaderExpiresMuchLater"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EXPIRES LATER"
+                        android:textColor="#777777"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/quicksand"
+                        android:layout_marginBottom="8dp" />
+
+                    <LinearLayout
+                        android:id="@+id/containerExpiresMuchLater"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- Section: NO EXPIRATION DATE -->
+                    <TextView
+                        android:id="@+id/tvHeaderNoExpiration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NO EXPIRATION DATE"
+                        android:textColor="#777777"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/quicksand"
+                        android:layout_marginBottom="8dp" />
+
+                    <LinearLayout
+                        android:id="@+id/containerNoExpiration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="24dp" />
+                </LinearLayout>
+            </ScrollView>
+
+            <!-- To-Buy / Classic List RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvGroceryList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingEnd="12dp"
+                android:scrollbarSize="2dp"
+                android:scrollbarStyle="outsideOverlay"
+                android:clipToPadding="false"
+                android:paddingBottom="16dp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

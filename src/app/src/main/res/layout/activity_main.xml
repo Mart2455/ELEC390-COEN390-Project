@@ -71,7 +71,7 @@
             android:padding="18dp"
             android:scaleType="fitCenter"
             android:src="@drawable/fridge_icon"
-            app:tint="@color/nav_icon_tint" />
+            app:tint="@color/dark_green" />
 
         <ImageButton
             android:id="@+id/navSettings"
@@ -82,10 +82,10 @@
             android:padding="18dp"
             android:scaleType="fitCenter"
             android:src="@drawable/baseline_settings_24"
-            app:tint="@color/nav_icon_tint" />
+            app:tint="@color/white" />
     </LinearLayout>
 
-
+    <!-- Empty State Container -->
     <LinearLayout
         android:id="@+id/layoutEmptyState"
         android:layout_width="wrap_content"
@@ -94,11 +94,11 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <!-- Placeholder for your Box Image -->
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/empty_fridge" />
+            android:src="@drawable/empty_fridge"
+            android:contentDescription="Empty Fridge Placeholder" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -110,49 +110,66 @@
             android:textSize="16sp" />
     </LinearLayout>
 
+    <!-- Content Container (Matches 'In fridge' theme) -->
     <LinearLayout
-        android:id="@+id/layoutAddedDevices"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/topBannerMain"
         android:layout_above="@id/bottomNavBar"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:padding="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp"
-            android:fontFamily="@font/shrikhand"
-            android:text="Your fridge"
-            android:textColor="#333333"
-            android:textSize="26sp"
-            android:textStyle="bold" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvDevices"
+        <LinearLayout
+            android:id="@+id/layoutAddedDevices"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
-            android:paddingHorizontal="16dp"
-            android:clipToPadding="false" />
+            android:background="@drawable/bg_card_rounded_all"
+            android:backgroundTint="#F2EFE9"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/shrikhand"
+                    android:text="Your fridge"
+                    android:textColor="#333333"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDevices"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="16dp" />
+        </LinearLayout>
     </LinearLayout>
 
-    <!-- Green '+' Button -->
+    <!-- Circular Green '+' Button -->
     <ImageButton
         android:id="@+id/btnPlus"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_above="@id/bottomNavBar"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/bg_circle_button"
         android:src="@drawable/baseline_add_24"
         app:tint="@color/white"
         android:scaleType="fitCenter"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:elevation="6dp"
+        android:contentDescription="Add Device" />
 
     <!-- OVERLAY: Add Device (Hidden by default) -->
     <RelativeLayout
@@ -167,18 +184,19 @@
         <Button
             android:id="@+id/btnAddDevice"
             android:layout_width="160dp"
-            android:layout_height="55dp"
+            android:layout_height="52dp"
             android:layout_above="@+id/btnOverlayClose"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="24dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/bg_pill_button"
             app:backgroundTint="@null"
             android:fontFamily="@font/quicksand"
             android:text="Add device"
             android:textAllCaps="false"
-            android:textColor="@color/medium_grey"
-            android:textSize="16sp" />
+            android:textColor="@color/dark_green"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <!-- '+' button on the overlay -->
         <ImageButton
@@ -186,14 +204,15 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="24dp"
             android:layout_marginBottom="114dp"
-        android:background="@drawable/bg_circle_button"
-        android:src="@drawable/baseline_add_24"
-        app:tint="@color/white"
-        android:scaleType="fitCenter"
-        android:padding="10dp" />
+            android:background="@drawable/bg_circle_button"
+            android:src="@drawable/baseline_add_24"
+            app:tint="@color/white"
+            android:scaleType="fitCenter"
+            android:padding="10dp"
+            android:contentDescription="Close Overlay" />
     </RelativeLayout>
 
 </RelativeLayout>

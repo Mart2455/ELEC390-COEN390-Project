@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.FridgeFriends" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.FridgeFriends" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:datePickerDialogTheme">@style/CustomDatePickerDialog</item>
+    </style>
+
+    <style name="CustomDatePickerDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/dark_green</item>
+        <item name="android:colorAccent">@color/dark_green</item>
+        <item name="colorPrimary">@color/pastel_green</item>
+        <item name="android:windowBackground">@drawable/bg_dialog_rounded</item>
+        <item name="android:textColorPrimary">#2A2A2A</item>
+        <item name="android:textColorSecondary">#6E6E6E</item>
+        <item name="android:fontFamily">@font/quicksand</item>
+        <item name="fontFamily">@font/quicksand</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/CustomDatePickerButton</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/CustomDatePickerButton</item>
+    </style>
+
+    <style name="CustomDatePickerButton" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/dark_green</item>
+        <item name="android:fontFamily">@font/quicksand</item>
+        <item name="fontFamily">@font/quicksand</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

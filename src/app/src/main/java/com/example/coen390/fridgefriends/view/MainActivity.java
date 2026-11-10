@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.content.SharedPreferences;
 import android.content.Intent;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.graphics.Color;
 
@@ -139,9 +142,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Change colors when they click other icons
         navCart.setOnClickListener(v -> {
-            navCart.setSelected(true);
-            navFridge.setSelected(false);
-            navSettings.setSelected(false);
+            startActivity(new Intent(MainActivity.this, GroceryListActivity.class));
+            overridePendingTransition(0, 0);
         });
 
         navFridge.setOnClickListener(v -> {
@@ -177,7 +179,8 @@ public class MainActivity extends AppCompatActivity {
             if (prefs.getBoolean(dName + "_added", false)) {
                 DeviceItem item = new DeviceItem();
                 item.name = dName;
-                item.iconResId = prefs.getInt(dName + "_icon", R.drawable.baseline_add_24);
+                String iconName = prefs.getString(dName + "_icon_name", "");
+                item.iconResId = FridgeSetupActivity.resolveIconResId(this, iconName, dName);
                 
                 boolean trackFresh = prefs.getBoolean(dName + "_track_freshness", false);
                 boolean trackMoist = prefs.getBoolean(dName + "_track_moisture", false);
@@ -187,10 +190,26 @@ public class MainActivity extends AppCompatActivity {
                 item.trackMoisture = trackMoist;
                 item.trackFermentation = trackFerm;
 
-                if (trackFresh) { item.trackingText = "Freshness"; item.trackingColor = "#85B751"; }
-                else if (trackMoist) { item.trackingText = "Moisture"; item.trackingColor = "#7EC8E3"; }
-                else if (trackFerm) { item.trackingText = "Fermentation"; item.trackingColor = "#9D84B7"; }
-                else { item.trackingText = "None"; item.trackingColor = "#777777"; }
+                StringBuilder sb = new StringBuilder();
+                if (trackFresh) sb.append("Freshness");
+                if (trackMoist) {
+                    if (sb.length() > 0) sb.append(", ");
+                    sb.append("Moisture");
+                }
+                if (trackFerm) {
+                    if (sb.length() > 0) sb.append(", ");
+                    sb.append("Fermentation");
+                }
+
+                if (sb.length() > 0) {
+                    item.trackingText = sb.toString();
+                    if (trackFresh) item.trackingColor = "#85B751";
+                    else if (trackMoist) item.trackingColor = "#7EC8E3";
+                    else item.trackingColor = "#9D84B7";
+                } else {
+                    item.trackingText = "None";
+                    item.trackingColor = "#777777";
+                }
                 
                 items.add(item);
             }
@@ -236,12 +255,47 @@ public class MainActivity extends AppCompatActivity {
             holder.tvDeviceNameMain.setText(item.name);
             holder.ivDeviceIconMain.setImageResource(item.iconResId);
 
-            String fullText = "Tracking: " + item.trackingText;
-            SpannableString spannable = new SpannableString(fullText);
-            int startIndex = "Tracking: ".length();
-            int color = Color.parseColor(item.trackingColor);
-            spannable.setSpan(new ForegroundColorSpan(color), startIndex, fullText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            holder.tvTrackingMain.setText(spannable);
+            SpannableStringBuilder ssb = new SpannableStringBuilder("Tracking: ");
+            boolean hasAny = false;
+
+            if (item.trackFreshness) {
+                int start = ssb.length();
+                ssb.append("Freshness");
+                ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#85B751")), start, ssb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                hasAny = true;
+            }
+
+            if (item.trackMoisture) {
+                if (hasAny) {
+                    int commaStart = ssb.length();
+                    ssb.append(", ");
+                    ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#888888")), commaStart, ssb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+                int start = ssb.length();
+                ssb.append("Moisture");
+                ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#7EC8E3")), start, ssb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                hasAny = true;
+            }
+
+            if (item.trackFermentation) {
+                if (hasAny) {
+                    int commaStart = ssb.length();
+                    ssb.append(", ");
+                    ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#888888")), commaStart, ssb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+                int start = ssb.length();
+                ssb.append("Fermentation");
+                ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#9D84B7")), start, ssb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                hasAny = true;
+            }
+
+            if (!hasAny) {
+                int start = ssb.length();
+                ssb.append("None");
+                ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#777777")), start, ssb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+
+            holder.tvTrackingMain.setText(ssb);
 
             String status;
             boolean warning = false;

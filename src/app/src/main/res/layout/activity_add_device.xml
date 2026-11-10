@@ -40,86 +40,87 @@
         android:textStyle="bold"
         android:visibility="gone" />
 
-    <!-- Available Devices Header -->
-    <TextView
-        android:id="@+id/tvAvailableDevicesTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="180dp"
-        android:text="@string/available_devices"
-        android:textSize="22sp"
-        android:fontFamily="@font/quicksand"
-        android:textStyle="bold"
-        android:textColor="#333333" />
-
-    <TextView
-        android:id="@+id/tvClickToAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvAvailableDevicesTitle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:text="@string/click_to_add"
-        android:fontFamily="@font/quicksand"
-        android:textSize="17sp"
-        android:textColor="#777777" />
-
-    <!-- Device List Container -->
+    <!-- Content Container (Matches 'In fridge' theme) -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvClickToAdd"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:gravity="center_horizontal"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topBannerAdd"
+        android:layout_above="@id/bottomNavBarAdd"
         android:orientation="vertical"
-        android:paddingHorizontal="32dp"
-        android:padding="20dp">
+        android:padding="16dp"
+        android:gravity="center">
 
-        <Button
-            android:id="@+id/btnDevice1"
-            android:layout_width="220dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_pill_selectable"
-            android:text="@string/device_1"
-            android:fontFamily="@font/quicksand"
-            android:textStyle="bold"
-            android:textColor="@color/pill_text_color"
-            android:textSize="16sp"
-            android:elevation="0dp"
-            android:stateListAnimator="@null"
-            app:backgroundTint="@null" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_dialog_rounded"
+            android:backgroundTint="#F2EFE9"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center_horizontal">
 
-        <Button
-            android:id="@+id/btnDevice2"
-            android:layout_width="220dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_pill_selectable"
-            android:text="@string/device_2"
-            android:textColor="@color/pill_text_color"
-            android:fontFamily="@font/quicksand"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:elevation="0dp"
-            android:stateListAnimator="@null"
-            app:backgroundTint="@null" />
+            <TextView
+                android:id="@+id/tvAvailableDevicesTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/available_devices"
+                android:textSize="24sp"
+                android:fontFamily="@font/shrikhand"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
 
-        <Button
-            android:id="@+id/btnDevice3"
-            android:layout_width="220dp"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_pill_selectable"
-            android:text="@string/device_3"
-            android:textColor="@color/pill_text_color"
-            android:fontFamily="@font/quicksand"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:elevation="0dp"
-            android:stateListAnimator="@null"
-            app:backgroundTint="@null" />
+            <TextView
+                android:id="@+id/tvClickToAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/click_to_add"
+                android:fontFamily="@font/quicksand"
+                android:textSize="15sp"
+                android:textColor="#777777"
+                android:layout_marginBottom="24dp" />
+
+            <Button
+                android:id="@+id/btnDevice1"
+                android:layout_width="220dp"
+                android:layout_height="52dp"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/bg_pill_button"
+                android:text="@string/device_1"
+                android:fontFamily="@font/quicksand"
+                android:textStyle="bold"
+                android:textColor="@color/dark_green"
+                android:textSize="16sp"
+                android:elevation="0dp"
+                android:stateListAnimator="@null" />
+
+            <Button
+                android:id="@+id/btnDevice2"
+                android:layout_width="220dp"
+                android:layout_height="52dp"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/bg_pill_button"
+                android:text="@string/device_2"
+                android:textColor="@color/dark_green"
+                android:fontFamily="@font/quicksand"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:elevation="0dp"
+                android:stateListAnimator="@null" />
+
+            <Button
+                android:id="@+id/btnDevice3"
+                android:layout_width="220dp"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_pill_button"
+                android:text="@string/device_3"
+                android:textColor="@color/dark_green"
+                android:fontFamily="@font/quicksand"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:elevation="0dp"
+                android:stateListAnimator="@null" />
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Bottom Navigation Bar -->
@@ -152,7 +153,7 @@
             android:padding="18dp"
             android:scaleType="fitCenter"
             android:src="@drawable/fridge_icon"
-            app:tint="@color/nav_icon_tint" />
+            app:tint="@color/dark_green" />
 
         <ImageButton
             android:id="@+id/navSettingsAdd"
@@ -163,7 +164,7 @@
             android:padding="18dp"
             android:scaleType="fitCenter"
             android:src="@drawable/baseline_settings_24"
-            app:tint="@color/nav_icon_tint" />
+            app:tint="@color/white" />
     </LinearLayout>
 
 </RelativeLayout>
