@@ -99,7 +99,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Hide the default Action Bar to match your clean mockup
-        if (getSupportActionBar() != null) {
+        if (getSupportActionBar() != null)
+        {
             getSupportActionBar().hide();
         }
 
