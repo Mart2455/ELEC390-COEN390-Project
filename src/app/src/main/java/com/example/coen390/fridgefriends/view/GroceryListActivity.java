@@ -50,6 +50,7 @@ import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
 import com.example.coen390.fridgefriends.R;
+import com.example.coen390.fridgefriends.MonitoringState;
 import com.example.coen390.fridgefriends.adapter.GroceryAdapter;
 import com.example.coen390.fridgefriends.model.DateParser;
 import com.example.coen390.fridgefriends.model.GroceryItem;
@@ -69,6 +70,31 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class GroceryListActivity extends AppCompatActivity implements GroceryAdapter.OnItemInteractionListener {
+
+    private final MonitoringState.Listener monitoringListener = state -> {
+        android.widget.TextView textTemperatureView = findViewById(R.id.tvTempGrocery);
+        if (!state.hasReadings)
+        {
+            textTemperatureView.setText("--°C");
+        }
+        else
+        {
+            textTemperatureView.setText(String.format(java.util.Locale.getDefault(), "%.1f°C", state.temperature));
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        MonitoringState.observe(monitoringListener);
+    }
+
+    @Override
+    protected void onStop() {
+        MonitoringState.removeObserver(monitoringListener);
+        super.onStop();
+    }
+
 
     private RecyclerView rvGroceryList;
     private TextView tabToBuy, tabOwned, tvGroceryTitle;

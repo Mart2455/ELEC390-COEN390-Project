@@ -25,7 +25,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/quicksand"
-        android:text="3°C"
+        android:text="--°C"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"

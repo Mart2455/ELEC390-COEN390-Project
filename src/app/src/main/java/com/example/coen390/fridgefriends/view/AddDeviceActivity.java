@@ -8,8 +8,34 @@ import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.coen390.fridgefriends.R;
+import com.example.coen390.fridgefriends.MonitoringState;
 
 public class AddDeviceActivity extends AppCompatActivity {
+
+    private final MonitoringState.Listener monitoringListener = state -> {
+        android.widget.TextView textTemperatureView = findViewById(R.id.tvTempAdd);
+        if (!state.hasReadings)
+        {
+            textTemperatureView.setText("--°C");
+        }
+        else
+        {
+            textTemperatureView.setText(String.format(java.util.Locale.getDefault(), "%.1f°C", state.temperature));
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        MonitoringState.observe(monitoringListener);
+    }
+
+    @Override
+    protected void onStop() {
+        MonitoringState.removeObserver(monitoringListener);
+        super.onStop();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

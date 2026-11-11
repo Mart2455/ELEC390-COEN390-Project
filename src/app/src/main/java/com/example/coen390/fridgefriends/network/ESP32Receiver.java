@@ -35,7 +35,7 @@ public class ESP32Receiver
         new Thread(() -> {
 
             // gotta review this mechanic
-            boolean useTestData = false; // Set false when testing with ESP32
+            boolean useTestData = true; // Set false when testing with ESP32
             boolean success = false;
             if (useTestData)
             {
