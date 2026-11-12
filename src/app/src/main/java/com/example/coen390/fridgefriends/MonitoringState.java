@@ -16,7 +16,9 @@ public final class MonitoringState
         public final double humidity;
         public final int tvoc, eco2, mq3Raw;
 
-        private Snapshot(boolean attempted, boolean connected, boolean hasReadings,  double humidity, int tvoc, int eco2, int mq3Raw)
+        public final double temperature;
+
+        private Snapshot(boolean attempted, boolean connected, boolean hasReadings,  double humidity, int tvoc, int eco2, int mq3Raw, double temperature)
         {
             this.attempted = attempted;
             this.connected = connected;
@@ -25,15 +27,18 @@ public final class MonitoringState
             this.tvoc = tvoc;
             this.eco2 = eco2;
             this.mq3Raw = mq3Raw;
+            this.temperature = temperature;
         }
     }
 
     private static final Set<Listener> listeners = new HashSet<>();
     private static Snapshot latest = new Snapshot(false, false, false,
-            Double.NaN, -1, -1, -1);
+            Double.NaN, -1, -1, -1, -1);
 
     private MonitoringState()
-    {}
+    {
+
+    }
 
     public static void observe(Listener listener)
     {
@@ -52,9 +57,9 @@ public final class MonitoringState
         {
             throw new IllegalStateException("Publish monitoring state on the main thread");
         }
-        latest = success ? new Snapshot(true, true, true, ESP32Receiver.getHumidity(), ESP32Receiver.getTvoc(), ESP32Receiver.getEco2(), ESP32Receiver.getMq3Raw())
+        latest = success ? new Snapshot(true, true, true, ESP32Receiver.getHumidity(), ESP32Receiver.getTvoc(), ESP32Receiver.getEco2(), ESP32Receiver.getMq3Raw(), ESP32Receiver.getTemperature())
                 : new Snapshot(true, false, latest.hasReadings, latest.humidity,
-                        latest.tvoc, latest.eco2, latest.mq3Raw);
+                        latest.tvoc, latest.eco2, latest.mq3Raw, latest.temperature);
         for (Listener listener : new HashSet<>(listeners))
         {
             listener.onChanged(latest);
