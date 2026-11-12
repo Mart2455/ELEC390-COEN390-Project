@@ -58,6 +58,15 @@ public class DeviceTrackerActivity extends AppCompatActivity {
 
     // The service owns HTTP requests; this screen only renders its latest result.
     private void updateReadings(MonitoringState.Snapshot state) {
+        android.widget.TextView textTemperatureView = findViewById(R.id.tvTempIcon);
+        if (!state.hasReadings)
+        {
+            textTemperatureView.setText("--°C");
+        }
+        else
+        {
+            textTemperatureView.setText(String.format(java.util.Locale.getDefault(), "%.1f°C", state.temperature));
+        }
         connectionLost = state.attempted && !state.connected;
         hasReadings = state.hasReadings;
         if (hasReadings) {

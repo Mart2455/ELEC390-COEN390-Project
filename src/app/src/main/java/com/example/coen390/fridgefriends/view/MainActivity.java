@@ -38,8 +38,28 @@ public class MainActivity extends AppCompatActivity {
     private MonitoringState.Snapshot monitoringState;
     private DeviceAdapter deviceAdapter;
     private final MonitoringState.Listener monitoringListener = state -> {
+
+        TextView textTemperatureView = findViewById(R.id.tvTempMain);   // this holds the value of the Text view
+
+        // Update the textview to have the temperature value
+        // Need to first verify that the readings are actually happening
+
+
+
         monitoringState = state;
-        if (deviceAdapter != null) deviceAdapter.notifyDataSetChanged();
+
+        // Np readings
+        if(!state.hasReadings)
+        {
+            textTemperatureView.setText("--°C");
+        }
+        else
+        {
+            // Important to convert to a string!!!
+            textTemperatureView.setText(String.format(java.util.Locale.getDefault(), "%.1f°C",state.temperature));
+        }
+        if (deviceAdapter != null)
+            deviceAdapter.notifyDataSetChanged();
     };
 
     @Override
@@ -99,7 +119,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Hide the default Action Bar to match your clean mockup
-        if (getSupportActionBar() != null) {
+        if (getSupportActionBar() != null)
+        {
             getSupportActionBar().hide();
         }
 
