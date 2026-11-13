@@ -37,7 +37,7 @@ public class AlertChecker {
             return Result.IGNORED;
         }
 
-        //if an is active, clear alert if reading is back to normal
+        //if an alert is active, clear alert if reading is back to normal
         if (state.alertActive) {
             if (sensor.isBackToNormal(reading)) {
                 state.alertActive = false;

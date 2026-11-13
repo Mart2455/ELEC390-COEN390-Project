@@ -15,12 +15,22 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.coen390.fridgefriends.network.ESP32Receiver;
 
+import android.content.SharedPreferences;
+import com.example.coen390.fridgefriends.alert.AlertChecker;
+import com.example.coen390.fridgefriends.alert.AlertConfig;
+import com.example.coen390.fridgefriends.alert.Sensor;
+import java.util.List;
+
 public class SensorMonitoringService extends Service
 {
 
     // Used to have the monitoring run in a loop
     private final Handler handler = new Handler(Looper.getMainLooper());
     private boolean monitoring = false;
+
+    //remembers the alert state of every device and sensor
+    private final AlertChecker alertChecker = new AlertChecker();
+    private static final String[] DEVICES = {"Device 1", "Device 2", "Device 3"};
 
     // Creating the poll used by the sensor
 
@@ -47,6 +57,11 @@ public class SensorMonitoringService extends Service
                     if (monitoring)
                     {
                         MonitoringState.publish(success);
+
+                        //check the new reading for every added device
+                        if (success)
+                            checkAlerts();
+
                         handler.postDelayed(this, 5000);
                     }
                 });
@@ -124,7 +139,47 @@ public class SensorMonitoringService extends Service
         handler.removeCallbacksAndMessages(null);
         super.onDestroy();
     }
+    private void checkAlerts() {
+        SharedPreferences prefs = getSharedPreferences("DevicePrefs", MODE_PRIVATE);
+        long now = System.currentTimeMillis();
 
+        for (String device : DEVICES) {
+            //if a device is removed, forget its alert
+            if (!prefs.getBoolean(device + "_added", false)) {
+                alertChecker.removeDevice(device);
+                continue;
+            }
+
+            //sensor check what the user selected for a device
+            List<Sensor> sensors = AlertConfig.getSensorsToCheck(
+                    prefs.getBoolean(device + "_track_freshness", false),
+                    prefs.getBoolean(device + "_track_moisture", false),
+                    prefs.getBoolean(device + "_track_fermentation", false));
+
+            for (Sensor sensor : sensors) {
+                double reading = getReading(sensor);
+                AlertChecker.Result result = alertChecker.check(device, sensor, reading, now, now);
+
+                //only log when an alert starts or ends, not every reading
+                if (result == AlertChecker.Result.ALERT_STARTED || result == AlertChecker.Result.ALERT_CLEARED)
+                    Log.d("AlertChecker", device + " - " + sensor.getSensorName() + ": "
+                            + reading + " " + sensor.getUnit() + " -> " + result);
+            }
+        }
+    }
+
+    //return latest value received from the device to this sensor
+    private double getReading(Sensor sensor) {
+        switch (sensor) {
+            case TEMPERATURE: return ESP32Receiver.getTemperature();
+            case HUMIDITY: return ESP32Receiver.getHumidity();
+            case GAS_RESISTANCE: return ESP32Receiver.getGasResistance();
+            case ECO2: return ESP32Receiver.getEco2();
+            case TVOC: return ESP32Receiver.getTvoc();
+            case ALCOHOL: return ESP32Receiver.getMq3Raw();
+            default: return Double.NaN;
+        }
+    }
 
     @Override
     public IBinder onBind(Intent intent)

@@ -1,8 +1,9 @@
 package com.example.coen390.fridgefriends.alert;
 
+//ALL THE VALUES HERE ARE FROM THE RASPBERRY TEST
+//DONT FORGET TO CHANGE THE VALUES WNV WE FIGURE OUT THE RIGHT VALUE FOR EACH PARRAMTER
 public enum Sensor {
-    //name, unit, min, max, alert if above?, limit, clear
-    //DONT FORGET TO CHANGE THE THRESHOLD VALUES HERE WHEN WE DECIDE THEM
+    //name, unit, min, max, alert if above, limit, clear
     TEMPERATURE("Temperature", "°C", -40, 85, true, 4.0, 3.5),
     HUMIDITY("Humidity", "%", 0, 100, true, 85, 80),
     GAS_RESISTANCE("Gas resistance", "kΩ", 0, Double.MAX_VALUE, false, 50, 60),
