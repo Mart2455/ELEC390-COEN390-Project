@@ -20,6 +20,7 @@ import com.example.coen390.fridgefriends.alert.AlertChecker;
 import com.example.coen390.fridgefriends.alert.AlertConfig;
 import com.example.coen390.fridgefriends.alert.Sensor;
 import java.util.List;
+import com.example.coen390.fridgefriends.alert.AlertNotifier;
 
 public class SensorMonitoringService extends Service
 {
@@ -30,6 +31,9 @@ public class SensorMonitoringService extends Service
 
     //remembers the alert state of every device and sensor
     private final AlertChecker alertChecker = new AlertChecker();
+
+    //shows the notif when an alert starts
+    private AlertNotifier alertNotifier;
     private static final String[] DEVICES = {"Device 1", "Device 2", "Device 3"};
 
     // Creating the poll used by the sensor
@@ -115,6 +119,7 @@ public class SensorMonitoringService extends Service
     {
         // When the device is setup, we launch on create that picks up the sensor readings
         super.onCreate();
+        alertNotifier = new AlertNotifier(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
         {
@@ -164,6 +169,10 @@ public class SensorMonitoringService extends Service
                 if (result == AlertChecker.Result.ALERT_STARTED || result == AlertChecker.Result.ALERT_CLEARED)
                     Log.d("AlertChecker", device + " - " + sensor.getSensorName() + ": "
                             + reading + " " + sensor.getUnit() + " -> " + result);
+
+                //send the notif only when the alert starts
+                if (result == AlertChecker.Result.ALERT_STARTED)
+                    alertNotifier.showAlert(device, sensor, reading);
             }
         }
     }

@@ -33,6 +33,12 @@ import com.example.coen390.fridgefriends.R;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+
 public class MainActivity extends AppCompatActivity {
 
     private MonitoringState.Snapshot monitoringState;
@@ -82,11 +88,26 @@ public class MainActivity extends AppCompatActivity {
     private Button btnAddDevice;
     private ImageButton btnOverlayClose;
 
+    //popup asking the user to allow notifs (Android 13+)
+    private final ActivityResultLauncher<String> notificationPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                //nothing to do: if refused, AlertNotifier just won't show alerts
+            });
+
+    //ask only on Android 13+ and only if not already allowed
+    private void askNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        askNotificationPermission();
 
         // Make the monitoring reset everytime the app is turned on
 
