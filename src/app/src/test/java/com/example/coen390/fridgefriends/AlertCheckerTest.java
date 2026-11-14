@@ -137,4 +137,42 @@ public class AlertCheckerTest {
         assertEquals(Arrays.asList(Sensor.TEMPERATURE, Sensor.HUMIDITY),
                 AlertConfig.getSensorsToCheck(false, true, false));
     }
+
+    //ALERT-1.4: after going back to normal, a new problem sends a new alert
+    @Test
+    public void newAlertAfterBackToNormal() {
+        //first problem: alert starts at minute 2
+        checker.check("Device 1", Sensor.TEMPERATURE, 6.0, 0, 0);
+        checker.check("Device 1", Sensor.TEMPERATURE, 6.0, MINUTE, MINUTE);
+        AlertChecker.Result first = checker.check("Device 1", Sensor.TEMPERATURE, 6.0, 2 * MINUTE, 2 * MINUTE);
+
+        //back to normal
+        AlertChecker.Result cleared = checker.check("Device 1", Sensor.TEMPERATURE, 3.0, 3 * MINUTE, 3 * MINUTE);
+
+        //second problem: needs 2 new minutes, then alerts again
+        AlertChecker.Result waiting = checker.check("Device 1", Sensor.TEMPERATURE, 6.0, 4 * MINUTE, 4 * MINUTE);
+        checker.check("Device 1", Sensor.TEMPERATURE, 6.0, 5 * MINUTE, 5 * MINUTE);
+        AlertChecker.Result second = checker.check("Device 1", Sensor.TEMPERATURE, 6.0, 6 * MINUTE, 6 * MINUTE);
+
+        assertEquals(AlertChecker.Result.ALERT_STARTED, first);
+        assertEquals(AlertChecker.Result.ALERT_CLEARED, cleared);
+        assertEquals(AlertChecker.Result.WAITING, waiting);
+        assertEquals(AlertChecker.Result.ALERT_STARTED, second);
+    }
+
+    //ALERT-1.4: staying in the gap zone (between 3.5 and 4.0) does not allow a new alert
+    @Test
+    public void noNewAlertWithoutGoingBackToNormal() {
+        checker.check("Device 1", Sensor.TEMPERATURE, 6.0, 0, 0);
+        checker.check("Device 1", Sensor.TEMPERATURE, 6.0, MINUTE, MINUTE);
+        checker.check("Device 1", Sensor.TEMPERATURE, 6.0, 2 * MINUTE, 2 * MINUTE);
+
+        //dips to 3.8 (not back to normal), then goes bad again
+        checker.check("Device 1", Sensor.TEMPERATURE, 3.8, 3 * MINUTE, 3 * MINUTE);
+        AlertChecker.Result result4 = checker.check("Device 1", Sensor.TEMPERATURE, 6.0, 4 * MINUTE, 4 * MINUTE);
+        AlertChecker.Result result6 = checker.check("Device 1", Sensor.TEMPERATURE, 6.0, 6 * MINUTE, 6 * MINUTE);
+
+        assertEquals(AlertChecker.Result.ALERT_ACTIVE, result4);
+        assertEquals(AlertChecker.Result.ALERT_ACTIVE, result6);
+    }
 }

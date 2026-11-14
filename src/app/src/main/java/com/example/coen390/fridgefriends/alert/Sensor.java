@@ -1,7 +1,7 @@
 package com.example.coen390.fridgefriends.alert;
 
-//ALL THE VALUES HERE ARE FROM THE RASPBERRY TEST
-//DONT FORGET TO CHANGE THE VALUES WNV WE FIGURE OUT THE RIGHT VALUE FOR EACH PARRAMTER
+//ALL THE VALUES HERE ARE FOR TEST PUROPSES
+//DONT FORGET TO CHANGE THEM WHEN WE DECIDE FINAL VALUES
 public enum Sensor {
     //name, unit, min, max, alert if above, limit, clear
     TEMPERATURE("Temperature", "°C", -40, 85, true, 4.0, 3.5),
