@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@drawable/bg_dialog_rounded">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data and Storage"
+        android:textColor="#333333"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/quicksand"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:id="@+id/tvStorageSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Local Storage: 1.2 MB used\nCached Images: 0.8 MB"
+        android:textColor="#2A2A2A"
+        android:textSize="14sp"
+        android:fontFamily="@font/quicksand"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/tvGroceryItemCountInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Database: 12 grocery items saved."
+        android:textColor="#777777"
+        android:textSize="13sp"
+        android:fontFamily="@font/quicksand"
+        android:layout_marginBottom="20dp" />
+
+    <Button
+        android:id="@+id/btnClearCache"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_pill_button"
+        android:backgroundTint="#FFF0F0"
+        android:text="Clear Image Cache"
+        android:textColor="#C0392B"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:fontFamily="@font/quicksand" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <TextView
+            android:id="@+id/btnDataStorageClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Close"
+            android:textColor="@color/dark_green"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/quicksand"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true" />
+    </LinearLayout>
+</LinearLayout>

@@ -195,9 +195,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         navSettings.setOnClickListener(v -> {
-            navSettings.setSelected(true);
-            navCart.setSelected(false);
-            navFridge.setSelected(false);
+            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+            overridePendingTransition(0, 0);
         });
     }
 
