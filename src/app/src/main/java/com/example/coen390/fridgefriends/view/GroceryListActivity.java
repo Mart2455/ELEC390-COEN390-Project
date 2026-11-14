@@ -404,14 +404,23 @@ public class GroceryListActivity extends AppCompatActivity implements GroceryAda
 
     private void setupBottomNav() {
         ImageButton navFridge = findViewById(R.id.navFridge);
-        ImageButton navCart = findViewById(R.id.navCart);
-        // Cart is already visually selected in XML with dark green tint
+        ImageButton navSettings = findViewById(R.id.navSettings);
 
-        navFridge.setOnClickListener(v -> {
-            startActivity(new Intent(this, MainActivity.class));
-            overridePendingTransition(0, 0);
-            finish();
-        });
+        if (navFridge != null) {
+            navFridge.setOnClickListener(v -> {
+                startActivity(new Intent(this, MainActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+            });
+        }
+
+        if (navSettings != null) {
+            navSettings.setOnClickListener(v -> {
+                startActivity(new Intent(this, SettingsActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+            });
+        }
     }
 
     private void switchTab(boolean toOwned) {
@@ -592,12 +601,14 @@ public class GroceryListActivity extends AppCompatActivity implements GroceryAda
         if (layoutOwnedVisualView == null) return;
 
         RecyclerView rvExpiringSoon = findViewById(R.id.rvExpiringSoon);
+        LinearLayout containerExpired = findViewById(R.id.containerExpired);
         LinearLayout containerExpiresToday = findViewById(R.id.containerExpiresToday);
         LinearLayout containerExpiresTomorrow = findViewById(R.id.containerExpiresTomorrow);
         LinearLayout containerExpiresLater = findViewById(R.id.containerExpiresLater);
         LinearLayout containerExpiresMuchLater = findViewById(R.id.containerExpiresMuchLater);
         LinearLayout containerNoExpiration = findViewById(R.id.containerNoExpiration);
 
+        TextView tvHeaderExpired = findViewById(R.id.tvHeaderExpired);
         TextView tvHeaderExpiresToday = findViewById(R.id.tvHeaderExpiresToday);
         TextView tvHeaderExpiresTomorrow = findViewById(R.id.tvHeaderExpiresTomorrow);
         TextView tvHeaderExpiresLater = findViewById(R.id.tvHeaderExpiresLater);
@@ -605,6 +616,7 @@ public class GroceryListActivity extends AppCompatActivity implements GroceryAda
         TextView tvHeaderNoExpiration = findViewById(R.id.tvHeaderNoExpiration);
         EditText etOwnedSearch = findViewById(R.id.etOwnedSearch);
 
+        if (containerExpired != null) containerExpired.removeAllViews();
         if (containerExpiresToday != null) containerExpiresToday.removeAllViews();
         if (containerExpiresTomorrow != null) containerExpiresTomorrow.removeAllViews();
         if (containerExpiresLater != null) containerExpiresLater.removeAllViews();
@@ -624,7 +636,7 @@ public class GroceryListActivity extends AppCompatActivity implements GroceryAda
                 if (matchesSearch && matchesCategory) {
                     ownedItems.add(item);
                     int days = DateParser.getDaysUntilExpiry(item.getExpiryDate());
-                    if (days <= 7 && days != 9999) {
+                    if (days >= 0 && days <= 7) {
                         expiringSoonItems.add(item);
                     }
                 }
@@ -699,19 +711,39 @@ public class GroceryListActivity extends AppCompatActivity implements GroceryAda
             });
 
             if (!hasExpiry) {
+                tvExpiry.setText("No expiration");
+                tvExpiry.setTextColor(Color.parseColor("#888888"));
                 if (containerNoExpiration != null) containerNoExpiration.addView(cardView);
-            } else if (days <= 0) {
+            } else if (days < 0) {
+                int absDays = Math.abs(days);
+                tvExpiry.setText("Expired " + absDays + (absDays == 1 ? " day ago" : " days ago"));
+                tvExpiry.setTextColor(Color.parseColor("#C0392B"));
+                if (containerExpired != null) containerExpired.addView(cardView);
+            } else if (days == 0) {
+                tvExpiry.setText("Expires today");
+                tvExpiry.setTextColor(Color.parseColor("#C0392B"));
                 if (containerExpiresToday != null) containerExpiresToday.addView(cardView);
             } else if (days == 1) {
+                tvExpiry.setText(DateParser.formatDisplayDate(item.getExpiryDate()));
+                tvExpiry.setTextColor(Color.parseColor("#888888"));
                 if (containerExpiresTomorrow != null) containerExpiresTomorrow.addView(cardView);
             } else if (days <= 7) {
+                tvExpiry.setText(DateParser.formatDisplayDate(item.getExpiryDate()));
+                tvExpiry.setTextColor(Color.parseColor("#888888"));
                 if (containerExpiresLater != null) containerExpiresLater.addView(cardView);
             } else {
+                tvExpiry.setText(DateParser.formatDisplayDate(item.getExpiryDate()));
+                tvExpiry.setTextColor(Color.parseColor("#888888"));
                 if (containerExpiresMuchLater != null) containerExpiresMuchLater.addView(cardView);
             }
         }
 
         // Toggle section headers visibility
+        if (tvHeaderExpired != null && containerExpired != null) {
+            boolean show = containerExpired.getChildCount() > 0;
+            tvHeaderExpired.setVisibility(show ? View.VISIBLE : View.GONE);
+            containerExpired.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
         if (tvHeaderExpiresToday != null && containerExpiresToday != null) {
             boolean show = containerExpiresToday.getChildCount() > 0;
             tvHeaderExpiresToday.setVisibility(show ? View.VISIBLE : View.GONE);

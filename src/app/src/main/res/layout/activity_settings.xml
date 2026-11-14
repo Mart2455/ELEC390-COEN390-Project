@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <!-- Top Green Banner -->
+    <View
+        android:id="@+id/topBannerSettings"
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/pastel_green" />
+
+    <TextView
+        android:id="@+id/tvTempSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/quicksand"
+        android:text="3°C"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <!-- Main Content Area -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topBannerSettings"
+        android:layout_above="@id/bottomNavBarSettings"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_card_rounded_all"
+            android:backgroundTint="#F2EFE9"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Title & Subtitle -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/shrikhand"
+                android:text="Settings"
+                android:textColor="#333333"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/quicksand"
+                android:text="App preferences &amp; system info"
+                android:textColor="#777777"
+                android:textSize="13sp" />
+
+            <!-- 1. Connected Devices Option Card -->
+            <LinearLayout
+                android:id="@+id/cardSettingsConnectedDevices"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="14dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_item_card"
+                android:elevation="2.5dp"
+                android:outlineAmbientShadowColor="#20000000"
+                android:outlineSpotShadowColor="#15000000"
+                android:clickable="true"
+                android:focusable="true">
+
+                <FrameLayout
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_thumb_rounded"
+                    android:clipToOutline="true">
+
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/fridge_icon"
+                        app:tint="@color/dark_green"
+                        android:contentDescription="Connected Devices Icon" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Connected Devices"
+                        android:textColor="#2A2A2A"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/quicksand" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="View active sensors &amp; status"
+                        android:textColor="#888888"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/quicksand" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/back_btn"
+                    android:rotation="180"
+                    app:tint="#888888"
+                    android:contentDescription="Chevron Right" />
+            </LinearLayout>
+
+            <!-- 2. Data and Storage Option Card -->
+            <LinearLayout
+                android:id="@+id/cardSettingsDataStorage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="14dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_item_card"
+                android:elevation="2.5dp"
+                android:outlineAmbientShadowColor="#20000000"
+                android:outlineSpotShadowColor="#15000000"
+                android:clickable="true"
+                android:focusable="true">
+
+                <FrameLayout
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_thumb_rounded"
+                    android:clipToOutline="true">
+
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/cart_icon"
+                        app:tint="@color/dark_green"
+                        android:contentDescription="Data and Storage Icon" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Data and Storage"
+                        android:textColor="#2A2A2A"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/quicksand" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Database &amp; storage usage"
+                        android:textColor="#888888"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/quicksand" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/back_btn"
+                    android:rotation="180"
+                    app:tint="#888888"
+                    android:contentDescription="Chevron Right" />
+            </LinearLayout>
+
+            <!-- 3. Security and Privacy Option Card -->
+            <LinearLayout
+                android:id="@+id/cardSettingsSecurityPrivacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="14dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_item_card"
+                android:elevation="2.5dp"
+                android:outlineAmbientShadowColor="#20000000"
+                android:outlineSpotShadowColor="#15000000"
+                android:clickable="true"
+                android:focusable="true">
+
+                <FrameLayout
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_thumb_rounded"
+                    android:clipToOutline="true">
+
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_menu_preferences"
+                        app:tint="@color/dark_green"
+                        android:contentDescription="Security and Privacy Icon" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Security and Privacy"
+                        android:textColor="#2A2A2A"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/quicksand" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Permissions &amp; data safety"
+                        android:textColor="#888888"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/quicksand" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/back_btn"
+                    android:rotation="180"
+                    app:tint="#888888"
+                    android:contentDescription="Chevron Right" />
+            </LinearLayout>
+
+            <!-- 4. About Option Card -->
+            <LinearLayout
+                android:id="@+id/cardSettingsAbout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="14dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_item_card"
+                android:elevation="2.5dp"
+                android:outlineAmbientShadowColor="#20000000"
+                android:outlineSpotShadowColor="#15000000"
+                android:clickable="true"
+                android:focusable="true">
+
+                <FrameLayout
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_thumb_rounded"
+                    android:clipToOutline="true">
+
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="About Icon"
+                        android:src="@android:drawable/ic_menu_info_details"
+                        app:tint="@color/dark_green" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="About"
+                        android:textColor="#2A2A2A"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/quicksand" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Version 1.0.0 • Fridge Friends"
+                        android:textColor="#888888"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/quicksand" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/back_btn"
+                    android:rotation="180"
+                    app:tint="#888888"
+                    android:contentDescription="Chevron Right" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Bottom Navigation Bar -->
+    <LinearLayout
+        android:id="@+id/bottomNavBarSettings"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/pastel_green"
+        android:orientation="horizontal"
+        android:paddingBottom="20dp">
+
+        <ImageButton
+            android:id="@+id/navCartSettings"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="18dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/cart_icon"
+            app:tint="@color/nav_icon_tint"
+            android:contentDescription="Cart Tab" />
+
+        <ImageButton
+            android:id="@+id/navFridgeSettings"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="18dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/fridge_icon"
+            app:tint="@color/white"
+            android:contentDescription="Fridge Tab" />
+
+        <ImageButton
+            android:id="@+id/navSettingsSettings"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="18dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/baseline_settings_24"
+            app:tint="@color/dark_green"
+            android:contentDescription="Settings Tab" />
+    </LinearLayout>
+
+</RelativeLayout>
