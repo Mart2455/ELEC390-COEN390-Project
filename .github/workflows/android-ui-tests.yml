@@ -37,15 +37,21 @@ jobs:
           arch: x86_64
           disable-animations: true
           working-directory: ./src
-          script: ./gradlew app:connectedAndroidTest --continue
+          script: ./gradlew app:connectedAndroidTest --continue || true
 
-      - name: Print Failed Tests to Log
-        if: failure()
+      - name: Check Test Results & Report Failures
         run: |
           echo "=========================================="
           echo "           FAILED TESTS SUMMARY           "
           echo "=========================================="
-          find src/app/build/outputs/androidTest-results/connected/ -name "*.xml" -exec grep -H -C 5 "<failure" {} + || true
+          if grep -q -r "<failure" src/app/build/outputs/androidTest-results/connected/; then
+            find src/app/build/outputs/androidTest-results/connected/ -name "*.xml" -exec grep -H -C 5 "<failure" {} +
+            echo "------------------------------------------"
+            echo "UI Tests Failed! See details above."
+            exit 1
+          else
+            echo "All UI Tests Passed Successfully!"
+          fi
 
       - name: Upload Test Results
         if: always()
