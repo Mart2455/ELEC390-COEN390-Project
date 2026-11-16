@@ -39,6 +39,14 @@ jobs:
           working-directory: ./src
           script: ./gradlew app:connectedAndroidTest --continue
 
+      - name: Print Failed Tests to Log
+        if: failure()
+        run: |
+          echo "=========================================="
+          echo "           FAILED TESTS SUMMARY           "
+          echo "=========================================="
+          find src/app/build/outputs/androidTest-results/connected/ -name "*.xml" -exec grep -H -C 5 "<failure" {} + || true
+
       - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v4
