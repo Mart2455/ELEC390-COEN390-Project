@@ -18,6 +18,7 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -74,7 +75,7 @@ public class MultiDeviceThirdUiTest {
         try (ActivityScenario<FridgeSetupActivity> scenario = ActivityScenario.launch(intent)) {
             // Steps: 1. Select tracking parameters and click save.
             onView(withId(R.id.btnFermentation)).perform(click());
-            onView(withId(R.id.btnSave)).perform(click());
+            onView(withId(R.id.btnSave)).perform(scrollTo(), click());
 
             // Navigate back to the Main Activity from the Tracker Activity to check results
             onView(withId(R.id.navFridgeTracker)).perform(click());

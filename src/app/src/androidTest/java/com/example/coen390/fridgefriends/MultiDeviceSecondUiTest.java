@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -54,18 +55,14 @@ public class MultiDeviceSecondUiTest {
         try (ActivityScenario<FridgeSetupActivity> scenario = ActivityScenario.launch(intent)) {
             // Steps: 1. Select tracking parameters and click save.
             onView(withId(R.id.btnMoisture)).perform(click()); // Select something
-            onView(withId(R.id.btnSave)).perform(click());
+            onView(withId(R.id.btnSave)).perform(scrollTo(), click());
 
             // Expected Results: 1. The Main fridge menu updates to display both Device 1 and Device 2
-            // Because saving navigates to DeviceTrackerActivity, we need to click the back button or home button
-            // to return to MainActivity to check this.
             onView(withId(R.id.navFridgeTracker)).perform(click());
 
             // We are now on MainActivity. The layoutEmptyState should be gone, and rvDevices should be visible.
             onView(withId(R.id.rvDevices)).check(matches(isDisplayed()));
 
-            // Note: In Espresso, verifying specific items in a RecyclerView is complex without custom matchers,
-            // but we can verify that the list exists and the empty placeholder does not.
             onView(withText("Device 1")).check(matches(isDisplayed()));
             onView(withText("Device 2")).check(matches(isDisplayed()));
         }

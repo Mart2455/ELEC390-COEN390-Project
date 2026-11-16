@@ -20,6 +20,7 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -54,10 +55,9 @@ public class SaveConfigurationUiTest {
 
         try (ActivityScenario<FridgeSetupActivity> scenario = ActivityScenario.launch(intent)) {
             // Step 1: Click the save button at the bottom.
-            onView(withId(R.id.btnSave)).perform(click());
+            onView(withId(R.id.btnSave)).perform(scrollTo(), click());
 
             // Expected Result 1: The configuration saves and the UI updates
-            // According to code, saving navigates to DeviceTrackerActivity
             Intents.intended(IntentMatchers.hasComponent(DeviceTrackerActivity.class.getName()));
         }
     }
