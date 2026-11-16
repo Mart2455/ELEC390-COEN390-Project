@@ -1,6 +1,7 @@
 package com.example.coen390.fridgefriends;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import androidx.test.core.app.ActivityScenario;
@@ -44,10 +45,12 @@ public class DeviceConfigurationUiTest {
 
     @Test
     public void testSelectTrackingParameter() {
-        try (ActivityScenario<FridgeSetupActivity> scenario = ActivityScenario.launch(FridgeSetupActivity.class)) {
+        Intent intent = new Intent(context, FridgeSetupActivity.class);
+        intent.putExtra("device_name", "Device 1");
+
+        try (ActivityScenario<FridgeSetupActivity> scenario = ActivityScenario.launch(intent)) {
             // Test Case 3.1
             // Pre-Condition: User is on the Fridge setup menu for a device.
-            // By default, Freshness is selected for a new device, so we select Moisture instead.
             onView(withId(R.id.btnMoisture)).check(matches(isDisplayed()));
             
             // Steps: 1. Click on 'Moisture'

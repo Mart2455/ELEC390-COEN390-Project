@@ -37,4 +37,11 @@ jobs:
           arch: x86_64
           disable-animations: true
           working-directory: ./src
-          script: ./gradlew app:connectedAndroidTest
+          script: ./gradlew app:connectedAndroidTest --continue
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-test-results
+          path: src/app/build/reports/androidTests/connected/
