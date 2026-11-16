@@ -59,3 +59,5 @@ dependencies {
     implementation("com.google.android.gms:play-services-code-scanner:16.1.0")
     implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.1")
 }
+dependencies { androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.1") }
+dependencies { androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1") }
