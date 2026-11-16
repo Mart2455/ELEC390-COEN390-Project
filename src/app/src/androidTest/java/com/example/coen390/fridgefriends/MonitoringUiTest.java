@@ -67,10 +67,10 @@ public class MonitoringUiTest {
         savedState = (MonitoringState.Snapshot) latest.get(null);
         Constructor<MonitoringState.Snapshot> constructor = MonitoringState.Snapshot.class
                 .getDeclaredConstructor(boolean.class, boolean.class, boolean.class,
-                        double.class, int.class, int.class, int.class);
+                        double.class, int.class, int.class, int.class, double.class);
         constructor.setAccessible(true);
         MonitoringState.Snapshot initial = constructor.newInstance(false, false, false,
-                Double.NaN, -1, -1, -1);
+                Double.NaN, -1, -1, -1, Double.NaN);
         onMain(() -> {
             try { latest.set(null, initial); }
             catch (IllegalAccessException e) { throw new AssertionError(e); }
