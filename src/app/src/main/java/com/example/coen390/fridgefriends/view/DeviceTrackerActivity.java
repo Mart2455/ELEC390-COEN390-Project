@@ -90,12 +90,18 @@ public class DeviceTrackerActivity extends AppCompatActivity {
         for (StatCardHolder holder : mStatCardHolders) {
             int mainColor = Color.parseColor(holder.colorHex);
 
+            if (!state.attempted) {
+                holder.tvStatus.setText("Connecting...");
+                holder.tvStatus.setTextColor(mainColor);
+                holder.tvValue.setText("No readings available");
+                continue;
+            }
+
             if (mConnectionLost) {
                 if (!mHasReadings) {
                     holder.tvStatus.setText("Unable to connect — no readings available");
                     holder.tvStatus.setTextColor(Color.RED);
                     holder.tvValue.setText("No readings available");
-                    holder.tvValue.setTextColor(Color.parseColor("#2A2A2A"));
                 } else {
                     holder.tvStatus.setText("Connection lost — readings outdated");
                     holder.tvStatus.setTextColor(Color.RED);
@@ -110,12 +116,10 @@ public class DeviceTrackerActivity extends AppCompatActivity {
                         holder.tvStatus.setText("Sensor reading unavailable");
                         holder.tvStatus.setTextColor(Color.RED);
                         holder.tvValue.setText("Reading unavailable");
-                        holder.tvValue.setTextColor(Color.parseColor("#2A2A2A"));
                     } else {
                         holder.tvStatus.setText("Connected");
                         holder.tvStatus.setTextColor(mainColor);
                         holder.tvValue.setText(String.format(java.util.Locale.getDefault(), "%.1f %%", state.humidity));
-                        holder.tvValue.setTextColor(Color.parseColor("#2A2A2A"));
                     }
                     break;
                 case "Freshness":
@@ -123,12 +127,10 @@ public class DeviceTrackerActivity extends AppCompatActivity {
                         holder.tvStatus.setText("Sensor reading unavailable");
                         holder.tvStatus.setTextColor(Color.RED);
                         holder.tvValue.setText("Reading unavailable");
-                        holder.tvValue.setTextColor(Color.parseColor("#2A2A2A"));
                     } else {
                         holder.tvStatus.setText("Connected");
                         holder.tvStatus.setTextColor(mainColor);
                         holder.tvValue.setText(state.tvoc + " ppb");
-                        holder.tvValue.setTextColor(Color.parseColor("#2A2A2A"));
                     }
                     break;
                 case "Fermentation":
@@ -136,12 +138,10 @@ public class DeviceTrackerActivity extends AppCompatActivity {
                         holder.tvStatus.setText("Sensor reading unavailable");
                         holder.tvStatus.setTextColor(Color.RED);
                         holder.tvValue.setText("Reading unavailable");
-                        holder.tvValue.setTextColor(Color.parseColor("#2A2A2A"));
                     } else {
                         holder.tvStatus.setText("Connected");
                         holder.tvStatus.setTextColor(mainColor);
                         holder.tvValue.setText("eCO2: " + state.eco2 + " ppm\nMQ-3: " + state.mq3Raw + " raw");
-                        holder.tvValue.setTextColor(Color.parseColor("#2A2A2A"));
                     }
                     break;
             }
