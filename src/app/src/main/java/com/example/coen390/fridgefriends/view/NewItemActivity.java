@@ -24,6 +24,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coen390.fridgefriends.R;
+import com.example.coen390.fridgefriends.controller.DatabaseHelper;
 import com.example.coen390.fridgefriends.model.DateParser;
 import com.example.coen390.fridgefriends.model.GroceryItem;
 import com.example.coen390.fridgefriends.model.ProductImageResolver;
@@ -33,7 +34,9 @@ import org.json.JSONArray;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class NewItemActivity extends AppCompatActivity {
@@ -47,6 +50,7 @@ public class NewItemActivity extends AppCompatActivity {
     public static final String EXTRA_ITEM_QUANTITY = "extra_item_quantity";
     public static final String EXTRA_ITEM_UNIT = "extra_item_unit";
     public static final String EXTRA_ITEM_MEMO = "extra_item_memo";
+    public static final String EXTRA_ITEM_DEVICE_ID = "extra_item_device_id";
 
     private ImageView imgNewItemPhoto;
     private View cardProductPhoto, btnAddPhoto;
@@ -54,7 +58,7 @@ public class NewItemActivity extends AppCompatActivity {
     private EditText etNewItemName, etNewItemMemo;
     private TextView tvNewItemExpiry, tvQtyValue, tvUnitText;
     private TextView btnQtyMinus, btnQtyPlus;
-    private Spinner spNewItemType;
+    private Spinner spNewItemType, spNewItemTracker;
     private Button btnSaveToFridge, btnAddtoGroceryList;
 
     private String currentImageUrl = "";
@@ -64,6 +68,8 @@ public class NewItemActivity extends AppCompatActivity {
     private int unitIndex = 0;
     private boolean isEditMode = false;
     private int itemIndex = -1;
+
+    private DatabaseHelper mDatabaseHelper;
 
     private final ActivityResultLauncher<Intent> cameraLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -103,6 +109,8 @@ public class NewItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_item);
 
+        mDatabaseHelper = DatabaseHelper.getInstance(this);
+
         ImageButton btnBack = findViewById(R.id.btnNewItemBack);
         TextView tvNewItemTitle = findViewById(R.id.tvNewItemTitle);
         cardProductPhoto = findViewById(R.id.cardProductPhoto);
@@ -119,6 +127,7 @@ public class NewItemActivity extends AppCompatActivity {
         etNewItemName = findViewById(R.id.etNewItemName);
         tvNewItemExpiry = findViewById(R.id.tvNewItemExpiry);
         spNewItemType = findViewById(R.id.spNewItemType);
+        spNewItemTracker = findViewById(R.id.spNewItemTracker);
         btnQtyMinus = findViewById(R.id.btnQtyMinus);
         tvQtyValue = findViewById(R.id.tvQtyValue);
         btnQtyPlus = findViewById(R.id.btnQtyPlus);
@@ -152,6 +161,25 @@ public class NewItemActivity extends AppCompatActivity {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spNewItemType.setAdapter(spinnerAdapter);
 
+        // Setup Tracker Device Spinner dynamically from SharedPreferences
+        List<String> trackerOptions = new ArrayList<>();
+        trackerOptions.add("None"); // Default option: no tracker assigned
+
+        SharedPreferences devicePrefs = getSharedPreferences("DevicePrefs", MODE_PRIVATE);
+        if (devicePrefs.getBoolean("Device 1_added", false)) {
+            trackerOptions.add("Device 1");
+        }
+        if (devicePrefs.getBoolean("Device 2_added", false)) {
+            trackerOptions.add("Device 2");
+        }
+        if (devicePrefs.getBoolean("Device 3_added", false)) {
+            trackerOptions.add("Device 3");
+        }
+
+        ArrayAdapter<String> trackerAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_right, trackerOptions);
+        trackerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spNewItemTracker.setAdapter(trackerAdapter);
+
         // Intent Extras from Scanner or Edit Mode
         String name = getIntent().getStringExtra(EXTRA_ITEM_NAME);
         String expiry = getIntent().getStringExtra(EXTRA_ITEM_EXPIRY);
@@ -160,6 +188,7 @@ public class NewItemActivity extends AppCompatActivity {
         int qty = getIntent().getIntExtra(EXTRA_ITEM_QUANTITY, 1);
         String unit = getIntent().getStringExtra(EXTRA_ITEM_UNIT);
         String memo = getIntent().getStringExtra(EXTRA_ITEM_MEMO);
+        String deviceId = getIntent().getStringExtra(EXTRA_ITEM_DEVICE_ID);
 
         if (name != null && !name.isEmpty()) {
             etNewItemName.setText(name);
@@ -184,6 +213,15 @@ public class NewItemActivity extends AppCompatActivity {
             for (int i = 0; i < categories.length; i++) {
                 if (categories[i].equalsIgnoreCase(category)) {
                     spNewItemType.setSelection(i);
+                    break;
+                }
+            }
+        }
+
+        if (deviceId != null && !deviceId.trim().isEmpty()) {
+            for (int i = 0; i < trackerOptions.size(); i++) {
+                if (trackerOptions.get(i).equalsIgnoreCase(deviceId)) {
+                    spNewItemTracker.setSelection(i);
                     break;
                 }
             }
@@ -317,6 +355,9 @@ public class NewItemActivity extends AppCompatActivity {
     }
 
     private void deleteItemAndFinish() {
+        String name = etNewItemName.getText().toString().trim();
+        mDatabaseHelper.deleteGroceryItemByName(name);
+
         SharedPreferences prefs = getSharedPreferences("GroceryPrefs", MODE_PRIVATE);
         String jsonString = prefs.getString("grocery_list", "[]");
         try {
@@ -365,14 +406,22 @@ public class NewItemActivity extends AppCompatActivity {
         String category = spNewItemType.getSelectedItem() != null ? spNewItemType.getSelectedItem().toString() : "Other";
         String memo = etNewItemMemo.getText().toString().trim();
         String unit = tvUnitText.getText().toString();
+        String trackerDevice = spNewItemTracker.getSelectedItem() != null ? spNewItemTracker.getSelectedItem().toString() : "None";
 
         if (currentImageUrl == null || currentImageUrl.trim().isEmpty()) {
             currentImageUrl = ProductImageResolver.resolveImageUrl(name, category);
         }
 
-        GroceryItem item = new GroceryItem(name, isOwned, currentExpiryDate, currentImageUrl, category, quantity, unit, memo);
+        GroceryItem item = new GroceryItem(name, isOwned, currentExpiryDate, currentImageUrl, category, quantity, unit, memo, trackerDevice);
 
-        // Save to SharedPreferences
+        // Save / Update in SQLite database
+        if (isEditMode) {
+            mDatabaseHelper.updateGroceryItem(item);
+        } else {
+            mDatabaseHelper.insertGroceryItem(item);
+        }
+
+        // Save to SharedPreferences for compatibility
         SharedPreferences prefs = getSharedPreferences("GroceryPrefs", MODE_PRIVATE);
         String jsonString = prefs.getString("grocery_list", "[]");
         try {

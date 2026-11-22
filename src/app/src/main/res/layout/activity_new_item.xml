@@ -312,6 +312,41 @@
                 android:background="#EEEEEE"
                 android:layout_marginVertical="5dp" />
 
+            <!-- Tracker Device Spinner -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="5dp">
+
+                <TextView
+                    android:id="@+id/tvTrackerLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Tracker"
+                    android:textColor="#2A2A2A"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/quicksand" />
+
+                <Spinner
+                    android:id="@+id/spNewItemTracker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/tvTrackerLabel"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:gravity="end"
+                    android:textAlignment="viewEnd"
+                    android:spinnerMode="dropdown" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EEEEEE"
+                android:layout_marginVertical="5dp" />
+
             <!-- Memo (Optional) -->
             <EditText
                 android:id="@+id/etNewItemMemo"

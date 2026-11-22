@@ -785,6 +785,7 @@ public class GroceryListActivity extends AppCompatActivity implements GroceryAda
         intent.putExtra(NewItemActivity.EXTRA_ITEM_QUANTITY, item.getQuantity());
         intent.putExtra(NewItemActivity.EXTRA_ITEM_UNIT, item.getUnit());
         intent.putExtra(NewItemActivity.EXTRA_ITEM_MEMO, item.getMemo());
+        intent.putExtra(NewItemActivity.EXTRA_ITEM_DEVICE_ID, item.getDeviceId());
         startActivity(intent);
     }
 

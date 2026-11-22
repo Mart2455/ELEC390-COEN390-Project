@@ -7,4 +7,9 @@
     <color name="dark_charcoal">#4A4A4A</color>
     <color name="medium_grey">#6E6E6E</color>
     <color name="dark_green">#829a6a</color> <!-- Used for text -->
+
+    <!-- ZXing Barcode Scanner UI Overrides -->
+    <color name="zxing_viewfinder_laser">#FFFFFFFF</color>
+    <color name="zxing_possible_result_points">#00000000</color>
+    <color name="zxing_result_point_color">#00000000</color>
 </resources>

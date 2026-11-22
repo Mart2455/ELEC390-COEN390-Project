@@ -4,93 +4,135 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class GroceryItem {
-    private String name;
-    private boolean isOwned;
-    private String expiryDate;
-    private boolean isStriked;
-    private boolean isEmptyRow;
-    private boolean isSelected;
-    private String imageUrl;
-    private String category;
-    private int quantity = 1;
-    private String unit = "pcs";
-    private String memo;
+    private long mId = -1;
+    private String mName;
+    private boolean mIsOwned;
+    private String mExpiryDate;
+    private boolean mIsStriked;
+    private boolean mIsEmptyRow;
+    private boolean mIsSelected;
+    private String mImageUrl;
+    private String mCategory;
+    private int mQuantity = 1;
+    private String mUnit = "pcs";
+    private String mMemo;
+    private String mDeviceId = "None";
 
     public GroceryItem() {
-        this.isEmptyRow = true;
-        this.isSelected = false;
+        this.mIsEmptyRow = true;
+        this.mIsSelected = false;
     }
 
     public GroceryItem(String name, boolean isOwned, String expiryDate) {
-        this.name = name;
-        this.isOwned = isOwned;
-        this.expiryDate = expiryDate;
-        this.isEmptyRow = false;
-        this.isStriked = false;
-        this.quantity = 1;
-        this.unit = "pcs";
+        this.mName = name;
+        this.mIsOwned = isOwned;
+        this.mExpiryDate = expiryDate;
+        this.mIsEmptyRow = false;
+        this.mIsStriked = false;
+        this.mQuantity = 1;
+        this.mUnit = "pcs";
+        this.mDeviceId = "None";
     }
 
     public GroceryItem(String name, boolean isOwned, String expiryDate, String imageUrl, String category, int quantity, String unit, String memo) {
-        this.name = name;
-        this.isOwned = isOwned;
-        this.expiryDate = expiryDate;
-        this.imageUrl = imageUrl;
-        this.category = category;
-        this.quantity = quantity > 0 ? quantity : 1;
-        this.unit = (unit != null && !unit.isEmpty()) ? unit : "pcs";
-        this.memo = memo;
-        this.isEmptyRow = false;
-        this.isStriked = false;
+        this.mName = name;
+        this.mIsOwned = isOwned;
+        this.mExpiryDate = expiryDate;
+        this.mImageUrl = imageUrl;
+        this.mCategory = category;
+        this.mQuantity = quantity > 0 ? quantity : 1;
+        this.mUnit = (unit != null && !unit.isEmpty()) ? unit : "pcs";
+        this.mMemo = memo;
+        this.mIsEmptyRow = false;
+        this.mIsStriked = false;
+        this.mDeviceId = "None";
     }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; this.isEmptyRow = false; }
+    public GroceryItem(String name, boolean isOwned, String expiryDate, String imageUrl, String category, int quantity, String unit, String memo, String deviceId) {
+        this.mName = name;
+        this.mIsOwned = isOwned;
+        this.mExpiryDate = expiryDate;
+        this.mImageUrl = imageUrl;
+        this.mCategory = category;
+        this.mQuantity = quantity > 0 ? quantity : 1;
+        this.mUnit = (unit != null && !unit.isEmpty()) ? unit : "pcs";
+        this.mMemo = memo;
+        this.mIsEmptyRow = false;
+        this.mIsStriked = false;
+        this.mDeviceId = (deviceId != null && !deviceId.trim().isEmpty()) ? deviceId : "None";
+    }
 
-    public boolean isOwned() { return isOwned; }
-    public void setOwned(boolean owned) { isOwned = owned; }
+    public GroceryItem(long id, String name, boolean isOwned, String expiryDate, String imageUrl, String category, int quantity, String unit, String memo, String deviceId) {
+        this.mId = id;
+        this.mName = name;
+        this.mIsOwned = isOwned;
+        this.mExpiryDate = expiryDate;
+        this.mImageUrl = imageUrl;
+        this.mCategory = category;
+        this.mQuantity = quantity > 0 ? quantity : 1;
+        this.mUnit = (unit != null && !unit.isEmpty()) ? unit : "pcs";
+        this.mMemo = memo;
+        this.mIsEmptyRow = false;
+        this.mIsStriked = false;
+        this.mDeviceId = (deviceId != null && !deviceId.trim().isEmpty()) ? deviceId : "None";
+    }
 
-    public String getExpiryDate() { return expiryDate; }
-    public void setExpiryDate(String expiryDate) { this.expiryDate = expiryDate; }
+    public long getId() { return mId; }
+    public void setId(long id) { this.mId = id; }
 
-    public boolean isEmptyRow() { return isEmptyRow; }
-    public void setEmptyRow(boolean emptyRow) { isEmptyRow = emptyRow; }
+    public String getName() { return mName; }
+    public void setName(String name) { this.mName = name; this.mIsEmptyRow = false; }
 
-    public boolean isStriked() { return isStriked; }
-    public void setStriked(boolean striked) { isStriked = striked; }
+    public boolean isOwned() { return mIsOwned; }
+    public void setOwned(boolean owned) { mIsOwned = owned; }
 
-    public boolean isSelected() { return isSelected; }
-    public void setSelected(boolean selected) { isSelected = selected; }
+    public String getExpiryDate() { return mExpiryDate; }
+    public void setExpiryDate(String expiryDate) { this.mExpiryDate = expiryDate; }
 
-    public String getImageUrl() { return imageUrl; }
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public boolean isEmptyRow() { return mIsEmptyRow; }
+    public void setEmptyRow(boolean emptyRow) { mIsEmptyRow = emptyRow; }
 
-    public String getCategory() { return category; }
-    public void setCategory(String category) { this.category = category; }
+    public boolean isStriked() { return mIsStriked; }
+    public void setStriked(boolean striked) { mIsStriked = striked; }
 
-    public int getQuantity() { return quantity; }
-    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public boolean isSelected() { return mIsSelected; }
+    public void setSelected(boolean selected) { mIsSelected = selected; }
 
-    public String getUnit() { return unit; }
-    public void setUnit(String unit) { this.unit = unit; }
+    public String getImageUrl() { return mImageUrl; }
+    public void setImageUrl(String imageUrl) { this.mImageUrl = imageUrl; }
 
-    public String getMemo() { return memo; }
-    public void setMemo(String memo) { this.memo = memo; }
+    public String getCategory() { return mCategory; }
+    public void setCategory(String category) { this.mCategory = category; }
+
+    public int getQuantity() { return mQuantity; }
+    public void setQuantity(int quantity) { this.mQuantity = quantity; }
+
+    public String getUnit() { return mUnit; }
+    public void setUnit(String unit) { this.mUnit = unit; }
+
+    public String getMemo() { return mMemo; }
+    public void setMemo(String memo) { this.mMemo = memo; }
+
+    public String getDeviceId() { return mDeviceId; }
+    public void setDeviceId(String deviceId) { this.mDeviceId = (deviceId != null && !deviceId.trim().isEmpty()) ? deviceId : "None"; }
 
     public JSONObject toJSON() throws JSONException {
         JSONObject obj = new JSONObject();
-        obj.put("name", name);
-        obj.put("isOwned", isOwned);
-        obj.put("expiryDate", expiryDate == null ? "" : expiryDate);
-        obj.put("imageUrl", imageUrl == null ? "" : imageUrl);
-        obj.put("category", category == null ? "" : category);
-        obj.put("quantity", quantity);
-        obj.put("unit", unit == null ? "pcs" : unit);
-        obj.put("memo", memo == null ? "" : memo);
+        if (mId != -1) obj.put("id", mId);
+        obj.put("name", mName);
+        obj.put("isOwned", mIsOwned);
+        obj.put("expiryDate", mExpiryDate == null ? "" : mExpiryDate);
+        obj.put("imageUrl", mImageUrl == null ? "" : mImageUrl);
+        obj.put("category", mCategory == null ? "" : mCategory);
+        obj.put("quantity", mQuantity);
+        obj.put("unit", mUnit == null ? "pcs" : mUnit);
+        obj.put("memo", mMemo == null ? "" : mMemo);
+        obj.put("deviceId", mDeviceId == null ? "None" : mDeviceId);
         return obj;
     }
 
     public static GroceryItem fromJSON(JSONObject obj) throws JSONException {
+        long id = obj.optLong("id", -1);
         String name = obj.getString("name");
         boolean isOwned = obj.getBoolean("isOwned");
         String expiryDate = obj.optString("expiryDate", "");
@@ -99,6 +141,7 @@ public class GroceryItem {
         int quantity = obj.optInt("quantity", 1);
         String unit = obj.optString("unit", "pcs");
         String memo = obj.optString("memo", "");
-        return new GroceryItem(name, isOwned, expiryDate, imageUrl, category, quantity, unit, memo);
+        String deviceId = obj.optString("deviceId", "None");
+        return new GroceryItem(id, name, isOwned, expiryDate, imageUrl, category, quantity, unit, memo, deviceId);
     }
 }

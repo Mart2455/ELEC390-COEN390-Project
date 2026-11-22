@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <!-- Top Green Banner -->
+    <!-- Top Green Banner (Fixed 95dp at top edge) -->
     <View
         android:id="@+id/topBannerIcon"
         android:layout_width="match_parent"
         android:layout_height="95dp"
+        android:layout_alignParentTop="true"
         android:background="@color/pastel_green" />
 
     <ImageButton
@@ -22,9 +23,9 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:background="@android:color/transparent"
+        android:contentDescription="Back"
         android:scaleType="fitCenter"
-        android:src="@drawable/back_btn"
-        android:contentDescription="Back" />
+        android:src="@drawable/back_btn" />
 
     <TextView
         android:id="@+id/tvTempIcon"
@@ -40,88 +41,126 @@
         android:textSize="30sp"
         android:textStyle="bold" />
 
-    <!-- Content Container (Matches 'In fridge' theme) -->
-    <LinearLayout
+    <!-- Scrollable Middle Content Area (Positioned between Top Banner and Bottom Nav) -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollViewTracker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/topBannerIcon"
         android:layout_above="@+id/bottomNavBarTracker"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_below="@id/topBannerIcon"
+        android:clipToPadding="false"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_card_rounded_all"
-            android:backgroundTint="#F2EFE9"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
             android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:paddingBottom="90dp">
 
-            <!-- Header & Device Title -->
-            <TextView
-                android:id="@+id/tvYourFridgeTracker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/shrikhand"
-                android:text="Your fridge"
-                android:textColor="#333333"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvDeviceNameTracker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/quicksand"
-                android:text="Device 1"
-                android:textColor="#2A2A2A"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <!-- Big More-Rounded Icon Box (Light Earthy White) -->
-            <FrameLayout
-                android:id="@+id/viewIconBoxTracker"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/bg_dialog_rounded"
-                android:backgroundTint="#F9F8F5"
-                android:elevation="2.5dp"
-                android:outlineAmbientShadowColor="#20000000"
-                android:outlineSpotShadowColor="#15000000"
-                android:clipToOutline="true">
-
-                <ImageView
-                    android:id="@+id/ivSelectedIcon"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/fridge_icon"
-                    android:contentDescription="Device Selected Icon" />
-            </FrameLayout>
-
-            <!-- Swipeable ViewPager for Trackers -->
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewPagerTrackers"
-                android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:layout_marginTop="24dp"
-                tools:listitem="@layout/item_tracker_page" />
-
-            <!-- Dots Indicator Container -->
             <LinearLayout
-                android:id="@+id/layoutDots"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:orientation="horizontal" />
-        </LinearLayout>
-    </LinearLayout>
+                android:background="@drawable/bg_card_rounded_all"
+                android:backgroundTint="#F2EFE9"
+                android:clipToPadding="false"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-    <!-- Interactive Step 1: Green Options Button -->
+                <!-- Header & Device Title -->
+                <TextView
+                    android:id="@+id/tvYourFridgeTracker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/shrikhand"
+                    android:text="Your fridge"
+                    android:textColor="#333333"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDeviceNameTracker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/quicksand"
+                    android:text="Device 1"
+                    android:textColor="#2A2A2A"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <!-- Device Icon Box -->
+                <FrameLayout
+                    android:id="@+id/viewIconBoxTracker"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_dialog_rounded"
+                    android:backgroundTint="#F9F8F5"
+                    android:clipToOutline="true"
+                    android:elevation="2.5dp"
+                    android:outlineAmbientShadowColor="#20000000"
+                    android:outlineSpotShadowColor="#15000000">
+
+                    <ImageView
+                        android:id="@+id/ivSelectedIcon"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="Device Selected Icon"
+                        android:src="@drawable/fridge_icon" />
+                </FrameLayout>
+
+                <!-- Dynamic Stat Grid Container for Enabled Tracking Parameters -->
+                <LinearLayout
+                    android:id="@+id/layoutStatGrid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical" />
+
+                <!-- Tracked Items Section Header -->
+                <TextView
+                    android:id="@+id/tvTrackedItemsHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/quicksand"
+                    android:text="Tracked Items"
+                    android:textColor="#333333"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <!-- RecyclerView for Items Assigned to this Device -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTrackedItems"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:nestedScrollingEnabled="false"
+                    android:paddingBottom="16dp"
+                    tools:listitem="@layout/item_tracked_produce" />
+
+                <TextView
+                    android:id="@+id/tvNoTrackedItems"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="12dp"
+                    android:fontFamily="@font/quicksand"
+                    android:text="No produce items assigned to this tracker."
+                    android:textColor="#888888"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Floating 3 Dots Options Button -->
     <ImageButton
         android:id="@+id/btnOptionsTracker"
         android:layout_width="70dp"
@@ -131,12 +170,12 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/bg_circle_button"
-        android:src="@drawable/baseline_more_horiz_24"
-        app:tint="@color/white"
-        android:scaleType="fitCenter"
-        android:padding="10dp"
+        android:contentDescription="Device Options"
         android:elevation="6dp"
-        android:contentDescription="Device Options" />
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/baseline_more_horiz_24"
+        app:tint="@color/white" />
 
     <!-- OVERLAY: Options Menu (Hidden by default) -->
     <RelativeLayout
@@ -144,8 +183,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#99000000"
-        android:visibility="gone"
-        android:elevation="10dp">
+        android:elevation="10dp"
+        android:visibility="gone">
 
         <!-- "Edit" pill Button -->
         <Button
@@ -157,13 +196,13 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/bg_pill_button"
-            app:backgroundTint="@null"
             android:fontFamily="@font/quicksand"
             android:text="Edit"
             android:textAllCaps="false"
             android:textColor="@color/dark_green"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:backgroundTint="@null" />
 
         <!-- Duplicate options button on the overlay -->
         <ImageButton
@@ -175,14 +214,14 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="114dp"
             android:background="@drawable/bg_circle_button"
-            android:src="@drawable/baseline_more_horiz_24"
-            app:tint="@color/white"
-            android:scaleType="fitCenter"
+            android:contentDescription="Close Tracker Overlay"
             android:padding="10dp"
-            android:contentDescription="Close Tracker Overlay" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/baseline_more_horiz_24"
+            app:tint="@color/white" />
     </RelativeLayout>
 
-    <!-- Bottom Navigation Bar -->
+    <!-- Bottom Navigation Bar (Fixed 90dp at bottom) -->
     <LinearLayout
         android:id="@+id/bottomNavBarTracker"
         android:layout_width="match_parent"
@@ -198,6 +237,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:contentDescription="Cart"
             android:padding="18dp"
             android:scaleType="fitCenter"
             android:src="@drawable/cart_icon"
@@ -209,6 +249,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:contentDescription="Fridge"
             android:padding="18dp"
             android:scaleType="fitCenter"
             android:src="@drawable/fridge_icon"
@@ -220,6 +261,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:contentDescription="Settings"
             android:padding="18dp"
             android:scaleType="fitCenter"
             android:src="@drawable/baseline_settings_24"

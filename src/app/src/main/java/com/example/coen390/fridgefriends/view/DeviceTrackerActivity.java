@@ -1,96 +1,145 @@
 package com.example.coen390.fridgefriends.view;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
-import android.widget.FrameLayout;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
-import com.example.coen390.fridgefriends.R;
-import com.example.coen390.fridgefriends.MonitoringState;
 
+import com.example.coen390.fridgefriends.MonitoringState;
+import com.example.coen390.fridgefriends.R;
+import com.example.coen390.fridgefriends.controller.DatabaseHelper;
+import com.example.coen390.fridgefriends.model.DateParser;
+import com.example.coen390.fridgefriends.model.GroceryItem;
+import com.example.coen390.fridgefriends.model.ProductImageResolver;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class DeviceTrackerActivity extends AppCompatActivity {
 
-    private ViewPager2 viewPager;
-    private LinearLayout layoutDots;
-    private ImageView[] dots;
-    private List<TrackerData> trackerList;
-    private int currentIconResId = R.drawable.baseline_add_24;
+    private String mDeviceName = "Unknown Device";
+    private int mCurrentIconResId = R.drawable.baseline_add_24;
 
-    private boolean connectionLost = false;
-    private boolean hasReadings = false;
-    private TrackerPagerAdapter adapter;
-    private final MonitoringState.Listener monitoringListener = this::updateReadings;
+    private LinearLayout mLayoutStatGrid;
+    private RecyclerView mRvTrackedItems;
+    private TextView mTvNoTrackedItems;
+    private DatabaseHelper mDatabaseHelper;
+    private TrackedItemsAdapter mTrackedItemsAdapter;
+
+    private final List<GroceryItem> mAssignedItems = new ArrayList<>();
+    private final List<StatCardHolder> mStatCardHolders = new ArrayList<>();
+
+    private boolean mConnectionLost = false;
+    private boolean mHasReadings = false;
+    private final MonitoringState.Listener mMonitoringListener = this::updateReadings;
 
     @Override
     protected void onStart() {
         super.onStart();
-        MonitoringState.observe(monitoringListener);
+        MonitoringState.observe(mMonitoringListener);
     }
 
     @Override
     protected void onStop() {
-        MonitoringState.removeObserver(monitoringListener);
+        MonitoringState.removeObserver(mMonitoringListener);
         super.onStop();
     }
 
-    // The service owns HTTP requests; this screen only renders its latest result.
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadAssignedItems();
+    }
+
+    // Real-time sensor readings update
     private void updateReadings(MonitoringState.Snapshot state) {
-        android.widget.TextView textTemperatureView = findViewById(R.id.tvTempIcon);
-        if (!state.hasReadings)
-        {
+        TextView textTemperatureView = findViewById(R.id.tvTempIcon);
+        if (!state.hasReadings) {
             textTemperatureView.setText("--°C");
-        }
-        else
-        {
+        } else {
             textTemperatureView.setText(String.format(java.util.Locale.getDefault(), "%.1f°C", state.temperature));
         }
-        connectionLost = state.attempted && !state.connected;
-        hasReadings = state.hasReadings;
-        if (hasReadings) {
-            for (TrackerData item : trackerList) {
-                switch (item.name) {
-                    case "Moisture":
-                        item.value = Double.isNaN(state.humidity)
-                                ? "Reading unavailable" : state.humidity + " %";
-                        break;
-                    case "Freshness":
-                        item.value = state.tvoc < 0
-                                ? "Reading unavailable" : state.tvoc + " ppb";
-                        break;
-                    case "Fermentation":
-                        item.value = "eCO2: " + (state.eco2 < 0 ? "unavailable" : state.eco2 + " ppm")
-                                + "\nMQ-3: " + (state.mq3Raw < 0 ? "unavailable" : state.mq3Raw + " raw");
-                        break;
-                }
-                item.unavailable = (item.name.equals("Moisture") && Double.isNaN(state.humidity))
-                        || (item.name.equals("Freshness") && state.tvoc < 0)
-                        || (item.name.equals("Fermentation") && (state.eco2 < 0 || state.mq3Raw < 0));
+
+        mConnectionLost = state.attempted && !state.connected;
+        mHasReadings = state.hasReadings;
+
+        for (StatCardHolder holder : mStatCardHolders) {
+            int mainColor = Color.parseColor(holder.colorHex);
+
+            if (mConnectionLost) {
+                holder.tvStatus.setText(mHasReadings ? "Connection lost" : "Unable to connect");
+                holder.tvStatus.setTextColor(Color.RED);
+                holder.tvValue.setText("Unavailable");
+                holder.tvValue.setTextColor(Color.RED);
+                continue;
+            }
+
+            switch (holder.type) {
+                case "Moisture":
+                    if (Double.isNaN(state.humidity)) {
+                        holder.tvStatus.setText("Sensor unavailable");
+                        holder.tvStatus.setTextColor(Color.RED);
+                        holder.tvValue.setText("Unavailable");
+                        holder.tvValue.setTextColor(Color.RED);
+                    } else {
+                        holder.tvStatus.setText("Connected");
+                        holder.tvStatus.setTextColor(mainColor);
+                        holder.tvValue.setText(String.format(java.util.Locale.getDefault(), "%.1f %%", state.humidity));
+                        holder.tvValue.setTextColor(Color.parseColor("#2A2A2A"));
+                    }
+                    break;
+                case "Freshness":
+                    if (state.tvoc < 0) {
+                        holder.tvStatus.setText("Sensor unavailable");
+                        holder.tvStatus.setTextColor(Color.RED);
+                        holder.tvValue.setText("Unavailable");
+                        holder.tvValue.setTextColor(Color.RED);
+                    } else {
+                        holder.tvStatus.setText("Connected");
+                        holder.tvStatus.setTextColor(mainColor);
+                        holder.tvValue.setText(state.tvoc + " ppb");
+                        holder.tvValue.setTextColor(Color.parseColor("#2A2A2A"));
+                    }
+                    break;
+                case "Fermentation":
+                    if (state.eco2 < 0 || state.mq3Raw < 0) {
+                        holder.tvStatus.setText("Sensor unavailable");
+                        holder.tvStatus.setTextColor(Color.RED);
+                        holder.tvValue.setText("Unavailable");
+                        holder.tvValue.setTextColor(Color.RED);
+                    } else {
+                        holder.tvStatus.setText("Connected");
+                        holder.tvStatus.setTextColor(mainColor);
+                        holder.tvValue.setText("eCO2: " + state.eco2 + " ppm | MQ-3: " + state.mq3Raw);
+                        holder.tvValue.setTextColor(Color.parseColor("#2A2A2A"));
+                    }
+                    break;
             }
         }
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -98,8 +147,9 @@ public class DeviceTrackerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_tracker);
 
-        if (getSupportActionBar() != null)
-        {
+        mDatabaseHelper = DatabaseHelper.getInstance(this);
+
+        if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
 
@@ -110,9 +160,6 @@ public class DeviceTrackerActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-
-        viewPager = findViewById(R.id.viewPagerTrackers);
-        layoutDots = findViewById(R.id.layoutDots);
 
         ImageButton btnOptionsTracker = findViewById(R.id.btnOptionsTracker);
         RelativeLayout overlayOptionsMenuTracker = findViewById(R.id.overlayOptionsMenuTracker);
@@ -127,6 +174,7 @@ public class DeviceTrackerActivity extends AppCompatActivity {
 
         String intentDeviceName = getIntent() != null ? getIntent().getStringExtra("device_name") : null;
         final String finalDeviceName = (intentDeviceName != null) ? intentDeviceName : "Unknown Device";
+        mDeviceName = finalDeviceName;
 
         btnEditDeviceTracker.setOnClickListener(v -> {
             overlayOptionsMenuTracker.setVisibility(View.GONE);
@@ -148,7 +196,7 @@ public class DeviceTrackerActivity extends AppCompatActivity {
                 overridePendingTransition(0, 0);
             });
         }
-        
+
         ImageButton navCartTracker = findViewById(R.id.navCartTracker);
         if (navCartTracker != null) {
             navCartTracker.setOnClickListener(v -> {
@@ -158,7 +206,16 @@ public class DeviceTrackerActivity extends AppCompatActivity {
             });
         }
 
-        // Read intent extras
+        ImageButton navSettingsTracker = findViewById(R.id.navSettingsTracker);
+        if (navSettingsTracker != null) {
+            navSettingsTracker.setOnClickListener(v -> {
+                Intent intent = new Intent(DeviceTrackerActivity.this, SettingsActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+            });
+        }
+
+        // Read intent extras & device state
         String deviceName = finalDeviceName;
         boolean trackFreshness = false;
         boolean trackMoisture = false;
@@ -166,7 +223,7 @@ public class DeviceTrackerActivity extends AppCompatActivity {
 
         SharedPreferences devicePrefs = getSharedPreferences("DevicePrefs", MODE_PRIVATE);
         String storedIconName = devicePrefs.getString(deviceName + "_icon_name", "");
-        currentIconResId = FridgeSetupActivity.resolveIconResId(this, storedIconName, deviceName);
+        mCurrentIconResId = FridgeSetupActivity.resolveIconResId(this, storedIconName, deviceName);
 
         if (getIntent() != null) {
             trackFreshness = getIntent().getBooleanExtra("track_freshness", false);
@@ -179,41 +236,51 @@ public class DeviceTrackerActivity extends AppCompatActivity {
         if (tvDeviceNameTracker != null) tvDeviceNameTracker.setText(deviceName);
 
         ImageView ivSelectedIcon = findViewById(R.id.ivSelectedIcon);
-        if (ivSelectedIcon != null) ivSelectedIcon.setImageResource(currentIconResId);
+        if (ivSelectedIcon != null) ivSelectedIcon.setImageResource(mCurrentIconResId);
 
-        // Create pages before requesting data so first-request failures are visible.
-        trackerList = new ArrayList<>();
+        // Setup Stat Grid Container
+        mLayoutStatGrid = findViewById(R.id.layoutStatGrid);
+        setupStatGrid(trackMoisture, trackFreshness, trackFermentation);
 
-        if (trackMoisture)
-        {
-            trackerList.add(new TrackerData(
-                    "Moisture", "Humidity levels", "#7EC8E3",
-                    "No readings available", R.drawable.moisture_icon));
-        }
-        if (trackFreshness)
-        {
-            trackerList.add(new TrackerData(
-                    "Freshness", "VOC levels", "#85B751",
-                    "No readings available", R.drawable.veggie_icon));
-        }
-        if (trackFermentation)
-        {
-            trackerList.add(new TrackerData(
-                    "Fermentation", "CO2 and ethanol levels", "#9D84B7",
-                    "No readings available", R.drawable.voc_icon));
+        // Setup Tracked Produce Items RecyclerView
+        mRvTrackedItems = findViewById(R.id.rvTrackedItems);
+        mTvNoTrackedItems = findViewById(R.id.tvNoTrackedItems);
+
+        if (mRvTrackedItems != null) {
+            mRvTrackedItems.setLayoutManager(new LinearLayoutManager(this));
+            mTrackedItemsAdapter = new TrackedItemsAdapter(mAssignedItems);
+            mRvTrackedItems.setAdapter(mTrackedItemsAdapter);
         }
 
-        adapter = new TrackerPagerAdapter(trackerList);
-        viewPager.setAdapter(adapter);
-        setupDots(trackerList.size());
+        // Setup Scroll Listener to hide floating 3-dot options button near the bottom
+        NestedScrollView nestedScrollViewTracker = findViewById(R.id.nestedScrollViewTracker);
+        if (nestedScrollViewTracker != null && btnOptionsTracker != null) {
+            nestedScrollViewTracker.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                int scrollRange = v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight();
 
-        // Listen for swipes to change the active dot color
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                updateDots(position);
-            }
-        });
+                // If scrolling down or approaching bottom, smoothly hide options button
+                if (scrollY > oldScrollY + 8 || (scrollRange > 0 && scrollY >= scrollRange - 60)) {
+                    if (btnOptionsTracker.getVisibility() == View.VISIBLE) {
+                        btnOptionsTracker.animate()
+                                .alpha(0f)
+                                .scaleX(0.7f)
+                                .scaleY(0.7f)
+                                .setDuration(150)
+                                .withEndAction(() -> btnOptionsTracker.setVisibility(View.GONE));
+                    }
+                } else if (scrollY < oldScrollY - 8) {
+                    // Scrolling up towards top, reveal options button
+                    if (btnOptionsTracker.getVisibility() != View.VISIBLE) {
+                        btnOptionsTracker.setVisibility(View.VISIBLE);
+                        btnOptionsTracker.animate()
+                                .alpha(1f)
+                                .scaleX(1f)
+                                .scaleY(1f)
+                                .setDuration(150);
+                    }
+                }
+            });
+        }
 
         getOnBackPressedDispatcher().addCallback(this, new androidx.activity.OnBackPressedCallback(true) {
             @Override
@@ -224,115 +291,220 @@ public class DeviceTrackerActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        loadAssignedItems();
     }
 
-    // --- DOT INDICATOR LOGIC ---
-    private void setupDots(int count) {
-        dots = new ImageView[count];
-        layoutDots.removeAllViews();
+    /**
+     * Builds a balanced, symmetric 2-column or adaptive stat grid displaying only
+     * the tracking parameters enabled for this device.
+     */
+    private void setupStatGrid(boolean trackMoisture, boolean trackFreshness, boolean trackFermentation) {
+        if (mLayoutStatGrid == null) return;
+        mLayoutStatGrid.removeAllViews();
+        mStatCardHolders.clear();
 
-        for (int i = 0; i < count; i++) {
-            dots[i] = new ImageView(this);
-            dots[i].setImageResource(R.drawable.bg_circle_button);
+        List<StatCardHolder> activeHolders = new ArrayList<>();
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(24, 24);
-            params.setMargins(8, 0, 8, 0);
-            dots[i].setLayoutParams(params);
-
-            layoutDots.addView(dots[i]);
+        if (trackMoisture) {
+            activeHolders.add(createStatCardHolder("Moisture", "Humidity levels", "#7EC8E3", R.drawable.moisture_icon));
         }
-        if (dots.length > 0) updateDots(0);
-    }
+        if (trackFreshness) {
+            activeHolders.add(createStatCardHolder("Freshness", "VOC levels", "#85B751", R.drawable.veggie_icon));
+        }
+        if (trackFermentation) {
+            activeHolders.add(createStatCardHolder("Fermentation", "CO2 & ethanol", "#9D84B7", R.drawable.voc_icon));
+        }
 
-    private void updateDots(int activePosition) {
-        for (int i = 0; i < dots.length; i++) {
-            // Dark green for active dot, soft earthy white/beige for inactive dot
-            if (i == activePosition) {
-                dots[i].setColorFilter(ContextCompat.getColor(this, R.color.dark_green));
-            } else {
-                dots[i].setColorFilter(Color.parseColor("#D8D4CB"));
+        mStatCardHolders.addAll(activeHolders);
+
+        int total = activeHolders.size();
+        if (total == 0) return;
+
+        if (total == 1) {
+            LinearLayout row = createRowLayout();
+            View card = activeHolders.get(0).cardView;
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f);
+            card.setLayoutParams(lp);
+            row.addView(card);
+            mLayoutStatGrid.addView(row);
+        } else if (total == 2) {
+            LinearLayout row = createRowLayout();
+            for (int i = 0; i < 2; i++) {
+                View card = activeHolders.get(i).cardView;
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f);
+                if (i == 0) lp.setMarginEnd(dpToPx(6));
+                else lp.setMarginStart(dpToPx(6));
+                card.setLayoutParams(lp);
+                row.addView(card);
             }
+            mLayoutStatGrid.addView(row);
+        } else if (total == 3) {
+            // Row 1: 2 Cards side-by-side
+            LinearLayout row1 = createRowLayout();
+            for (int i = 0; i < 2; i++) {
+                View card = activeHolders.get(i).cardView;
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f);
+                if (i == 0) lp.setMarginEnd(dpToPx(6));
+                else lp.setMarginStart(dpToPx(6));
+                card.setLayoutParams(lp);
+                row1.addView(card);
+            }
+            mLayoutStatGrid.addView(row1);
+
+            // Row 2: 1 Card centered / full-width
+            LinearLayout row2 = createRowLayout();
+            row2.setPadding(0, dpToPx(10), 0, 0);
+            View card = activeHolders.get(2).cardView;
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f);
+            card.setLayoutParams(lp);
+            row2.addView(card);
+            mLayoutStatGrid.addView(row2);
         }
     }
 
-    // --- INNER DATA MODEL ---
-    class TrackerData {
-        String name, subtitle, colorHex, value;
-        int iconResId;
-        boolean unavailable;
+    private LinearLayout createRowLayout() {
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        return row;
+    }
 
-        TrackerData(String name, String subtitle, String colorHex, String value, int iconResId) {
-            this.name = name;
-            this.subtitle = subtitle;
-            this.colorHex = colorHex;
-            this.value = value;
-            this.iconResId = iconResId;
+    private StatCardHolder createStatCardHolder(String title, String subtitle, String colorHex, int iconResId) {
+        View cardView = LayoutInflater.from(this).inflate(R.layout.item_stat_card, mLayoutStatGrid, false);
+
+        StatCardHolder holder = new StatCardHolder();
+        holder.type = title;
+        holder.cardView = cardView;
+        holder.ivIcon = cardView.findViewById(R.id.ivStatIcon);
+        holder.tvTitle = cardView.findViewById(R.id.tvStatTitle);
+        holder.tvSubtitle = cardView.findViewById(R.id.tvStatSubtitle);
+        holder.tvStatus = cardView.findViewById(R.id.tvStatStatus);
+        holder.tvValue = cardView.findViewById(R.id.tvStatValue);
+        holder.colorHex = colorHex;
+
+        int color = Color.parseColor(colorHex);
+        holder.tvTitle.setText(title);
+        holder.tvSubtitle.setText(subtitle);
+        holder.ivIcon.setImageResource(iconResId);
+        holder.ivIcon.setColorFilter(color);
+        holder.tvStatus.setTextColor(color);
+        holder.tvStatus.setText("Connecting...");
+        holder.tvValue.setText("--");
+
+        return holder;
+    }
+
+    private int dpToPx(int dp) {
+        return (int) (dp * getResources().getDisplayMetrics().density);
+    }
+
+    private void loadAssignedItems() {
+        if (mDatabaseHelper == null || mDeviceName == null) return;
+        mDatabaseHelper.syncFromSharedPreferences();
+
+        List<GroceryItem> items = mDatabaseHelper.getItemsByDevice(mDeviceName);
+        mAssignedItems.clear();
+        if (items != null) {
+            mAssignedItems.addAll(items);
+        }
+
+        if (mAssignedItems.isEmpty()) {
+            if (mRvTrackedItems != null) mRvTrackedItems.setVisibility(View.GONE);
+            if (mTvNoTrackedItems != null) mTvNoTrackedItems.setVisibility(View.VISIBLE);
+        } else {
+            if (mRvTrackedItems != null) mRvTrackedItems.setVisibility(View.VISIBLE);
+            if (mTvNoTrackedItems != null) mTvNoTrackedItems.setVisibility(View.GONE);
+            if (mTrackedItemsAdapter != null) mTrackedItemsAdapter.notifyDataSetChanged();
         }
     }
 
-    // --- VIEWPAGER ADAPTER (INNER CLASS) ---
-    class TrackerPagerAdapter extends RecyclerView.Adapter<TrackerPagerAdapter.ViewHolder> {
-        List<TrackerData> data;
-        TrackerPagerAdapter(List<TrackerData> data) { this.data = data; }
+    private void fetchImageToView(String urlStr, ImageView imageView) {
+        if (urlStr == null || urlStr.trim().isEmpty() || imageView == null) {
+            return;
+        }
+        new Thread(() -> {
+            try {
+                URL url = new URL(urlStr);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setConnectTimeout(4000);
+                conn.setRequestProperty("User-Agent", "Mozilla/5.0");
+                InputStream is = conn.getInputStream();
+                Bitmap bitmap = BitmapFactory.decodeStream(is);
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    if (bitmap != null) {
+                        imageView.setImageBitmap(bitmap);
+                    }
+                });
+            } catch (Exception ignored) {}
+        }).start();
+    }
 
+    // --- STAT CARD HOLDER CLASS ---
+    static class StatCardHolder {
+        String type;
+        View cardView;
+        ImageView ivIcon;
+        TextView tvTitle;
+        TextView tvSubtitle;
+        TextView tvStatus;
+        TextView tvValue;
+        String colorHex;
+    }
+
+    // --- TRACKED PRODUCE ITEMS RECYCLERVIEW ADAPTER ---
+    class TrackedItemsAdapter extends RecyclerView.Adapter<TrackedItemsAdapter.ViewHolder> {
+        private final List<GroceryItem> items;
+
+        TrackedItemsAdapter(List<GroceryItem> items) {
+            this.items = items;
+        }
 
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tracker_page, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tracked_produce, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            TrackerData item = data.get(position);
-            // Here it says the tracking name maybe i should put the error message here
+            GroceryItem item = items.get(position);
+            holder.tvName.setText(item.getName());
+            holder.tvQuantity.setText(item.getQuantity() + " " + (item.getUnit() == null ? "pcs" : item.getUnit()));
 
-            holder.tvTitle.setText("Tracking: " + item.name);
-
-            if (connectionLost)
-            {
-                holder.tvStatus.setText(hasReadings
-                        ? "Connection lost — readings outdated"
-                        : "Unable to connect — no readings available");
-                holder.tvStatus.setTextColor(Color.RED);
-            }
-            else if (item.unavailable)
-            {
-                holder.tvStatus.setText("Sensor reading unavailable");
-                holder.tvStatus.setTextColor(Color.RED);
-            }
-            else
-            {
-                holder.tvStatus.setText(hasReadings ? "Connected" : "Connecting...");
-                holder.tvStatus.setTextColor(Color.parseColor(item.colorHex));
+            if (item.getExpiryDate() != null && !item.getExpiryDate().trim().isEmpty() && !item.getExpiryDate().equalsIgnoreCase("no expiration")) {
+                holder.tvExpiry.setText(DateParser.formatDisplayDate(item.getExpiryDate()));
+                holder.tvExpiry.setVisibility(View.VISIBLE);
+            } else {
+                holder.tvExpiry.setText("No expiry set");
+                holder.tvExpiry.setVisibility(View.VISIBLE);
             }
 
-            holder.tvSubtitle.setText(item.subtitle);
-            holder.tvValue.setText(item.value);
-
-            // Set the specific icon for this page
-            holder.ivIcon.setImageResource(item.iconResId);
-
-            // Set dynamic colors based on the tracker type
-            int color = Color.parseColor(item.colorHex);
-            holder.tvValue.setTextColor(color);
-            holder.ivIcon.setColorFilter(color);
+            String imageUrl = item.getImageUrl();
+            if (imageUrl == null || imageUrl.trim().isEmpty()) {
+                imageUrl = ProductImageResolver.resolveImageUrl(item.getName(), item.getCategory());
+            }
+            fetchImageToView(imageUrl, holder.imgPhoto);
         }
 
         @Override
-        public int getItemCount() { return data.size(); }
+        public int getItemCount() {
+            return items.size();
+        }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            TextView tvTitle, tvSubtitle, tvStatus, tvValue;
-            ImageView ivIcon;
+            TextView tvName, tvQuantity, tvExpiry;
+            ImageView imgPhoto;
+
             ViewHolder(View itemView) {
                 super(itemView);
-                tvTitle = itemView.findViewById(R.id.tvTrackingTitle);
-                tvSubtitle = itemView.findViewById(R.id.tvTrackingSubtitle);
-                tvStatus = itemView.findViewById(R.id.tvStatusLabel);
-                tvValue = itemView.findViewById(R.id.tvSensorValue);
-                ivIcon = itemView.findViewById(R.id.ivTrackerIcon);
+                tvName = itemView.findViewById(R.id.tvTrackedItemName);
+                tvQuantity = itemView.findViewById(R.id.tvTrackedItemQuantity);
+                tvExpiry = itemView.findViewById(R.id.tvTrackedItemExpiry);
+                imgPhoto = itemView.findViewById(R.id.imgTrackedItemPhoto);
             }
         }
     }
