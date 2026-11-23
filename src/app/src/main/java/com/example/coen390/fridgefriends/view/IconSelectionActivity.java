@@ -86,6 +86,15 @@ public class IconSelectionActivity extends AppCompatActivity {
                 overridePendingTransition(0, 0);
             });
         }
+
+        ImageButton navSettingsIcon = findViewById(R.id.navSettingsIcon);
+        if (navSettingsIcon != null) {
+            navSettingsIcon.setOnClickListener(v -> {
+                android.content.Intent intent = new android.content.Intent(IconSelectionActivity.this, SettingsActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+            });
+        }
     }
 
     private void returnIconResult(int iconResId, String iconName) {

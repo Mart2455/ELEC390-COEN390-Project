@@ -87,6 +87,15 @@ public class AddDeviceActivity extends AppCompatActivity {
             });
         }
 
+        android.widget.ImageButton navSettingsAdd = findViewById(R.id.navSettingsAdd);
+        if (navSettingsAdd != null) {
+            navSettingsAdd.setOnClickListener(v -> {
+                Intent intent = new Intent(AddDeviceActivity.this, SettingsActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+            });
+        }
+
         // Toggle selection state for each pill button individually
         View.OnClickListener deviceClickListener = v -> {
             Intent intent = new Intent(AddDeviceActivity.this, FridgeSetupActivity.class);
