@@ -17,7 +17,7 @@ public class ESP32Receiver
     private static final String TAG = "ESP32_DATA";
 
     private static final String ESP32_URL =
-            "http://172.20.10.6/sensors";
+            "http://172.20.10.4/sensors";
 
     // Sensor readings
     private static double temperature;

@@ -1,0 +1,421 @@
+--------- beginning of main
+11-25 12:16:45.960 18610 29742 D ESP32_DATA: Temperature: 2.89 C
+11-25 12:16:45.960 18610 29742 D ESP32_DATA: Humidity: 64.65 %
+11-25 12:16:45.960 18610 29742 D ESP32_DATA: Pressure: 1039.12 hPa
+11-25 12:16:45.960 18610 29742 D ESP32_DATA: Gas Resistance: 145.65 kOhms
+11-25 12:16:45.960 18610 29742 D ESP32_DATA: eCO2: 7938 ppm
+11-25 12:16:45.960 18610 29742 D ESP32_DATA: TVOC: 1148 ppb
+11-25 12:16:45.960 18610 29742 D ESP32_DATA: MQ-3: 1323
+11-25 12:16:51.244 18610 29743 D ESP32_DATA: Temperature: 2.89 C
+11-25 12:16:51.244 18610 29743 D ESP32_DATA: Humidity: 64.76 %
+11-25 12:16:51.244 18610 29743 D ESP32_DATA: Pressure: 1039.1 hPa
+11-25 12:16:51.244 18610 29743 D ESP32_DATA: Gas Resistance: 146.03 kOhms
+11-25 12:16:51.244 18610 29743 D ESP32_DATA: eCO2: 5739 ppm
+11-25 12:16:51.244 18610 29743 D ESP32_DATA: TVOC: 813 ppb
+11-25 12:16:51.244 18610 29743 D ESP32_DATA: MQ-3: 1313
+11-25 12:16:56.533 18610 29744 D ESP32_DATA: Temperature: 2.89 C
+11-25 12:16:56.533 18610 29744 D ESP32_DATA: Humidity: 64.84 %
+11-25 12:16:56.533 18610 29744 D ESP32_DATA: Pressure: 1039.12 hPa
+11-25 12:16:56.533 18610 29744 D ESP32_DATA: Gas Resistance: 145.78 kOhms
+11-25 12:16:56.533 18610 29744 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:16:56.533 18610 29744 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:16:56.533 18610 29744 D ESP32_DATA: MQ-3: 1296
+11-25 12:17:01.808 18610 29750 D ESP32_DATA: Temperature: 2.89 C
+11-25 12:17:01.808 18610 29750 D ESP32_DATA: Humidity: 64.92 %
+11-25 12:17:01.808 18610 29750 D ESP32_DATA: Pressure: 1039.12 hPa
+11-25 12:17:01.808 18610 29750 D ESP32_DATA: Gas Resistance: 146.03 kOhms
+11-25 12:17:01.808 18610 29750 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:17:01.808 18610 29750 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:17:01.808 18610 29750 D ESP32_DATA: MQ-3: 1302
+11-25 12:17:07.052 18610 29752 D ESP32_DATA: Temperature: 2.89 C
+11-25 12:17:07.052 18610 29752 D ESP32_DATA: Humidity: 65.01 %
+11-25 12:17:07.052 18610 29752 D ESP32_DATA: Pressure: 1039.12 hPa
+11-25 12:17:07.052 18610 29752 D ESP32_DATA: Gas Resistance: 144.9 kOhms
+11-25 12:17:07.052 18610 29752 D ESP32_DATA: eCO2: 7412 ppm
+11-25 12:17:07.052 18610 29752 D ESP32_DATA: TVOC: 1068 ppb
+11-25 12:17:07.052 18610 29752 D ESP32_DATA: MQ-3: 1326
+11-25 12:17:12.533 18610 29755 D ESP32_DATA: Temperature: 2.9 C
+11-25 12:17:12.533 18610 29755 D ESP32_DATA: Humidity: 65.11 %
+11-25 12:17:12.534 18610 29755 D ESP32_DATA: Pressure: 1039.11 hPa
+11-25 12:17:12.534 18610 29755 D ESP32_DATA: Gas Resistance: 145.52 kOhms
+11-25 12:17:12.534 18610 29755 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:17:12.534 18610 29755 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:17:12.534 18610 29755 D ESP32_DATA: MQ-3: 1313
+11-25 12:17:17.720 18610 29756 D ESP32_DATA: Temperature: 2.9 C
+11-25 12:17:17.720 18610 29756 D ESP32_DATA: Humidity: 65.15 %
+11-25 12:17:17.720 18610 29756 D ESP32_DATA: Pressure: 1039.12 hPa
+11-25 12:17:17.720 18610 29756 D ESP32_DATA: Gas Resistance: 146.16 kOhms
+11-25 12:17:17.720 18610 29756 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:17:17.720 18610 29756 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:17:17.720 18610 29756 D ESP32_DATA: MQ-3: 1318
+11-25 12:17:22.948 18610 29757 D ESP32_DATA: Temperature: 2.89 C
+11-25 12:17:22.948 18610 29757 D ESP32_DATA: Humidity: 65.23 %
+11-25 12:17:22.948 18610 29757 D ESP32_DATA: Pressure: 1039.13 hPa
+11-25 12:17:22.949 18610 29757 D ESP32_DATA: Gas Resistance: 145.27 kOhms
+11-25 12:17:22.949 18610 29757 D ESP32_DATA: eCO2: 6809 ppm
+11-25 12:17:22.949 18610 29757 D ESP32_DATA: TVOC: 976 ppb
+11-25 12:17:22.949 18610 29757 D ESP32_DATA: MQ-3: 1293
+11-25 12:17:28.644 18610 29805 D ESP32_DATA: Temperature: 2.89 C
+11-25 12:17:28.645 18610 29805 D ESP32_DATA: Humidity: 65.31 %
+11-25 12:17:28.645 18610 29805 D ESP32_DATA: Pressure: 1039.13 hPa
+11-25 12:17:28.645 18610 29805 D ESP32_DATA: Gas Resistance: 147.58 kOhms
+11-25 12:17:28.645 18610 29805 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:17:28.645 18610 29805 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:17:28.645 18610 29805 D ESP32_DATA: MQ-3: 1322
+11-25 12:17:33.773 18610 29808 D ESP32_DATA: Temperature: 2.89 C
+11-25 12:17:33.773 18610 29808 D ESP32_DATA: Humidity: 65.37 %
+11-25 12:17:33.773 18610 29808 D ESP32_DATA: Pressure: 1039.14 hPa
+11-25 12:17:33.773 18610 29808 D ESP32_DATA: Gas Resistance: 145.9 kOhms
+11-25 12:17:33.773 18610 29808 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:17:33.773 18610 29808 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:17:33.773 18610 29808 D ESP32_DATA: MQ-3: 1321
+11-25 12:17:39.007 18610 29809 D ESP32_DATA: Temperature: 2.89 C
+11-25 12:17:39.007 18610 29809 D ESP32_DATA: Humidity: 65.47 %
+11-25 12:17:39.007 18610 29809 D ESP32_DATA: Pressure: 1039.13 hPa
+11-25 12:17:39.007 18610 29809 D ESP32_DATA: Gas Resistance: 145.02 kOhms
+11-25 12:17:39.007 18610 29809 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:17:39.007 18610 29809 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:17:39.007 18610 29809 D ESP32_DATA: MQ-3: 1325
+11-25 12:17:44.534 18610 29810 D ESP32_DATA: Temperature: 2.9 C
+11-25 12:17:44.534 18610 29810 D ESP32_DATA: Humidity: 65.55 %
+11-25 12:17:44.534 18610 29810 D ESP32_DATA: Pressure: 1039.13 hPa
+11-25 12:17:44.534 18610 29810 D ESP32_DATA: Gas Resistance: 145.78 kOhms
+11-25 12:17:44.534 18610 29810 D ESP32_DATA: eCO2: 7961 ppm
+11-25 12:17:44.534 18610 29810 D ESP32_DATA: TVOC: 1151 ppb
+11-25 12:17:44.534 18610 29810 D ESP32_DATA: MQ-3: 1314
+11-25 12:17:49.675 18610 29811 D ESP32_DATA: Temperature: 2.9 C
+11-25 12:17:49.675 18610 29811 D ESP32_DATA: Humidity: 65.61 %
+11-25 12:17:49.675 18610 29811 D ESP32_DATA: Pressure: 1039.13 hPa
+11-25 12:17:49.675 18610 29811 D ESP32_DATA: Gas Resistance: 145.02 kOhms
+11-25 12:17:49.675 18610 29811 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:17:49.675 18610 29811 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:17:49.676 18610 29811 D ESP32_DATA: MQ-3: 1323
+11-25 12:17:54.887 18610 29822 D ESP32_DATA: Temperature: 2.9 C
+11-25 12:17:54.887 18610 29822 D ESP32_DATA: Humidity: 65.68 %
+11-25 12:17:54.887 18610 29822 D ESP32_DATA: Pressure: 1039.13 hPa
+11-25 12:17:54.887 18610 29822 D ESP32_DATA: Gas Resistance: 145.27 kOhms
+11-25 12:17:54.887 18610 29822 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:17:54.887 18610 29822 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:17:54.887 18610 29822 D ESP32_DATA: MQ-3: 1327
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: Failed to receive ESP32 data
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: java.net.SocketTimeoutException: timeout
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at com.android.okhttp.okio.Okio$3.newTimeoutException(Okio.java:214)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at com.android.okhttp.okio.AsyncTimeout.exit(AsyncTimeout.java:263)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at com.android.okhttp.okio.AsyncTimeout$2.read(AsyncTimeout.java:217)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at com.android.okhttp.okio.RealBufferedSource.indexOf(RealBufferedSource.java:307)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at com.android.okhttp.okio.RealBufferedSource.indexOf(RealBufferedSource.java:301)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at com.android.okhttp.okio.RealBufferedSource.readUtf8LineStrict(RealBufferedSource.java:197)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at com.android.okhttp.internal.http.Http1xStream.readResponse(Http1xStream.java:188)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at com.android.okhttp.internal.http.Http1xStream.readResponseHeaders(Http1xStream.java:129)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at com.android.okhttp.internal.http.HttpEngine.readNetworkResponse(HttpEngine.java:750)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at com.android.okhttp.internal.http.HttpEngine.readResponse(HttpEngine.java:622)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:475)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getInputStream(HttpURLConnectionImpl.java:248)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at com.example.coen390.fridgefriends.network.ESP32Receiver.lambda$receiveData$0(ESP32Receiver.java:70)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at com.example.coen390.fridgefriends.network.ESP32Receiver$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at java.lang.Thread.run(Thread.java:1563)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: Caused by: java.net.SocketException: Socket closed
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at java.net.SocketInputStream.read(SocketInputStream.java:188)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at java.net.SocketInputStream.read(SocketInputStream.java:143)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at com.android.okhttp.okio.Okio$2.read(Okio.java:138)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	at com.android.okhttp.okio.AsyncTimeout$2.read(AsyncTimeout.java:213)
+11-25 12:18:05.165 18610 29829 E ESP32_DATA: 	... 13 more
+11-25 12:18:13.430 18610 29830 D ESP32_DATA: Temperature: 2.89 C
+11-25 12:18:13.430 18610 29830 D ESP32_DATA: Humidity: 65.87 %
+11-25 12:18:13.430 18610 29830 D ESP32_DATA: Pressure: 1039.12 hPa
+11-25 12:18:13.430 18610 29830 D ESP32_DATA: Gas Resistance: 145.02 kOhms
+11-25 12:18:13.430 18610 29830 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:18:13.430 18610 29830 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:18:13.430 18610 29830 D ESP32_DATA: MQ-3: 1293
+11-25 12:18:18.639 18610 29833 D ESP32_DATA: Temperature: 2.9 C
+11-25 12:18:18.639 18610 29833 D ESP32_DATA: Humidity: 65.98 %
+11-25 12:18:18.640 18610 29833 D ESP32_DATA: Pressure: 1039.12 hPa
+11-25 12:18:18.640 18610 29833 D ESP32_DATA: Gas Resistance: 144.77 kOhms
+11-25 12:18:18.640 18610 29833 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:18:18.640 18610 29833 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:18:18.640 18610 29833 D ESP32_DATA: MQ-3: 1327
+11-25 12:18:23.863 18610 29834 D ESP32_DATA: Temperature: 2.9 C
+11-25 12:18:23.863 18610 29834 D ESP32_DATA: Humidity: 66.02 %
+11-25 12:18:23.863 18610 29834 D ESP32_DATA: Pressure: 1039.12 hPa
+11-25 12:18:23.863 18610 29834 D ESP32_DATA: Gas Resistance: 145.4 kOhms
+11-25 12:18:23.863 18610 29834 D ESP32_DATA: eCO2: 5832 ppm
+11-25 12:18:23.863 18610 29834 D ESP32_DATA: TVOC: 827 ppb
+11-25 12:18:23.863 18610 29834 D ESP32_DATA: MQ-3: 1324
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: Failed to receive ESP32 data
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: java.net.SocketTimeoutException: failed to connect to /172.20.10.4 (port 80) from /172.20.10.5 (port 37132) after 5000ms
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at libcore.io.IoBridge.connectErrno(IoBridge.java:235)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at libcore.io.IoBridge.connect(IoBridge.java:179)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:142)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:390)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:230)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:212)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:436)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at java.net.Socket.connect(Socket.java:646)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at com.android.okhttp.internal.Platform.connectSocket(Platform.java:182)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at com.android.okhttp.internal.io.RealConnection.connectSocket(RealConnection.java:145)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at com.android.okhttp.internal.io.RealConnection.connect(RealConnection.java:116)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at com.android.okhttp.internal.http.StreamAllocation.findConnection(StreamAllocation.java:186)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at com.android.okhttp.internal.http.StreamAllocation.findHealthyConnection(StreamAllocation.java:128)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at com.android.okhttp.internal.http.StreamAllocation.newStream(StreamAllocation.java:97)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at com.android.okhttp.internal.http.HttpEngine.connect(HttpEngine.java:289)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at com.android.okhttp.internal.http.HttpEngine.sendRequest(HttpEngine.java:232)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:465)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getInputStream(HttpURLConnectionImpl.java:248)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at com.example.coen390.fridgefriends.network.ESP32Receiver.lambda$receiveData$0(ESP32Receiver.java:70)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at com.example.coen390.fridgefriends.network.ESP32Receiver$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+11-25 12:18:33.918 18610 29835 E ESP32_DATA: 	at java.lang.Thread.run(Thread.java:1563)
+11-25 12:18:42.708 18610 29836 D ESP32_DATA: Temperature: 2.9 C
+11-25 12:18:42.708 18610 29836 D ESP32_DATA: Humidity: 66.25 %
+11-25 12:18:42.708 18610 29836 D ESP32_DATA: Pressure: 1039.12 hPa
+11-25 12:18:42.708 18610 29836 D ESP32_DATA: Gas Resistance: 145.27 kOhms
+11-25 12:18:42.708 18610 29836 D ESP32_DATA: eCO2: 6442 ppm
+11-25 12:18:42.708 18610 29836 D ESP32_DATA: TVOC: 920 ppb
+11-25 12:18:42.708 18610 29836 D ESP32_DATA: MQ-3: 1314
+11-25 12:18:51.096 18610 29837 D ESP32_DATA: Temperature: 2.9 C
+11-25 12:18:51.096 18610 29837 D ESP32_DATA: Humidity: 66.34 %
+11-25 12:18:51.096 18610 29837 D ESP32_DATA: Pressure: 1039.12 hPa
+11-25 12:18:51.096 18610 29837 D ESP32_DATA: Gas Resistance: 145.02 kOhms
+11-25 12:18:51.096 18610 29837 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:18:51.096 18610 29837 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:18:51.096 18610 29837 D ESP32_DATA: MQ-3: 1304
+11-25 12:18:56.577 18610 29838 D ESP32_DATA: Temperature: 2.91 C
+11-25 12:18:56.577 18610 29838 D ESP32_DATA: Humidity: 66.41 %
+11-25 12:18:56.577 18610 29838 D ESP32_DATA: Pressure: 1039.12 hPa
+11-25 12:18:56.577 18610 29838 D ESP32_DATA: Gas Resistance: 145.27 kOhms
+11-25 12:18:56.577 18610 29838 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:18:56.577 18610 29838 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:18:56.577 18610 29838 D ESP32_DATA: MQ-3: 1298
+11-25 12:19:01.784 18610 29839 D ESP32_DATA: Temperature: 2.91 C
+11-25 12:19:01.784 18610 29839 D ESP32_DATA: Humidity: 66.46 %
+11-25 12:19:01.784 18610 29839 D ESP32_DATA: Pressure: 1039.12 hPa
+11-25 12:19:01.784 18610 29839 D ESP32_DATA: Gas Resistance: 144.77 kOhms
+11-25 12:19:01.784 18610 29839 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:19:01.784 18610 29839 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:19:01.784 18610 29839 D ESP32_DATA: MQ-3: 1302
+11-25 12:19:09.460 18610 29840 D ESP32_DATA: Temperature: 2.91 C
+11-25 12:19:09.460 18610 29840 D ESP32_DATA: Humidity: 66.55 %
+11-25 12:19:09.460 18610 29840 D ESP32_DATA: Pressure: 1039.11 hPa
+11-25 12:19:09.460 18610 29840 D ESP32_DATA: Gas Resistance: 145.52 kOhms
+11-25 12:19:09.460 18610 29840 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:19:09.460 18610 29840 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:19:09.460 18610 29840 D ESP32_DATA: MQ-3: 1328
+11-25 12:19:14.777 18610 29851 D ESP32_DATA: Temperature: 2.91 C
+11-25 12:19:14.780 18610 29851 D ESP32_DATA: Humidity: 66.61 %
+11-25 12:19:14.780 18610 29851 D ESP32_DATA: Pressure: 1039.1 hPa
+11-25 12:19:14.781 18610 29851 D ESP32_DATA: Gas Resistance: 145.02 kOhms
+11-25 12:19:14.781 18610 29851 D ESP32_DATA: eCO2: 5997 ppm
+11-25 12:19:14.781 18610 29851 D ESP32_DATA: TVOC: 852 ppb
+11-25 12:19:14.781 18610 29851 D ESP32_DATA: MQ-3: 1299
+11-25 12:19:19.987 18610 29865 D ESP32_DATA: Temperature: 2.91 C
+11-25 12:19:19.988 18610 29865 D ESP32_DATA: Humidity: 66.64 %
+11-25 12:19:19.988 18610 29865 D ESP32_DATA: Pressure: 1039.1 hPa
+11-25 12:19:19.988 18610 29865 D ESP32_DATA: Gas Resistance: 144.15 kOhms
+11-25 12:19:19.988 18610 29865 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:19:19.988 18610 29865 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:19:19.988 18610 29865 D ESP32_DATA: MQ-3: 1325
+11-25 12:19:25.908 18610 29866 D ESP32_DATA: Temperature: 2.92 C
+11-25 12:19:25.908 18610 29866 D ESP32_DATA: Humidity: 66.69 %
+11-25 12:19:25.908 18610 29866 D ESP32_DATA: Pressure: 1039.1 hPa
+11-25 12:19:25.908 18610 29866 D ESP32_DATA: Gas Resistance: 145.52 kOhms
+11-25 12:19:25.908 18610 29866 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:19:25.908 18610 29866 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:19:25.908 18610 29866 D ESP32_DATA: MQ-3: 1322
+11-25 12:19:31.793 18610 29868 D ESP32_DATA: Temperature: 2.92 C
+11-25 12:19:31.793 18610 29868 D ESP32_DATA: Humidity: 66.74 %
+11-25 12:19:31.793 18610 29868 D ESP32_DATA: Pressure: 1039.1 hPa
+11-25 12:19:31.793 18610 29868 D ESP32_DATA: Gas Resistance: 144.9 kOhms
+11-25 12:19:31.793 18610 29868 D ESP32_DATA: eCO2: 7984 ppm
+11-25 12:19:31.793 18610 29868 D ESP32_DATA: TVOC: 1155 ppb
+11-25 12:19:31.793 18610 29868 D ESP32_DATA: MQ-3: 1319
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: Failed to receive ESP32 data
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: java.net.SocketTimeoutException: timeout
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at com.android.okhttp.okio.Okio$3.newTimeoutException(Okio.java:214)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at com.android.okhttp.okio.AsyncTimeout.exit(AsyncTimeout.java:263)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at com.android.okhttp.okio.AsyncTimeout$2.read(AsyncTimeout.java:217)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at com.android.okhttp.okio.RealBufferedSource.indexOf(RealBufferedSource.java:307)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at com.android.okhttp.okio.RealBufferedSource.indexOf(RealBufferedSource.java:301)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at com.android.okhttp.okio.RealBufferedSource.readUtf8LineStrict(RealBufferedSource.java:197)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at com.android.okhttp.internal.http.Http1xStream.readResponse(Http1xStream.java:188)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at com.android.okhttp.internal.http.Http1xStream.readResponseHeaders(Http1xStream.java:129)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at com.android.okhttp.internal.http.HttpEngine.readNetworkResponse(HttpEngine.java:750)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at com.android.okhttp.internal.http.HttpEngine.readResponse(HttpEngine.java:622)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:475)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getInputStream(HttpURLConnectionImpl.java:248)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at com.example.coen390.fridgefriends.network.ESP32Receiver.lambda$receiveData$0(ESP32Receiver.java:70)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at com.example.coen390.fridgefriends.network.ESP32Receiver$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at java.lang.Thread.run(Thread.java:1563)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: Caused by: java.net.SocketException: Socket closed
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at java.net.SocketInputStream.read(SocketInputStream.java:188)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at java.net.SocketInputStream.read(SocketInputStream.java:143)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at com.android.okhttp.okio.Okio$2.read(Okio.java:138)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	at com.android.okhttp.okio.AsyncTimeout$2.read(AsyncTimeout.java:213)
+11-25 12:19:43.765 18610 29869 E ESP32_DATA: 	... 13 more
+11-25 12:19:49.053 18610 29875 D ESP32_DATA: Temperature: 2.93 C
+11-25 12:19:49.054 18610 29875 D ESP32_DATA: Humidity: 66.92 %
+11-25 12:19:49.054 18610 29875 D ESP32_DATA: Pressure: 1039.09 hPa
+11-25 12:19:49.054 18610 29875 D ESP32_DATA: Gas Resistance: 145.02 kOhms
+11-25 12:19:49.054 18610 29875 D ESP32_DATA: eCO2: 7992 ppm
+11-25 12:19:49.054 18610 29875 D ESP32_DATA: TVOC: 1156 ppb
+11-25 12:19:49.054 18610 29875 D ESP32_DATA: MQ-3: 1301
+11-25 12:20:02.385 18610 29876 D ESP32_DATA: Temperature: 2.94 C
+11-25 12:20:02.386 18610 29876 D ESP32_DATA: Humidity: 66.99 %
+11-25 12:20:02.386 18610 29876 D ESP32_DATA: Pressure: 1039.08 hPa
+11-25 12:20:02.386 18610 29876 D ESP32_DATA: Gas Resistance: 144.77 kOhms
+11-25 12:20:02.386 18610 29876 D ESP32_DATA: eCO2: 5849 ppm
+11-25 12:20:02.386 18610 29876 D ESP32_DATA: TVOC: 830 ppb
+11-25 12:20:02.386 18610 29876 D ESP32_DATA: MQ-3: 1309
+11-25 12:20:07.586 18610 29877 D ESP32_DATA: Temperature: 2.94 C
+11-25 12:20:07.586 18610 29877 D ESP32_DATA: Humidity: 67.05 %
+11-25 12:20:07.586 18610 29877 D ESP32_DATA: Pressure: 1039.09 hPa
+11-25 12:20:07.586 18610 29877 D ESP32_DATA: Gas Resistance: 145.4 kOhms
+11-25 12:20:07.586 18610 29877 D ESP32_DATA: eCO2: 7656 ppm
+11-25 12:20:07.586 18610 29877 D ESP32_DATA: TVOC: 1105 ppb
+11-25 12:20:07.586 18610 29877 D ESP32_DATA: MQ-3: 1301
+11-25 12:20:12.745 18610 29880 D ESP32_DATA: Temperature: 2.94 C
+11-25 12:20:12.746 18610 29880 D ESP32_DATA: Humidity: 67.08 %
+11-25 12:20:12.746 18610 29880 D ESP32_DATA: Pressure: 1039.09 hPa
+11-25 12:20:12.746 18610 29880 D ESP32_DATA: Gas Resistance: 145.65 kOhms
+11-25 12:20:12.746 18610 29880 D ESP32_DATA: eCO2: 6171 ppm
+11-25 12:20:12.746 18610 29880 D ESP32_DATA: TVOC: 879 ppb
+11-25 12:20:12.746 18610 29880 D ESP32_DATA: MQ-3: 1303
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: Failed to receive ESP32 data
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: java.net.SocketTimeoutException: failed to connect to /172.20.10.4 (port 80) from /172.20.10.5 (port 48598) after 5000ms
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at libcore.io.IoBridge.connectErrno(IoBridge.java:235)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at libcore.io.IoBridge.connect(IoBridge.java:179)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:142)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:390)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:230)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:212)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:436)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at java.net.Socket.connect(Socket.java:646)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at com.android.okhttp.internal.Platform.connectSocket(Platform.java:182)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at com.android.okhttp.internal.io.RealConnection.connectSocket(RealConnection.java:145)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at com.android.okhttp.internal.io.RealConnection.connect(RealConnection.java:116)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at com.android.okhttp.internal.http.StreamAllocation.findConnection(StreamAllocation.java:186)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at com.android.okhttp.internal.http.StreamAllocation.findHealthyConnection(StreamAllocation.java:128)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at com.android.okhttp.internal.http.StreamAllocation.newStream(StreamAllocation.java:97)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at com.android.okhttp.internal.http.HttpEngine.connect(HttpEngine.java:289)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at com.android.okhttp.internal.http.HttpEngine.sendRequest(HttpEngine.java:232)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:465)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getInputStream(HttpURLConnectionImpl.java:248)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at com.example.coen390.fridgefriends.network.ESP32Receiver.lambda$receiveData$0(ESP32Receiver.java:70)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at com.example.coen390.fridgefriends.network.ESP32Receiver$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+11-25 12:20:22.786 18610 29881 E ESP32_DATA: 	at java.lang.Thread.run(Thread.java:1563)
+11-25 12:20:31.568 18610 29882 D ESP32_DATA: Temperature: 2.94 C
+11-25 12:20:31.568 18610 29882 D ESP32_DATA: Humidity: 67.2 %
+11-25 12:20:31.568 18610 29882 D ESP32_DATA: Pressure: 1039.08 hPa
+11-25 12:20:31.568 18610 29882 D ESP32_DATA: Gas Resistance: 145.02 kOhms
+11-25 12:20:31.569 18610 29882 D ESP32_DATA: eCO2: 6032 ppm
+11-25 12:20:31.569 18610 29882 D ESP32_DATA: TVOC: 858 ppb
+11-25 12:20:31.569 18610 29882 D ESP32_DATA: MQ-3: 1303
+11-25 12:20:37.185 18610 29883 D ESP32_DATA: Temperature: 2.94 C
+11-25 12:20:37.185 18610 29883 D ESP32_DATA: Humidity: 67.26 %
+11-25 12:20:37.185 18610 29883 D ESP32_DATA: Pressure: 1039.08 hPa
+11-25 12:20:37.185 18610 29883 D ESP32_DATA: Gas Resistance: 145.65 kOhms
+11-25 12:20:37.185 18610 29883 D ESP32_DATA: eCO2: 5674 ppm
+11-25 12:20:37.185 18610 29883 D ESP32_DATA: TVOC: 803 ppb
+11-25 12:20:37.186 18610 29883 D ESP32_DATA: MQ-3: 1320
+11-25 12:20:42.730 18610 29884 D ESP32_DATA: Temperature: 2.95 C
+11-25 12:20:42.731 18610 29884 D ESP32_DATA: Humidity: 67.3 %
+11-25 12:20:42.731 18610 29884 D ESP32_DATA: Pressure: 1039.08 hPa
+11-25 12:20:42.731 18610 29884 D ESP32_DATA: Gas Resistance: 145.9 kOhms
+11-25 12:20:42.731 18610 29884 D ESP32_DATA: eCO2: 4525 ppm
+11-25 12:20:42.731 18610 29884 D ESP32_DATA: TVOC: 628 ppb
+11-25 12:20:42.731 18610 29884 D ESP32_DATA: MQ-3: 1289
+11-25 12:20:47.831 18610 29885 D ESP32_DATA: Temperature: 2.95 C
+11-25 12:20:47.831 18610 29885 D ESP32_DATA: Humidity: 67.33 %
+11-25 12:20:47.831 18610 29885 D ESP32_DATA: Pressure: 1039.07 hPa
+11-25 12:20:47.831 18610 29885 D ESP32_DATA: Gas Resistance: 145.02 kOhms
+11-25 12:20:47.832 18610 29885 D ESP32_DATA: eCO2: 6680 ppm
+11-25 12:20:47.832 18610 29885 D ESP32_DATA: TVOC: 956 ppb
+11-25 12:20:47.832 18610 29885 D ESP32_DATA: MQ-3: 1323
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: Failed to receive ESP32 data
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: java.net.SocketTimeoutException: timeout
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at com.android.okhttp.okio.Okio$3.newTimeoutException(Okio.java:214)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at com.android.okhttp.okio.AsyncTimeout.exit(AsyncTimeout.java:263)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at com.android.okhttp.okio.AsyncTimeout$2.read(AsyncTimeout.java:217)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at com.android.okhttp.okio.RealBufferedSource.indexOf(RealBufferedSource.java:307)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at com.android.okhttp.okio.RealBufferedSource.indexOf(RealBufferedSource.java:301)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at com.android.okhttp.okio.RealBufferedSource.readUtf8LineStrict(RealBufferedSource.java:197)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at com.android.okhttp.internal.http.Http1xStream.readResponse(Http1xStream.java:188)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at com.android.okhttp.internal.http.Http1xStream.readResponseHeaders(Http1xStream.java:129)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at com.android.okhttp.internal.http.HttpEngine.readNetworkResponse(HttpEngine.java:750)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at com.android.okhttp.internal.http.HttpEngine.readResponse(HttpEngine.java:622)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:475)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getInputStream(HttpURLConnectionImpl.java:248)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at com.example.coen390.fridgefriends.network.ESP32Receiver.lambda$receiveData$0(ESP32Receiver.java:70)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at com.example.coen390.fridgefriends.network.ESP32Receiver$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at java.lang.Thread.run(Thread.java:1563)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: Caused by: java.net.SocketException: Socket closed
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at java.net.SocketInputStream.read(SocketInputStream.java:188)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at java.net.SocketInputStream.read(SocketInputStream.java:143)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at com.android.okhttp.okio.Okio$2.read(Okio.java:138)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	at com.android.okhttp.okio.AsyncTimeout$2.read(AsyncTimeout.java:213)
+11-25 12:20:59.970 18610 29886 E ESP32_DATA: 	... 13 more
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: Failed to receive ESP32 data
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: java.net.SocketTimeoutException: timeout
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at com.android.okhttp.okio.Okio$3.newTimeoutException(Okio.java:214)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at com.android.okhttp.okio.AsyncTimeout.exit(AsyncTimeout.java:263)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at com.android.okhttp.okio.AsyncTimeout$2.read(AsyncTimeout.java:217)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at com.android.okhttp.okio.RealBufferedSource.indexOf(RealBufferedSource.java:307)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at com.android.okhttp.okio.RealBufferedSource.indexOf(RealBufferedSource.java:301)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at com.android.okhttp.okio.RealBufferedSource.readUtf8LineStrict(RealBufferedSource.java:197)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at com.android.okhttp.internal.http.Http1xStream.readResponse(Http1xStream.java:188)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at com.android.okhttp.internal.http.Http1xStream.readResponseHeaders(Http1xStream.java:129)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at com.android.okhttp.internal.http.HttpEngine.readNetworkResponse(HttpEngine.java:750)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at com.android.okhttp.internal.http.HttpEngine.readResponse(HttpEngine.java:622)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:475)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getInputStream(HttpURLConnectionImpl.java:248)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at com.example.coen390.fridgefriends.network.ESP32Receiver.lambda$receiveData$0(ESP32Receiver.java:70)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at com.example.coen390.fridgefriends.network.ESP32Receiver$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at java.lang.Thread.run(Thread.java:1563)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: Caused by: java.net.SocketException: Socket closed
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at java.net.SocketInputStream.read(SocketInputStream.java:188)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at java.net.SocketInputStream.read(SocketInputStream.java:143)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at com.android.okhttp.okio.Okio$2.read(Okio.java:138)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	at com.android.okhttp.okio.AsyncTimeout$2.read(AsyncTimeout.java:213)
+11-25 12:21:11.654 18610 29887 E ESP32_DATA: 	... 13 more
+11-25 12:21:16.952 18610 29892 D ESP32_DATA: Temperature: 2.96 C
+11-25 12:21:16.953 18610 29892 D ESP32_DATA: Humidity: 67.53 %
+11-25 12:21:16.953 18610 29892 D ESP32_DATA: Pressure: 1039.05 hPa
+11-25 12:21:16.953 18610 29892 D ESP32_DATA: Gas Resistance: 145.15 kOhms
+11-25 12:21:16.953 18610 29892 D ESP32_DATA: eCO2: 6442 ppm
+11-25 12:21:16.953 18610 29892 D ESP32_DATA: TVOC: 920 ppb
+11-25 12:21:16.953 18610 29892 D ESP32_DATA: MQ-3: 1323
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: Failed to receive ESP32 data
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: java.net.SocketTimeoutException: timeout
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at com.android.okhttp.okio.Okio$3.newTimeoutException(Okio.java:214)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at com.android.okhttp.okio.AsyncTimeout.exit(AsyncTimeout.java:263)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at com.android.okhttp.okio.AsyncTimeout$2.read(AsyncTimeout.java:217)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at com.android.okhttp.okio.RealBufferedSource.indexOf(RealBufferedSource.java:307)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at com.android.okhttp.okio.RealBufferedSource.indexOf(RealBufferedSource.java:301)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at com.android.okhttp.okio.RealBufferedSource.readUtf8LineStrict(RealBufferedSource.java:197)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at com.android.okhttp.internal.http.Http1xStream.readResponse(Http1xStream.java:188)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at com.android.okhttp.internal.http.Http1xStream.readResponseHeaders(Http1xStream.java:129)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at com.android.okhttp.internal.http.HttpEngine.readNetworkResponse(HttpEngine.java:750)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at com.android.okhttp.internal.http.HttpEngine.readResponse(HttpEngine.java:622)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:475)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getInputStream(HttpURLConnectionImpl.java:248)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at com.example.coen390.fridgefriends.network.ESP32Receiver.lambda$receiveData$0(ESP32Receiver.java:70)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at com.example.coen390.fridgefriends.network.ESP32Receiver$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at java.lang.Thread.run(Thread.java:1563)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: Caused by: java.net.SocketException: Socket closed
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at java.net.SocketInputStream.read(SocketInputStream.java:188)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at java.net.SocketInputStream.read(SocketInputStream.java:143)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at com.android.okhttp.okio.Okio$2.read(Okio.java:138)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	at com.android.okhttp.okio.AsyncTimeout$2.read(AsyncTimeout.java:213)
+11-25 12:21:30.108 18610 29893 E ESP32_DATA: 	... 13 more
+11-25 12:21:38.351 18610 29894 D ESP32_DATA: Temperature: 2.97 C
+11-25 12:21:38.351 18610 29894 D ESP32_DATA: Humidity: 67.66 %
+11-25 12:21:38.351 18610 29894 D ESP32_DATA: Pressure: 1039.04 hPa
+11-25 12:21:38.351 18610 29894 D ESP32_DATA: Gas Resistance: 144.77 kOhms
+11-25 12:21:38.352 18610 29894 D ESP32_DATA: eCO2: 7146 ppm
+11-25 12:21:38.352 18610 29894 D ESP32_DATA: TVOC: 1027 ppb
+11-25 12:21:38.352 18610 29894 D ESP32_DATA: MQ-3: 1313

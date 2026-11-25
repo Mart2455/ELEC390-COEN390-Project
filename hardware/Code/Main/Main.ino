@@ -44,8 +44,8 @@ bool ccsConnected = false;
 
 //  NEED TO CHANGE THIS LATER ON
 // PROBLEM IS THAT ITS NOT REALLY USEFUL 
-const char* ssid = "iPhone";
-const char* password = "23456788";
+const char* ssid = "alexa";
+const char* password = "1234567a";
 
 WebServer server(80);
 
@@ -347,6 +347,13 @@ void loop()
 
   if (ccsConnected) 
   {
+    // Compensate CCS811 using BME680 measurements
+    if (bmeDataValid)
+    {
+        ccs.setEnvironmentalData(humidity, temperature);
+
+        Serial.println("CCS811 environmental compensation updated.");
+    }
 
     if (ccs.available()) 
     {
@@ -407,8 +414,11 @@ void loop()
   float adcVoltage =
       analogReadMilliVolts(MQ3_PIN) / 1000.0;
 
-  // Assumes 20k / 20k voltage divider
-  float sensorVoltage = adcVoltage * 2.0;
+  // Assumes 20k / 10k voltage divider
+  // 20k connected to MQ-3, 10k connected to GND
+  // change to 1.5 if the set up is opposite                                                                                        
+  // CHANGE IF SET UP IS DIFFERENT
+  float sensorVoltage = adcVoltage * 3;
 
   Serial.print("Analog Value: ");
   Serial.print(mq3Raw);
