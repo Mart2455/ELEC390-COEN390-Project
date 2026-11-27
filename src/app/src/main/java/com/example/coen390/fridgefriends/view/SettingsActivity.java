@@ -33,11 +33,15 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         // Setup Option Cards
+        View cardSettingsUserGuide = findViewById(R.id.cardSettingsUserGuide);
         View cardSettingsConnectedDevices = findViewById(R.id.cardSettingsConnectedDevices);
         View cardSettingsDataStorage = findViewById(R.id.cardSettingsDataStorage);
         View cardSettingsSecurityPrivacy = findViewById(R.id.cardSettingsSecurityPrivacy);
         View cardSettingsAbout = findViewById(R.id.cardSettingsAbout);
 
+        if (cardSettingsUserGuide != null) {
+            cardSettingsUserGuide.setOnClickListener(v -> startActivity(new Intent(this, UserGuideActivity.class)));
+        }
         if (cardSettingsConnectedDevices != null) {
             cardSettingsConnectedDevices.setOnClickListener(v -> showConnectedDevicesDialog());
         }
@@ -225,7 +229,14 @@ public class SettingsActivity extends AppCompatActivity {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
 
+        TextView btnGuide = dialogView.findViewById(R.id.btnAboutGuide);
         TextView btnClose = dialogView.findViewById(R.id.btnAboutClose);
+        if (btnGuide != null) {
+            btnGuide.setOnClickListener(v -> {
+                dialog.dismiss();
+                startActivity(new Intent(this, UserGuideActivity.class));
+            });
+        }
         if (btnClose != null) {
             btnClose.setOnClickListener(v -> dialog.dismiss());
         }
