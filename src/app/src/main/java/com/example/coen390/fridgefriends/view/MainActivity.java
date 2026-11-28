@@ -39,6 +39,14 @@ import android.os.Build;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import com.example.coen390.fridgefriends.alert.ReminderCheck;
+import com.example.coen390.fridgefriends.alert.ReminderConfig;
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
+
 public class MainActivity extends AppCompatActivity {
 
     private MonitoringState.Snapshot monitoringState;
@@ -103,11 +111,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //runs the reminder check once a day at 9am
+    private void scheduleReminderCheck() {
+        //find the time until the next 9:00
+        Calendar now = Calendar.getInstance();
+        Calendar nextCheck = Calendar.getInstance();
+        nextCheck.set(Calendar.HOUR_OF_DAY, ReminderConfig.CHECK_HOUR);
+        nextCheck.set(Calendar.MINUTE, 0);
+        nextCheck.set(Calendar.SECOND, 0);
+        //if 9am already passed today, the check happens tmr
+        //not sure if im gonna keep this like that. might add a check everytime the user opens the app
+        if (nextCheck.before(now))
+            nextCheck.add(Calendar.DAY_OF_MONTH, 1);
+        long waitTime = nextCheck.getTimeInMillis() - now.getTimeInMillis();
+
+        //repeat every day, first check wait until 9am
+        PeriodicWorkRequest dailyCheck = new PeriodicWorkRequest.Builder(ReminderCheck.class, 1, TimeUnit.DAYS)
+                .setInitialDelay(waitTime, TimeUnit.MILLISECONDS)
+                .build();
+
+        //only schedule the check once
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+                "reminder_check", ExistingPeriodicWorkPolicy.KEEP, dailyCheck);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         askNotificationPermission();
+        scheduleReminderCheck();
 
         // Make the monitoring reset everytime the app is turned on
 

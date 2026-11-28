@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation("androidx.viewpager2:viewpager2:1.1.0")
+    implementation("androidx.work:work-runtime:2.9.1")
 
     val cameraVersion = "1.3.4"
     implementation("androidx.camera:camera-core:$cameraVersion")
