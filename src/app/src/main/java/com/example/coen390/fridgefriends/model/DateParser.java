@@ -86,8 +86,8 @@ public class DateParser {
                         month = p1;
                         day = p2;
                     } else {
-                        month = p1;
-                        day = p2;
+                        day = p1;
+                        month = p2;
                     }
                 }
             }
